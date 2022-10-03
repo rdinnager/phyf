@@ -4,12 +4,12 @@
 \name{phyf-package}
 \alias{phyf}
 \alias{phyf-package}
-\title{phyf: What the Package Does (One Line, Title Case)}
+\title{phyf: Phylogenetic Flow Objects for Easy Manipulation and Modelling of Data on Phylogenetic Trees and Graphs}
 \description{
 What the package does (one paragraph).
 }
 \author{
-\strong{Maintainer}: Russell Dinnage \email{r.dinnage@gmail.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Russell Dinnage \email{r.dinnage@gmail.com} (\href{https://orcid.org/0000-0003-0846-2819}{ORCID})
 
 }
 \keyword{internal}
