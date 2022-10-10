@@ -14,7 +14,10 @@ Imports:
     assertthat,
     Matrix,
     phangorn,
+    pillar,
     purrr,
+    stringr,
+    tibble,
     vctrs
 Suggests: 
     knitr,

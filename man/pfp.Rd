@@ -3,16 +3,19 @@
 \name{pfp}
 \alias{pfp}
 \alias{is_pfp}
+\alias{is_pfc}
 \title{Create a new phylogenetic flow path object (\code{pfp})}
 \usage{
 pfp(x = list())
 
 is_pfp(x)
+
+is_pfc(x)
 }
 \arguments{
 \item{x}{\itemize{
 \item For \code{pfp()}: A list of nodes (integer) the path passes through
-\item For \code{is_percent()}: An object to test.
+\item For \code{is_pfp()}: An object to test.
 }}
 }
 \description{

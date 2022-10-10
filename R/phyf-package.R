@@ -11,3 +11,7 @@ NULL
 #' @keywords internal
 #' @name phyf-vctrs
 NULL
+
+.onLoad <- function(libname, pkgname) {
+  
+}

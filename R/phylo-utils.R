@@ -1,7 +1,12 @@
 add_internal_tips <- function(phy) {
-  node_labels <- ape::Ntip(phy) + seq_len(ape::Nnode(phy))
-  new_phy <- phangorn::add.tips(phy, as.character(node_labels),
-                                node_labels, 0)
+  nodes <- ape::Ntip(phy) + seq_len(ape::Nnode(phy))
+  if(!is.null(phy$node.label)) {
+    node_labels <- phy$node.label
+  } else {
+    node_labels <- as.character(node_labels)
+  }
+  new_phy <- phangorn::add.tips(phy, node_labels,
+                                nodes, 0)
   new_phy
 }
 

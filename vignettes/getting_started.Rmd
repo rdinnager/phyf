@@ -22,3 +22,9 @@ library(ape)
 ```{r phyf_ob}
 test_tree <- rtree(100) 
 ```
+
+```{r new_pf}
+
+
+
+```
