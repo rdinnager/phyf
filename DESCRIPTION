@@ -16,3 +16,7 @@ Imports:
     phangorn,
     purrr,
     vctrs
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

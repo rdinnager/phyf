@@ -4,24 +4,24 @@ new_pfc <- function(phy) {
   n_nodes <- ape::Ntip(phy) + ape::Nnode(phy)
   phy2 <- add_internal_tips(phy)
   
-  edge_ord <- rev(ape::postorder(phy))
-  node_ord <- c(ape::Ntip(phy) + 1, phy$edge[edge_ord, 2])
+  edge_ord <- rev(ape::postorder(phy2))
+  node_ord <- c(ape::Ntip(phy2) + 1, phy2$edge[edge_ord, 2])
   
-  if(!is.null(phy$edge.length)) {
-    lens <- phy$edge.length[edge_ord]
-  } else {
-    lens <- rep(1, nrow(phy$edge))
-  }
+  rtp <- root2tip_binary(phy2)
+  rtp <- rtp[node_ord, ]
+  lens <- phy2$edge.length[edge_ord]
   
-  if(!is.null(phy$root.edge)) {
-    lens <- c(phy$root.edge, lens)
-  } else {
-    lens <- c(0, lens)
-  }
+  rtp <- Matrix::t(rtp)[ , -1] %*% Matrix::Diagonal(length(lens), lens)
+  rtp <- Matrix::drop0(rtp)
   
-  np <- ape::nodepath(phy)
+  zero_br <- Matrix::colSums(rtp) != 0
+  rtp <- rtp[ , zero_br]
+  
+  new_lens <- lens[zero_br]
+  np <- split_indexes(Matrix::t(rtp))
+  
   el <- purrr::map(np,
-                   ~ lens[.x])
+                   ~ new_lens[.x])
 
   new_rcrd()
 }
