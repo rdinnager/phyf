@@ -27,3 +27,5 @@ test_tree <- rtree(100)
 tree_pf <- as_pf(test_tree)
 tree_pf
 ```
+
+This `tibble` is easy to join data by using the `node_names`, which include the tip labels from the phylogeny as well as 'NodeXX' for internal nodes, where XX starts a 1 and goes to the total number of internal nodes. You can also use `node_nums` to join by the node number, where the node number uses the traditional ordering of the nodes used in the `ape` package in `phylo` objects. Usually you will only have data on the tips, and so when joining to the `pf` object (using e.g. `dplyr::left_join()`) the internal node rows will recieve `NA` values. This is the desired behaviour. The missing values are easy to drop for fitting a model, but are useful later when making prediction (that is, ancestral state estimates).
