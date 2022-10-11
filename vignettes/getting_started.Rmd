@@ -25,5 +25,5 @@ test_tree <- rtree(100)
 
 ```{r new_pf}
 tree_pf <- as_pf(test_tree)
-
+tree_pf
 ```

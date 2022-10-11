@@ -46,10 +46,10 @@ as_pfc <- function(phy) {
   edge_names <- colnames(rtp)
   tip_names <- rownames(rtp)
   
-  new_pfc(tip_names,
-          np,
-          el,
-          edge_names,
+  new_pfc(unname(tip_names),
+          unname(np),
+          unname(el),
+          unname(edge_names),
           rtp)
   
 }
@@ -188,6 +188,22 @@ vec_ptype2.pfc.pfc <- function(x, y, ...) new_pfc()
 
 #' @export
 vec_cast.pfc.pfc <- function(x, to, ...) x
+
+#' @export
+vec_ptype.pfc <- function(x, ...) {
+  spm <- attr(x, "sparse_rep")
+  if(any(dim(spm)) != 0) {
+    spm <- spm[0, 0]
+  }
+  new_pfc(field(x, "pfn"), field(x, "pfp"),
+          field(x, "pfl"), edge_names(x)[integer()],
+          spm)
+}
+
+#' @export
+vec_ptype_full.pfc <- function(x, ...) {
+  paste0("pfc<e:", length(edge_names(x)), ">")
+}
 
 edge_names <- function(x) {
   attr(x, "edge_names")  
