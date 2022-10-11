@@ -46,10 +46,10 @@ as_pfc <- function(phy) {
   edge_names <- colnames(rtp)
   tip_names <- rownames(rtp)
   
-  new_pfc(unname(tip_names),
-          unname(np),
-          unname(el),
-          unname(edge_names),
+  new_pfc(tip_names,
+          np,
+          el,
+          edge_names,
           rtp)
   
 }
@@ -69,7 +69,7 @@ new_pfc <- function(pfn = character(),
     }
   } 
 
-  new_rcrd(list(pfn = pfn, pfp = pfpp, pfl = pfl),
+  new_rcrd(list(pfn = unname(pfn), pfp = unname(pfpp), pfl = unname(pfl)),
            edge_names = edge_names,
            sparse_rep = sparse_mat,
            class = "pfc")
