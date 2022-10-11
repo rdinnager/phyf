@@ -1,4 +1,15 @@
-new_pfc <- function(phy) {
+#' Make a `pfc` object from a `phylo` object
+#'
+#' @param phy A phylogenetic tree in `ape::phylo`
+#' format
+#'
+#' @return a `pfc`
+#' @export
+#'
+#' @examples
+#' as_pfc(ape::rtree(100))
+as_pfc <- function(phy) {
+  
   assertthat::assert_that(inherits(phy, "phylo"))
 
   n_nodes <- ape::Ntip(phy) + ape::Nnode(phy)
@@ -34,10 +45,31 @@ new_pfc <- function(phy) {
   
   edge_names <- colnames(rtp)
   tip_names <- rownames(rtp)
+  
+  new_pfc(tip_names,
+          np,
+          el,
+          edge_names,
+          rtp)
+  
+}
 
-  new_rcrd(list(pfn = tip_names, pfp = np, pfl = el),
+new_pfc <- function(pfn = character(), 
+                    pfp = pfp(), 
+                    pfl = list(),
+                    edge_names = character(),
+                    sparse_mat = NULL) {
+  
+  if(is.null(sparse_mat)) {
+    if(length(pfn) > 0) {
+      sparse_mat <- as_sparse(pfn, pfp, pfl,
+                              edge_names)
+    } 
+  } 
+
+  new_rcrd(list(pfn = pfn, pfp = pfp, pfl = pfl),
            edge_names = edge_names,
-           sparse_rep = rtp,
+           sparse_rep = sparse_mat,
            class = "pfc")
 }
 
@@ -89,13 +121,29 @@ format.pfp <- function(x, ...) {
 #' @export
 #'
 #' @examples
-pfc <- function(x) {
-  if(!inherits(x, "phylo")) {
-    rlang::warn("x is not a phylo object. Attempting to coerce it.")
-    x <- ape::as.phylo(x)
-  }
+pfc <- function(pfn = character(), 
+                pfpp = pfp(), 
+                pfl = list(),
+                edge_names = character(),
+                sparse_mat = NULL) {
   
-  new_pfc(x)
+  vec_assert(pfn, character())
+  vec_assert(pfpp, pfp())
+  vec_assert(pfl, list())
+  vec_assert(edge_names, character())
+  
+  if(!is.null(sparse_mat)) {
+    if(length(pfn) > 0) {
+      assertthat::assert_that(inherits(sparse_mat,
+                                     "CsparseMatrix"))
+    } 
+  } 
+  
+  new_pfc(pfn,
+          pfpp,
+          pfl,
+          edge_names,
+          sparse_mat)
 }
 
 #' @export
@@ -125,10 +173,44 @@ pillar_shaft.pfc <- function(x, ...) {
   pillar::new_pillar_shaft_simple(out, shorten = "mid", min_width = 15)
 }
 
+#' @export
+vec_restore.pfc <- function(x, to, ..., i = NULL) {
+  new_pfc(field(x, "pfn"),
+          field(x, "pfp"),
+          field(x, "pfl"),
+          edge_names(to))  
+}
+
 edge_names <- function(x) {
   attr(x, "edge_names")  
 }
 
 tip_names <- function(x) {
   attr(x, "tip_names")  
+}
+
+as_sparse <- function(pfn, pfp, pfl, edge_names) {
+  rtp <- Matrix::t(build_rtp(pfp, length(edge_names),
+                   lens = pfl))
+  rownames(rtp) <- pfn
+  colnames(rtp) <- edge_names
+  
+  rtp <- Matrix::drop0(rtp)
+  
+  rtp
+}
+
+#' @export
+pf <- function(x = pfc(), pf_column = "phyf", ...) {
+  vec_assert(x, pfc())
+  out <- tibble::tibble(node_name = field(x, "pfn"),
+                        "{pf_column}" := x)
+  tibble::new_tibble(out,
+                     pf_column = pf_column,
+                     class = "pf")
+}
+
+#' @export
+as_pf <- function(phy) {
+  pf(as_pfc(phy))
 }

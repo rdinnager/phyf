@@ -8,6 +8,13 @@
 \description{
 What the package does (one paragraph).
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://rdinnager.github.io/phyf/}
+}
+
+}
 \author{
 \strong{Maintainer}: Russell Dinnage \email{r.dinnage@gmail.com} (\href{https://orcid.org/0000-0003-0846-2819}{ORCID})
 

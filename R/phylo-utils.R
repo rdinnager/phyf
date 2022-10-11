@@ -19,7 +19,15 @@ root2tip_binary <- function(phy) {
 
 }
 
-build_rtp <- function(paths, n_nodes, sparse = TRUE) {
+build_rtp <- function(paths, n_nodes,
+                      lens = NULL,
+                      sparse = TRUE) {
+  
+  if(is.null(lens)) {
+    lens <- 1
+  } else {
+    lens <- unlist(lens)
+  }
 
   if(!sparse) {
 
@@ -40,7 +48,7 @@ build_rtp <- function(paths, n_nodes, sparse = TRUE) {
     Matrix::sparseMatrix(
       j = js,
       i = fastmatch::fmatch(ig_out, nn, nomatch = 0),
-      x = 1,
+      x = lens,
       dims = c(n_nodes, nj),
     )
   }

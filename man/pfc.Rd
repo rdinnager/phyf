@@ -4,7 +4,13 @@
 \alias{pfc}
 \title{Create a new phylogenetic flow collection object (\code{pfc})}
 \usage{
-pfc(x)
+pfc(
+  pfn = character(),
+  pfpp = pfp(),
+  pfl = list(),
+  edge_names = character(),
+  sparse_mat = NULL
+)
 }
 \arguments{
 \item{x}{\itemize{
