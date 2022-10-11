@@ -72,7 +72,38 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>..Nothing here yet..</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/phyf/">phyf</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'phyf'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     pf</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ape-package.ird.fr/" class="external-link">ape</a></span><span class="op">)</span></span></code></pre></div>
+<p>Create a random phylogeny for testing:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">test_tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ape/man/rtree.html" class="external-link">rtree</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test_tree</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-phyf_ob-1.png" width="100%"></p>
+<p>Turn it into a <code>tibble</code>-based phylogenetic flow format (<code>pf</code>) using <code>as_pf()</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tree_pf</span> <span class="op">&lt;-</span> <span class="fu">as_pf</span><span class="op">(</span><span class="va">test_tree</span><span class="op">)</span></span>
+<span><span class="va">tree_pf</span></span>
+<span><span class="co">#&gt; # A tibble: 198 × 2</span></span>
+<span><span class="co">#&gt;    node_name phyf                                                               </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;     &lt;pf&lt;:198&gt;&gt;                                                         </span></span>
+<span><span class="co">#&gt;  1 t61       root---0.2---&gt;Node2---0.9---&gt;Node…Node4---0.4---&gt;Node5---0.9---&gt;t61</span></span>
+<span><span class="co">#&gt;  2 t76       root---0.2---&gt;Node2---0.9---&gt;Node…Node4---0.4---&gt;Node5---0.7---&gt;t76</span></span>
+<span><span class="co">#&gt;  3 t71       root---0.2---&gt;Node2---0.9---&gt;Node…Node4---0.9---&gt;Node6---0.3---&gt;t71</span></span>
+<span><span class="co">#&gt;  4 t75       root---0.2---&gt;Node2---0.9---&gt;Node…Node6---0.4---&gt;Node7---0.2---&gt;t75</span></span>
+<span><span class="co">#&gt;  5 t53       root---0.2---&gt;Node2---0.9---&gt;Node…Node6---0.4---&gt;Node7---0.2---&gt;t53</span></span>
+<span><span class="co">#&gt;  6 t49       root---0.2---&gt;Node2---0.9---&gt;Node…Node8---0.8---&gt;Node9---0.5---&gt;t49</span></span>
+<span><span class="co">#&gt;  7 t91       root---0.2---&gt;Node2---0.9---&gt;Node…Node8---0.8---&gt;Node9---0.8---&gt;t91</span></span>
+<span><span class="co">#&gt;  8 t34       root---0.2---&gt;Node2---0.9---&gt;Node3---0.8---&gt;Node8---0.6---&gt;t34     </span></span>
+<span><span class="co">#&gt;  9 t45       root---0.23--&gt;Node2---0.13--&gt;Node…de11---0.38--&gt;Node12---0.69--&gt;t45</span></span>
+<span><span class="co">#&gt; 10 t81       root---0.23--&gt;Node2---0.13--&gt;Node…de11---0.38--&gt;Node12---0.11--&gt;t81</span></span>
+<span><span class="co">#&gt; # … with 188 more rows</span></span></code></pre></div>
+<p>This <code>tibble</code> is easy to join data by using the <code>node_name</code>, which include the tip labels from the phylogeny as well as ‘NodeXX’ for internal nodes, where XX starts a 1 and goes to the total number of internal nodes. You can also use <code>node_nums</code> to join by the node number, where the node number uses the traditional ordering of the nodes used in the <code>ape</code> package in <code>phylo</code> objects. Usually you will only have data on the tips, and so when joining to the <code>pf</code> object (using e.g. <code>dplyr::left_join()</code>) the internal node rows will recieve <code>NA</code> values. This is the desired behaviour. The missing values are easy to drop for fitting a model, but are useful later when making prediction (that is, ancestral state estimates).</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
