@@ -55,19 +55,21 @@ as_pfc <- function(phy) {
 }
 
 new_pfc <- function(pfn = character(), 
-                    pfp = pfp(), 
+                    pfpp = pfp(), 
                     pfl = list(),
                     edge_names = character(),
                     sparse_mat = NULL) {
   
   if(is.null(sparse_mat)) {
     if(length(pfn) > 0) {
-      sparse_mat <- as_sparse(pfn, pfp, pfl,
+      sparse_mat <- as_sparse(pfn, pfpp, pfl,
                               edge_names)
-    } 
+    } else {
+      sparse_mat <- MatrixExtra::emptySparse(format = "C")
+    }
   } 
 
-  new_rcrd(list(pfn = pfn, pfp = pfp, pfl = pfl),
+  new_rcrd(list(pfn = pfn, pfp = pfpp, pfl = pfl),
            edge_names = edge_names,
            sparse_rep = sparse_mat,
            class = "pfc")
@@ -180,6 +182,12 @@ vec_restore.pfc <- function(x, to, ..., i = NULL) {
           field(x, "pfl"),
           edge_names(to))  
 }
+
+#' @export
+vec_ptype2.pfc.pfc <- function(x, y, ...) new_pfc()
+
+#' @export
+vec_cast.pfc.pfc <- function(x, to, ...) x
 
 edge_names <- function(x) {
   attr(x, "edge_names")  
