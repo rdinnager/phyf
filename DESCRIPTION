@@ -12,17 +12,24 @@ RoxygenNote: 7.2.1
 Imports: 
     ape,
     assertthat,
+    colourvalues,
     fastmatch,
+    ghibli,
     Matrix,
     MatrixExtra,
     phangorn,
+    phytools,
     pillar,
     purrr,
     stringr,
     tibble,
-    vctrs
+    vctrs,
+    withr
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
 URL: https://rdinnager.github.io/phyf/
+Depends: 
+    R (>= 2.10)
+LazyData: true

@@ -1,6 +1,11 @@
-#' Make a `pfc` object from a `phylo` object
+#' @export
+pf_as_pfc <- function(x, ...) {
+  UseMethod("pf_as_pfc")
+}
+
+#' Make a `pfc` object from a `xlo` object
 #'
-#' @param phy A phylogenetic tree in `ape::phylo`
+#' @param x A xlogenetic tree in `ape::xlo`
 #' format
 #'
 #' @return a `pfc`
@@ -8,24 +13,24 @@
 #'
 #' @examples
 #' as_pfc(ape::rtree(100))
-as_pfc <- function(phy) {
+pf_as_pfc.phylo <- function(x, ...) {
   
-  assertthat::assert_that(inherits(phy, "phylo"))
+  assertthat::assert_that(inherits(x, "phylo"))
 
-  n_nodes <- ape::Ntip(phy) + ape::Nnode(phy)
-  phy <- ape::makeNodeLabel(phy)
-  phy2 <- add_internal_tips(phy)
+  n_nodes <- ape::Ntip(x) + ape::Nnode(x)
+  x <- ape::makeNodeLabel(x)
+  x2 <- add_internal_tips(x)
   
-  edge_ord <- rev(ape::postorder(phy2))
-  node_ord <- c(ape::Ntip(phy2) + 1, phy2$edge[edge_ord, 2])
+  edge_ord <- rev(ape::postorder(x2))
+  node_ord <- c(ape::Ntip(x2) + 1, x2$edge[edge_ord, 2])
   
-  rtp <- root2tip_binary(phy2)
+  rtp <- root2tip_binary(x2)
   rtp <- rtp[node_ord, ]
   
-  rownames(rtp) <- c(phy2$tip.label, phy2$node.label)[node_ord]
-  colnames(rtp) <- phy2$tip.label
+  rownames(rtp) <- c(x2$tip.label, x2$node.label)[node_ord]
+  colnames(rtp) <- x2$tip.label
   
-  lens <- phy2$edge.length[edge_ord]
+  lens <- x2$edge.length[edge_ord]
   
   rtp <- Matrix::t(rtp)[ , -1] %*% Matrix::Diagonal(length(lens), lens)
   rtp <- Matrix::drop0(rtp)
@@ -46,18 +51,42 @@ as_pfc <- function(phy) {
   edge_names <- colnames(rtp)
   tip_names <- rownames(rtp)
   
+  is_tip <- tip_names %in% x$tip.label
+  
   new_pfc(tip_names,
           np,
           el,
+          is_tip,
           edge_names,
+          new_lens,
           rtp)
+  
+}
+
+#' @export
+pf_as_pfc.dgCMatrix <- function(x, is_tip = NULL, ...) {
+  
+  np <- split_indexes(Matrix::t(x))
+  el <- split_xs(Matrix::t(x))
+  edge_names <- colnames(x)
+  tip_names <- rownames(x)
+  
+  new_pfc(tip_names,
+          np,
+          el,
+          is_tip,
+          edge_names,
+          Matrix::colMeans(x),
+          x)
   
 }
 
 new_pfc <- function(pfn = character(), 
                     pfpp = pfp(), 
                     pfl = list(),
+                    is_tip = logical(),
                     edge_names = character(),
+                    edge_lengths = double(),
                     sparse_mat = NULL) {
   
   if(is.null(sparse_mat)) {
@@ -69,8 +98,10 @@ new_pfc <- function(pfn = character(),
     }
   } 
 
-  new_rcrd(list(pfn = unname(pfn), pfp = unname(pfpp), pfl = unname(pfl)),
+  new_rcrd(list(pfn = unname(pfn), pfp = unname(pfpp), pfl = unname(pfl),
+                is_tip = unname(is_tip)),
            edge_names = edge_names,
+           edge_lengths = edge_lengths,
            sparse_rep = sparse_mat,
            class = "pfc")
 }
@@ -103,7 +134,7 @@ pfp <- function(x = list()) {
 
 #' @export
 #' @rdname pfp
-is_pfp <- function(x) {
+pf_is_pfp <- function(x) {
   inherits(x, "pfp")
 }
 
@@ -126,13 +157,17 @@ format.pfp <- function(x, ...) {
 pfc <- function(pfn = character(), 
                 pfpp = pfp(), 
                 pfl = list(),
+                is_tip = logical(),
                 edge_names = character(),
+                edge_lengths = double(),
                 sparse_mat = NULL) {
   
   vec_assert(pfn, character())
   vec_assert(pfpp, pfp())
   vec_assert(pfl, list())
   vec_assert(edge_names, character())
+  vec_assert(edge_lengths, double())
+  vec_assert(is_tip, logical())
   
   if(!is.null(sparse_mat)) {
     if(length(pfn) > 0) {
@@ -144,16 +179,19 @@ pfc <- function(pfn = character(),
   new_pfc(pfn,
           pfpp,
           pfl,
+          is_tip,
           edge_names,
+          edge_lengths,
           sparse_mat)
 }
 
 #' @export
 #' @rdname pfp
-is_pfc <- function(x) {
+pf_is_pfc <- function(x) {
   inherits(x, "pfc")
 }
 
+#' @importFrom stats setNames
 #' @export
 format.pfc <- function(x, ...) {
   edge_names <- edge_names(x)
@@ -180,7 +218,9 @@ vec_restore.pfc <- function(x, to, ..., i = NULL) {
   new_pfc(field(x, "pfn"),
           field(x, "pfp"),
           field(x, "pfl"),
-          edge_names(to))  
+          field(x, "is_tip"),
+          edge_names(to),
+          edge_lengths(to))  
 }
 
 #' @export
@@ -196,7 +236,9 @@ vec_ptype.pfc <- function(x, ...) {
     spm <- spm[0, 0]
   }
   new_pfc(field(x, "pfn"), field(x, "pfp"),
-          field(x, "pfl"), edge_names(x)[integer()],
+          field(x, "pfl"), field(x, "is_tip"), 
+          edge_names(x)[integer()],
+          edge_lengths(x)[integer()],
           spm)
 }
 
@@ -209,8 +251,12 @@ edge_names <- function(x) {
   attr(x, "edge_names")  
 }
 
+edge_lengths <- function(x) {
+  attr(x, "edge_lengths")  
+}
+
 tip_names <- function(x) {
-  attr(x, "tip_names")  
+  field(x, "pfn")  
 }
 
 as_sparse <- function(pfn, pfp, pfl, edge_names) {
@@ -224,17 +270,281 @@ as_sparse <- function(pfn, pfp, pfl, edge_names) {
   rtp
 }
 
+#' @importFrom rlang :=
 #' @export
-pf <- function(x = pfc(), pf_column = "phyf", ...) {
+pf <- function(x = pfc(), pf_column = "phlo", ...) {
   vec_assert(x, pfc())
-  out <- tibble::tibble(node_name = field(x, "pfn"),
+  out <- tibble::tibble(label = field(x, "pfn"),
+                        is_tip = field(x, "is_tip"),
                         "{pf_column}" := x)
   tibble::new_tibble(out,
                      pf_column = pf_column,
+                     label_column = "label",
+                     is_tip_column = "is_tip", 
                      class = "pf")
 }
 
 #' @export
-as_pf <- function(phy) {
-  pf(as_pfc(phy))
+pf_as_pf <- function(phy) {
+  pf(pf_as_pfc(phy))
 }
+
+#' @export
+pf_as_phylo <- function(x, ...) {
+  UseMethod("pf_as_phylo")
+}
+
+#' @export
+pf_as_phylo.pfc <- function(x, ...) {
+  
+  tips <- x[field(x, "is_tip")]
+  nodes <- field(tips, "pfp")
+  edge_mats <- purrr::map(nodes,
+                          flow_to_edge_list)
+  edge_mat <- unique(do.call(rbind, edge_mats))
+  
+  edge_nams <- c("root", edge_names(x))
+  edges_present <- unique(as.vector(edge_mat))
+  tip_nodes <- edges_present[edge_nams[edges_present] %in% field(tips, "pfn")]#  which(edge_nams %in% field(tips, "pfn")) + 1
+  other_nodes <- edges_present[!edges_present %in% tip_nodes]
+
+  tip_node_changer <- seq_along(tip_nodes)
+  names(tip_node_changer) <- tip_nodes
+  
+  other_node_changer <- max(tip_node_changer) + seq_along(other_nodes)
+  names(other_node_changer) <- other_nodes
+  
+  changer <- c(tip_node_changer, other_node_changer)
+  
+  edge_mat2 <- matrix(changer[as.character(edge_mat)], ncol = 2)
+  
+  tip_lab <- edge_nams[tip_nodes]
+  node_lab <- edge_nams[other_nodes]
+
+  new_phylo <- list()
+  new_phylo$edge <- edge_mat2
+  new_phylo$tip.label <- tip_lab
+  new_phylo$node.label <- node_lab
+  new_phylo$Nnode <- length(node_lab)
+  new_phylo$edge.length <- edge_lengths(x)[edge_mat[ , 2] - 1]
+  class(new_phylo) <- "phylo"
+  
+  new_phylo <- ape::collapse.singles(new_phylo)
+  
+  # ape::checkValidPhylo(new_phylo)
+  # plot(new_phylo)
+  # phytools::cotangleplot(test_tree, new_phylo, type = "phylogram")
+  # plot(phytools::cophylo(test_tree, new_phylo, rotate = FALSE))
+  
+  new_phylo
+  
+}
+
+#' @export
+pf_as_phylo.pf <- function(x, ...) {
+  pf_as_phylo(pf_phyloflow(x, ...))
+}
+
+#' @export
+pf_as_sparse <- function(x, ...) {
+  UseMethod("pf_as_sparse")
+}
+
+#' @export
+pf_as_sparse.pfc <- function(x, ...) {
+  attr(x, "sparse_rep")
+}
+
+#' @export
+pf_as_sparse.pf <- function(x, ...) {
+  pf_as_sparse(pf_phyloflow(x))
+}
+
+#' @export
+pf_as_sparse.dgCMatrix <- function(x, ...) {
+  x
+}
+
+
+#' Extracts the phylogenetic flow column of an `pf` object
+#'
+#' @param x A `pf` object
+#'
+#' @return A `pfc` object (phylogenetic flow collection)
+#' @export
+#'
+#' @examples
+pf_phyloflow <- function(x) {
+  
+  if(!inherits(x, "pf")) {
+    rlang::abort("x must be a pf object")
+  }
+  
+  pf_col <- attr(x, "pf_column")
+  x[[pf_col]]
+  
+}
+
+`pf_phyloflow<-` <- function(x, value) {
+  
+  if(!inherits(x, "pf")) {
+    rlang::abort("x must be a pf object")
+  }
+  
+  if(is.character(value)) {
+    if(length(value) >= 1) {
+      attr(x, "pf_column") <- value[1]
+    }
+    if(length(value) >= 2) {
+      attr(x, "label") <- value[2]
+    }
+    if(length(value) >= 3) {
+      attr(x, "is_tip") <- value[3]
+    }
+  } else {
+    pf_col <- attr(x, "pf_column")
+    x[[pf_col]] <- value
+  }
+  
+  x
+  
+}
+
+#' @export
+plot.pf <- function(x, n = 4, ...) {
+  phy <- pf_as_phylo(x)
+  labels <- c(attr(x, "label_column"))
+  ignore <- c(labels,
+              attr(x, "is_tip_column"),
+              attr(x, "pf_column"))
+  
+  if((ncol(x) - 3 ) == 0) {
+    p <- phytools::contMap(phy, main = "A phylogenetic tree with no features",
+                           x = rep(0, ape::Ntip(phy)) %>% setNames(phy$tip.label),
+                           method = "user", anc.states = rep(0, ape::Nnode(phy)) %>%
+                                                               setNames(ape::Ntip(phy) +
+                                                                          seq_len(ape::Nnode(phy)))
+                           )
+    plot(p)
+    return(p)
+  }
+  
+  pcols <- setdiff(names(x), ignore)
+  
+  if((ncol(x) - 3 ) == 1) {
+    sel <- c(labels, pcols)
+    df <- dplyr::tibble("{labels}" := c(phy$tip.label,
+                                       phy$node.label)) %>%
+      dplyr::left_join(x %>%
+                         dplyr::select(dplyr::all_of(sel))) 
+  }
+  
+  if((ncol(x) - 3 ) > 1) {
+    sel <- c(labels, head(pcols, n))
+    df <- dplyr::tibble("{labels}" := c(phy$tip.label,
+                                       phy$node.label)) %>%
+      dplyr::left_join(x %>%
+                         dplyr::select(dplyr::all_of(sel)))
+  }
+  
+  
+  
+  
+}
+
+#' @method vec_arith pfc
+#' @export
+vec_arith.pfc <- function(op, x, y, ...) {
+  UseMethod("vec_arith.pfc", y)
+}
+
+#' @method vec_arith.pfc default
+#' @export
+vec_arith.pfc.default <- function(op, x, y, ...) {
+  stop_incompatible_op(op, x, y)
+}
+
+#' @method vec_arith.pfc pfc
+#' @export
+vec_arith.pfc.pfc <- function(op, x, y, ...) {
+  if(!identical(field(x, "is_tip"), field(y, "is_tip"))) {
+    rlang::abort("Both pfc objects must have the same elements as tips")
+  }
+  if(!identical(field(x, "pfn"), field(y, "pfn"))) {
+    rlang::abort("Both pfc objects must have the same labels")
+  }
+  m1 <- pf_as_sparse(x)
+  m2 <- pf_as_sparse(y)
+  if(!structure_equal(m1, m2)) {
+    rlang::warn("You are doing arithmetic on phylogenetic flows with a different structures. Are you sure this is what you want to do?")
+  }
+  m <- vec_arith_sparse(op, m1, m2)
+  pf_as_pfc(m, field(x, "is_tip"))
+}
+
+#' @method vec_arith.pfc numeric
+#' @export
+vec_arith.pfc.numeric <- function(op, x, y, ...) {
+  
+  m1 <- pf_as_sparse(x)
+  
+  m <- m1
+  m@x <- vec_arith_base(op, m1@x, y)
+  pf_as_pfc(m, field(x, "is_tip"))
+  
+}
+
+#' @method vec_arith.numeric pfc
+#' @export
+vec_arith.numeric.pfc <- function(op, x, y, ...) {
+  
+  m1 <- pf_as_sparse(y)
+  
+  m <- m1
+  m@x <- vec_arith_base(op, x, m1@x)
+  pf_as_pfc(m, field(y, "is_tip"))
+  
+}
+
+#' @method vec_arith.pfc dgCMatrix
+#' @export
+vec_arith.pfc.dgCMatrix <- function(op, x, y, ...) {
+  
+  if(!identical(field(x, "pfn"), rownames(y))) {
+    rlang::abort("objects must have the same labels")
+  }
+  m1 <- pf_as_sparse(x)
+  if(!structure_equal(m1, y)) {
+    rlang::warn("You are doing arithmetic on phylogenetic flows with a different structures. Are you sure this is what you want to do?")
+  }
+  m <- vec_arith_sparse(op, m1, y)
+  pf_as_pfc(m, field(x, "is_tip"))
+  
+}
+
+#' @method vec_arith.numeric pfc
+#' @export
+vec_arith.numeric.pfc <- function(op, x, y, ...) {
+  
+  m1 <- pf_as_sparse(y)
+  
+  m <- m1
+  m@x <- vec_arith_base(op, x, m1@x)
+  pf_as_pfc(m, field(y, "is_tip"))
+  
+}
+
+vec_arith_sparse <- function(op, x, y) {
+  op_fn <- getExportedValue("base", op)
+  op_fn(x, y)
+}
+
+structure_equal <- function(pfc1, pfc2) {
+  m1 <- pf_as_sparse(pfc1)
+  m2 <- pf_as_sparse(pfc2)
+  m1@x <- 1
+  m2@x <- 1
+  identical(m1, m2)
+}
+
+

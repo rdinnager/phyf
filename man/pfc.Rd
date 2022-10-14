@@ -8,7 +8,9 @@ pfc(
   pfn = character(),
   pfpp = pfp(),
   pfl = list(),
+  is_tip = logical(),
   edge_names = character(),
+  edge_lengths = double(),
   sparse_mat = NULL
 )
 }

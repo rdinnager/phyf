@@ -2,15 +2,15 @@
 % Please edit documentation in R/phyf-vctrs.R
 \name{pfp}
 \alias{pfp}
-\alias{is_pfp}
-\alias{is_pfc}
+\alias{pf_is_pfp}
+\alias{pf_is_pfc}
 \title{Create a new phylogenetic flow path object (\code{pfp})}
 \usage{
 pfp(x = list())
 
-is_pfp(x)
+pf_is_pfp(x)
 
-is_pfc(x)
+pf_is_pfc(x)
 }
 \arguments{
 \item{x}{\itemize{

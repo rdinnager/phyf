@@ -55,7 +55,4 @@ build_rtp <- function(paths, n_nodes,
 
 }
 
-split_indexes <- function(x) {
-  res <- split(x@i + 1, findInterval(seq_len(Matrix::nnzero(x)), x@p, left.open = TRUE))
-  res
-}
+
