@@ -1,0 +1,64 @@
+---
+title: "Tree Arithmetic with Phylogenetic Flows"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tree Arithmetic with Phylogenetic Flows}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(phyf)
+library(ape)
+library(withr)
+```
+
+In this vignette we will see how the `{phyf}` package makes it easy to manipulate phylogenetic tree by performing arithmetic on phylogenetic flow collection objects (`pfc`). A phylogenetic flow collection is a way to represent a rooted phylogenetic as a set of 'flows' from the root of the tree to its terminal nodes (e.g. the tree's tips). Each edge between the root and the tips can have data associated with it, which we call phylogenetic flow features (`pff`). Often these feature will be the branch length associated with the edge. We can perform arithmetic on these features to do lots of interesting and useful thing. In this vignette, we will focus on using `pfc` arithmetic to perform the classic branch length transformations known as Pagel's transformations. There are three: 'lambda', 'delta', and 'kappa'.
+
+## Pagel's Kappa
+
+We will start with the kappa transformation because it is the simplest one from the perspective of a phylogenetic flow. It is simply raising the branch lengths of a phylogenetic tree to some power (which is the kappa parameter). Typically, kappa values less than one are used, but values greater than one are also possible. Kappa values less than one tend to 'shrink' branch lengths non-linearly towards 1, until we have at kappa = 0, all branch lengths are exactly one. This is sometimes used to model 'speciational' change along branches, because any model weighted by the branch lengths will be insensitive to branch length, only the branching structure itself. First we start by generating a random tree using `ape`, converting that to a `pfc`. Then we demonstrate the transformation.
+
+```{r generate}
+tree <- rcoal(100)
+tree_pfc <- pf_as_pfc(tree)
+plot(tree_pfc)
+```
+
+When we create a `pfc` object from a `phylo` object, the branch lengths of the tree are automatically used as the phylogenetic flow feature. We can easily perform a kappa transformation by directly raising the `pfc` object to the desired kappa parameter. Let's test it with kappa = 0.5
+
+```{r kappa_0.5}
+tree_pfc_0.5 <- tree_pfc^0.5
+plot(tree_pfc_0.5)
+```
+
+We can see as a result of the transformation that longer branches have become relatively shorter compared with branches that started out shorter. We can do a series of transformation to see how the tree converges to kappa = 0.
+
+```{r kappa_all}
+with_par(list(mfrow = c(3, 3), mar = c(2, 2, 1, 1), xpd = NA), {
+  for(i in seq(1, 0, length.out = 9)) plot(tree_pfc^i, main = sprintf("kappa = %s", i), show.tip.label = FALSE)
+})
+
+```
+
+Pagel's lambda and delta transformations are a little more complicated but still pretty easy to calculate in `{phyf}`. 
+
+## Pagel's Lambda
+
+Pagel's lambda transformation multiplies the internal branch lengths by a constant (the lambda parameter), whilst compensatorily growing the terminal branches to keep the total distances from the root to the tips the same. Again, lambda is usually set to less than 1, such that as lambda goes to zero the internal branches shrink to nothing, leaving only the terminla branches. This model is derived by transforming the phylogenetic variance-covariance matrix implied by a phylogeny. Lambda > 1 is not usually used because the resulting variance-covariance matrix can become ill-conditioned. From the perspective of branch length transformation this is because if you multiply an internal branch by two much greater than zero, its height can become greater than the height of the tips, and so you cannot maintain the total distance from the root to tips without negative branch lengths! 
+
+So to do the transformation in `{phyf}` we need to do two transformations, one on the internal branches and one on the external branches. We also need information on the root to tips lengths, which is the sum of each phylogenetic flow feature.
+
+```{r lambda}
+lambda_pfc <- tree_pfc
+root2node_lens <- pf_flow_sum(lambda_pfc)
+internal(lambda_pfc) <- internal(lambda_pfc) * 0.5
+plot(lambda_pfc)
+```

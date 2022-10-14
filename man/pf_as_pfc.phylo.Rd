@@ -7,7 +7,7 @@
 \method{pf_as_pfc}{phylo}(x, ...)
 }
 \arguments{
-\item{x}{A xlogenetic tree in \code{ape::xlo}
+\item{x}{A phylogenetic tree in \code{ape::phylo}
 format}
 }
 \value{
@@ -17,5 +17,5 @@ a \code{pfc}
 Make a \code{pfc} object from a \code{xlo} object
 }
 \examples{
-as_pfc(ape::rtree(100))
+pf_as_pfc(ape::rtree(100))
 }

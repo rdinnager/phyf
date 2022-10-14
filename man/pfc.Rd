@@ -11,6 +11,7 @@ pfc(
   is_tip = logical(),
   edge_names = character(),
   edge_lengths = double(),
+  internal = logical(),
   sparse_mat = NULL
 )
 }
@@ -19,6 +20,9 @@ pfc(
 \item For \code{pfc()}: A phylogenetic tree in \code{ape::phylo} format
 \item For \code{is_pfc()}: An object to test.
 }}
+}
+\value{
+A \code{pfc} object
 }
 \description{
 Create a new phylogenetic flow collection object (\code{pfc})

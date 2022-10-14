@@ -18,6 +18,12 @@ pf_is_pfc(x)
 \item For \code{is_pfp()}: An object to test.
 }}
 }
+\value{
+A \code{pfp} object
+}
 \description{
 Create a new phylogenetic flow path object (\code{pfp})
+}
+\examples{
+pfp(ape::nodepath(ape::rtree(100)))
 }

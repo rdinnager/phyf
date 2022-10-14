@@ -15,3 +15,6 @@ A \code{pfc} object (phylogenetic flow collection)
 \description{
 Extracts the phylogenetic flow column of an \code{pf} object
 }
+\examples{
+pf_phyloflow(avonet)
+}

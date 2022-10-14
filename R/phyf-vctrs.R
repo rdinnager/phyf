@@ -5,14 +5,14 @@ pf_as_pfc <- function(x, ...) {
 
 #' Make a `pfc` object from a `xlo` object
 #'
-#' @param x A xlogenetic tree in `ape::xlo`
+#' @param x A phylogenetic tree in `ape::phylo`
 #' format
 #'
 #' @return a `pfc`
 #' @export
 #'
 #' @examples
-#' as_pfc(ape::rtree(100))
+#' pf_as_pfc(ape::rtree(100))
 pf_as_pfc.phylo <- function(x, ...) {
   
   assertthat::assert_that(inherits(x, "phylo"))
@@ -53,18 +53,27 @@ pf_as_pfc.phylo <- function(x, ...) {
   
   is_tip <- tip_names %in% x$tip.label
   
+  internal <- edge_names %in% x$node.label
+  
   new_pfc(tip_names,
           np,
           el,
           is_tip,
           edge_names,
           new_lens,
+          internal,
           rtp)
   
 }
 
 #' @export
-pf_as_pfc.dgCMatrix <- function(x, is_tip = NULL, ...) {
+pf_as_pfc.dgCMatrix <- function(x, is_tip = NULL, internal = NULL, ...) {
+  
+  ## deal with possible empty cols
+  empty <- Matrix::rowSums(x) == 0
+  if(any(empty)) {
+    x[empty, 1] <- 1e-20
+  }
   
   np <- split_indexes(Matrix::t(x))
   el <- split_xs(Matrix::t(x))
@@ -76,8 +85,9 @@ pf_as_pfc.dgCMatrix <- function(x, is_tip = NULL, ...) {
           el,
           is_tip,
           edge_names,
-          Matrix::colMeans(x),
-          x)
+          purrr::map_dbl(split_xs(x), mean),
+          internal,
+          Matrix::drop0(x, 1e-10))
   
 }
 
@@ -87,6 +97,7 @@ new_pfc <- function(pfn = character(),
                     is_tip = logical(),
                     edge_names = character(),
                     edge_lengths = double(),
+                    internal = logical(),
                     sparse_mat = NULL) {
   
   if(is.null(sparse_mat)) {
@@ -102,6 +113,7 @@ new_pfc <- function(pfn = character(),
                 is_tip = unname(is_tip)),
            edge_names = edge_names,
            edge_lengths = edge_lengths,
+           internal = internal,
            sparse_rep = sparse_mat,
            class = "pfc")
 }
@@ -123,10 +135,11 @@ methods::setOldClass(c("pf", "vctrs_vctr"))
 #'  * For `pfp()`: A list of nodes (integer) the path passes through
 #'  * For `is_pfp()`: An object to test.
 #'
-#' @return
+#' @return A `pfp` object
 #' @export
 #'
 #' @examples
+#' pfp(ape::nodepath(ape::rtree(100)))
 pfp <- function(x = list()) {
   x <- vec_cast(x, list())
   new_pfp(x)
@@ -150,16 +163,15 @@ format.pfp <- function(x, ...) {
 #'  * For `pfc()`: A phylogenetic tree in `ape::phylo` format
 #'  * For `is_pfc()`: An object to test.
 #'
-#' @return
+#' @return A `pfc` object
 #' @export
-#'
-#' @examples
 pfc <- function(pfn = character(), 
                 pfpp = pfp(), 
                 pfl = list(),
                 is_tip = logical(),
                 edge_names = character(),
                 edge_lengths = double(),
+                internal = logical(),
                 sparse_mat = NULL) {
   
   vec_assert(pfn, character())
@@ -168,6 +180,7 @@ pfc <- function(pfn = character(),
   vec_assert(edge_names, character())
   vec_assert(edge_lengths, double())
   vec_assert(is_tip, logical())
+  vec_assert(internal, logical())
   
   if(!is.null(sparse_mat)) {
     if(length(pfn) > 0) {
@@ -182,6 +195,7 @@ pfc <- function(pfn = character(),
           is_tip,
           edge_names,
           edge_lengths,
+          internal,
           sparse_mat)
 }
 
@@ -220,7 +234,8 @@ vec_restore.pfc <- function(x, to, ..., i = NULL) {
           field(x, "pfl"),
           field(x, "is_tip"),
           edge_names(to),
-          edge_lengths(to))  
+          edge_lengths(to),
+          internal_edges(to))  
 }
 
 #' @export
@@ -239,6 +254,7 @@ vec_ptype.pfc <- function(x, ...) {
           field(x, "pfl"), field(x, "is_tip"), 
           edge_names(x)[integer()],
           edge_lengths(x)[integer()],
+          internal_edges(x)[integer()],
           spm)
 }
 
@@ -257,6 +273,32 @@ edge_lengths <- function(x) {
 
 tip_names <- function(x) {
   field(x, "pfn")  
+}
+
+internal_edges <- function(x) {
+  attr(x, "internal")
+}
+
+#' @export
+internal <- function(x, ...) {
+  UseMethod("internal")
+}
+
+#' @export
+internal.pfc <- function(x, ...) {
+  edges <- internal_edges(x)
+  is_tip <- field(x, "is_tip")
+  m <- pf_as_sparse(x)[ , edges]
+  pf_as_pfc(m, is_tip = is_tip, internal = edges[edges])
+}
+
+#' @export
+`internal<-` <- function(x, value) {
+  edges <- internal_edges(x)
+  is_tip <- field(x, "is_tip")
+  m <- pf_as_sparse(x)
+  m[ , edges] <- pf_as_sparse(value)
+  pf_as_pfc(m, is_tip = is_tip, internal = edges)
 }
 
 as_sparse <- function(pfn, pfp, pfl, edge_names) {
@@ -374,6 +416,7 @@ pf_as_sparse.dgCMatrix <- function(x, ...) {
 #' @export
 #'
 #' @examples
+#' pf_phyloflow(avonet)
 pf_phyloflow <- function(x) {
   
   if(!inherits(x, "pf")) {
@@ -410,6 +453,7 @@ pf_phyloflow <- function(x) {
   
 }
 
+#' @importFrom utils head
 #' @export
 plot.pf <- function(x, n = 4, ...) {
   phy <- pf_as_phylo(x)
@@ -445,11 +489,19 @@ plot.pf <- function(x, n = 4, ...) {
                                        phy$node.label)) %>%
       dplyr::left_join(x %>%
                          dplyr::select(dplyr::all_of(sel)))
+    withr::with_par(list(mfrow = c(2, 2)), 
+                    {
+                      "not implemented yet!"
+                    })
   }
   
-  
-  
-  
+}
+
+#' @export
+plot.pfc <- function(x, scale_bar_len = 0.5, ...) {
+  phy <- pf_as_phylo(x)
+  plot(phy, ...) 
+  ape::add.scale.bar(length = scale_bar_len)
 }
 
 #' @method vec_arith pfc
@@ -545,6 +597,21 @@ structure_equal <- function(pfc1, pfc2) {
   m1@x <- 1
   m2@x <- 1
   identical(m1, m2)
+}
+
+#' @export
+pf_flow_sum <- function(x, ...) {
+  UseMethod("pf_flow_sum")
+}
+
+#' @export
+pf_flow_sum.default <- function(x, ...) {
+  rlang::abort("flow_sums only works on pf and pfc objects")
+}
+
+#' @export
+pf_flow_sum.pfc <- function(x, ...) {
+  Matrix::rowSums(pf_as_sparse(x))
 }
 
 

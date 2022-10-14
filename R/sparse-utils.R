@@ -26,6 +26,6 @@ split_indexes <- function(x) {
 }
 
 split_xs <- function(x) {
-  res <- split(x@x + 1, findInterval(seq_len(Matrix::nnzero(x)), x@p, left.open = TRUE))
+  res <- split(x@x, findInterval(seq_len(Matrix::nnzero(x)), x@p, left.open = TRUE))
   res
 }
