@@ -42,6 +42,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/getting_started.html">Getting Started with {phyf}</a>
+    <a class="dropdown-item" href="../articles/phyf_arith.html">Tree Arithmetic with Phylogenetic Flows</a>
   </div>
 </li>
       </ul>
@@ -86,18 +87,18 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 198 × 3</span></span></span>
 <span><span class="co">#&gt;    label is_tip phlo                                                            </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;pf&lt;:198&gt;&gt;</span>                                                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> t78   TRUE   root---0.9---&gt;Node2---0.4---&gt;No…ode5---0.2---&gt;Node6---0.5---&gt;t78</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> t57   TRUE   root---0.9---&gt;Node2---0.4---&gt;No…ode6---0.5---&gt;Node7---0.6---&gt;t57</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> t66   TRUE   root---0.9---&gt;Node2---0.4---&gt;No…ode6---0.5---&gt;Node7---0.6---&gt;t66</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> t87   TRUE   root---0.9---&gt;Node2---0.4---&gt;No…ode4---0.6---&gt;Node5---0.7---&gt;t87</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> t12   TRUE   root---0.9---&gt;Node2---0.4---&gt;Node3---0.5---&gt;Node4---0.9---&gt;t12  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> t94   TRUE   root---0.9---&gt;Node2---0.4---&gt;Node3---0.3---&gt;t94                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> t31   TRUE   root---0.9---&gt;Node2---0.3---&gt;Node8---0.9---&gt;Node9---0.5---&gt;t31  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> t83   TRUE   root---0.9---&gt;Node2---0.3---&gt;Node8---0.9---&gt;Node9---0.4---&gt;t83  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> t53   TRUE   root---0.9---&gt;Node2---0.3---&gt;Node8---0.6---&gt;Node10---0.3---&gt;t53 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> t95   TRUE   root---0.9---&gt;Node2---0.3---&gt;No…e10---0.6---&gt;Node11---0.4---&gt;t95</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> t56   TRUE   root---0.07--&gt;Node2---0.26--&gt;No…ode5---0.88--&gt;Node6---0.19--&gt;t56</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> t30   TRUE   root---0.07--&gt;Node2---0.26--&gt;No…ode5---0.88--&gt;Node6---0.37--&gt;t30</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> t80   TRUE   root---0.07--&gt;Node2---0.26--&gt;No…ode4---0.58--&gt;Node5---0.15--&gt;t80</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> t64   TRUE   root---0.07--&gt;Node2---0.26--&gt;No…ode4---0.01--&gt;Node7---0.16--&gt;t64</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> t41   TRUE   root---0.07--&gt;Node2---0.26--&gt;No…ode4---0.01--&gt;Node7---0.81--&gt;t41</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> t7    TRUE   root---0.07--&gt;Node2---0.26--&gt;Node3---0.14--&gt;t7                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> t54   TRUE   root--0.068--&gt;Node2--0.003--&gt;No…de9--0.584--&gt;Node10--0.213--&gt;t54</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> t39   TRUE   root--0.068--&gt;Node2--0.003--&gt;No…e10--0.978--&gt;Node11--0.198--&gt;t39</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> t60   TRUE   root--0.068--&gt;Node2--0.003--&gt;No…e12--0.006--&gt;Node13--0.769--&gt;t60</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> t22   TRUE   root--0.068--&gt;Node2--0.003--&gt;No…e12--0.006--&gt;Node13--0.346--&gt;t22</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 188 more rows</span></span></span></code></pre></div>
-<p>This <code>tibble</code> is easy to join data by using the <code>node_names</code>, which include the tip labels from the phylogeny as well as ‘NodeXX’ for internal nodes, where XX starts a 1 and goes to the total number of internal nodes. You can also use <code>node_nums</code> to join by the node number, where the node number uses the traditional ordering of the nodes used in the <code>ape</code> package in <code>phylo</code> objects. Usually you will only have data on the tips, and so when joining to the <code>pf</code> object (using e.g. <code>dplyr::left_join()</code>) the internal node rows will recieve <code>NA</code> values. This is the desired behaviour. The missing values are easy to drop for fitting a model, but are useful later when making prediction (that is, ancestral state estimates).</p>
+<p>This <code>tibble</code> is easy to join data by using the <code>node_names</code>, which include the tip labels from the phylogeny as well as ‘NodeXX’ for internal nodes, where XX starts a 1 and goes to the total number of internal nodes. You can also use <code>node_nums</code> to join by the node number, where the node number uses the traditional ordering of the nodes used in the <code>ape</code> package in <code>phylo</code> objects. Usually you will only have data on the tips, and so when joining to the <code>pf</code> object (using e.g. <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>) the internal node rows will recieve <code>NA</code> values. This is the desired behaviour. The missing values are easy to drop for fitting a model, but are useful later when making prediction (that is, ancestral state estimates).</p>
 <p>Here, we will use one of the built-in <code>pf</code> datasets in <a href="https://rdinnager.github.io/phyf/">phyf</a> to show off some of its feature.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"avonet"</span><span class="op">)</span></span>

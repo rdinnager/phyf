@@ -16,10 +16,16 @@
     <loc>https://rdinnager.github.io/phyf/articles/index.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/phyf/articles/phyf_arith.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/phyf/authors.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/index.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/avonet.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/index.html</loc>
@@ -41,5 +47,8 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/phyf-vctrs.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pipe.html</loc>
   </url>
 </urlset>
