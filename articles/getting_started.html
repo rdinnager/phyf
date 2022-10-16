@@ -87,16 +87,16 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 198 × 3</span></span></span>
 <span><span class="co">#&gt;    label is_tip phlo                                                            </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;pf&lt;:198&gt;&gt;</span>                                                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> t56   TRUE   root---0.07--&gt;Node2---0.26--&gt;No…ode5---0.88--&gt;Node6---0.19--&gt;t56</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> t30   TRUE   root---0.07--&gt;Node2---0.26--&gt;No…ode5---0.88--&gt;Node6---0.37--&gt;t30</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> t80   TRUE   root---0.07--&gt;Node2---0.26--&gt;No…ode4---0.58--&gt;Node5---0.15--&gt;t80</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> t64   TRUE   root---0.07--&gt;Node2---0.26--&gt;No…ode4---0.01--&gt;Node7---0.16--&gt;t64</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> t41   TRUE   root---0.07--&gt;Node2---0.26--&gt;No…ode4---0.01--&gt;Node7---0.81--&gt;t41</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> t7    TRUE   root---0.07--&gt;Node2---0.26--&gt;Node3---0.14--&gt;t7                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> t54   TRUE   root--0.068--&gt;Node2--0.003--&gt;No…de9--0.584--&gt;Node10--0.213--&gt;t54</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> t39   TRUE   root--0.068--&gt;Node2--0.003--&gt;No…e10--0.978--&gt;Node11--0.198--&gt;t39</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> t60   TRUE   root--0.068--&gt;Node2--0.003--&gt;No…e12--0.006--&gt;Node13--0.769--&gt;t60</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> t22   TRUE   root--0.068--&gt;Node2--0.003--&gt;No…e12--0.006--&gt;Node13--0.346--&gt;t22</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> t59   TRUE   --0.244--&gt;Node2--0.723--&gt;Node3-…ode4--0.344--&gt;Node5--0.220--&gt;t59</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> t29   TRUE   --0.244--&gt;Node2--0.723--&gt;Node3-…ode5--0.476--&gt;Node6--0.887--&gt;t29</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> t89   TRUE   --0.244--&gt;Node2--0.723--&gt;Node3-…ode5--0.476--&gt;Node6--0.793--&gt;t89</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> t83   TRUE   --0.2437-&gt;Node2--0.7228-&gt;Node3-…ode7--0.1711-&gt;Node8--0.0546-&gt;t83</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> t62   TRUE   --0.2437-&gt;Node2--0.7228-&gt;Node3-…ode7--0.1711-&gt;Node8--0.0486-&gt;t62</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> t1    TRUE   --0.244--&gt;Node2--0.723--&gt;Node3-…Node7--0.708--&gt;Node9--0.260--&gt;t1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> t32   TRUE   --0.2437-&gt;Node2--0.7228-&gt;Node3-…ode7--0.7082-&gt;Node9--0.0885-&gt;t32</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> t85   TRUE   --0.244--&gt;Node2--0.723--&gt;Node3-…e15--0.711--&gt;Node16--0.637--&gt;t85</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> t45   TRUE   --0.244--&gt;Node2--0.723--&gt;Node3-…e16--0.625--&gt;Node17--0.772--&gt;t45</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> t63   TRUE   --0.244--&gt;Node2--0.723--&gt;Node3-…e16--0.625--&gt;Node17--0.580--&gt;t63</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 188 more rows</span></span></span></code></pre></div>
 <p>This <code>tibble</code> is easy to join data by using the <code>node_names</code>, which include the tip labels from the phylogeny as well as ‘NodeXX’ for internal nodes, where XX starts a 1 and goes to the total number of internal nodes. You can also use <code>node_nums</code> to join by the node number, where the node number uses the traditional ordering of the nodes used in the <code>ape</code> package in <code>phylo</code> objects. Usually you will only have data on the tips, and so when joining to the <code>pf</code> object (using e.g. <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>) the internal node rows will recieve <code>NA</code> values. This is the desired behaviour. The missing values are easy to drop for fitting a model, but are useful later when making prediction (that is, ancestral state estimates).</p>
 <p>Here, we will use one of the built-in <code>pf</code> datasets in <a href="https://rdinnager.github.io/phyf/">phyf</a> to show off some of its feature.</p>
@@ -106,16 +106,16 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 13,338 × 39</span></span></span>
 <span><span class="co">#&gt;    label      is_tip phlo            Speci…¹ Family3 Order3 Total…² Female  Male</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;p&lt;:13338&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Struthio_… TRUE   root---…camelus Struth… Struth… Strut…       8      1     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Rhea_amer… TRUE   root---…ericana Rhea a… Rheidae Rheif…       5      2     2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Rhea_penn… TRUE   root---…pennata Rhea p… Rheidae Rheif…       6      3     2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Apteryx_a… TRUE   root---…stralis Aptery… Aptery… Apter…       6      2     2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Apteryx_m… TRUE   root---…antelli Aptery… Aptery… Apter…       4      2     2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Apteryx_o… TRUE   root---…_owenii Aptery… Aptery… Apter…       5      2     3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Apteryx_h… TRUE   root---…haastii Aptery… Aptery… Apter…       9      6     3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Dromaius_… TRUE   root---…landiae Dromai… Dromai… Casua…       5      2     3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Casuarius… TRUE   root---…suarius Casuar… Casuar… Casua…       7      2     3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Casuarius… TRUE   root---…ennetti Casuar… Casuar… Casua…       4      1     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Struthio_… TRUE   ---26.8…camelus Struth… Struth… Strut…       8      1     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Rhea_amer… TRUE   --26.84…ericana Rhea a… Rheidae Rheif…       5      2     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Rhea_penn… TRUE   --26.84…pennata Rhea p… Rheidae Rheif…       6      3     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Apteryx_a… TRUE   --26.84…stralis Aptery… Aptery… Apter…       6      2     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Apteryx_m… TRUE   --26.84…antelli Aptery… Aptery… Apter…       4      2     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Apteryx_o… TRUE   --26.84…_owenii Aptery… Aptery… Apter…       5      2     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Apteryx_h… TRUE   --26.84…haastii Aptery… Aptery… Apter…       9      6     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Dromaius_… TRUE   --26.84…landiae Dromai… Dromai… Casua…       5      2     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Casuarius… TRUE   --26.84…suarius Casuar… Casuar… Casua…       7      2     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Casuarius… TRUE   --26.84…ennetti Casuar… Casuar… Casua…       4      1     0</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 13,328 more rows, 30 more variables: Unknown &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   Complete.measures &lt;dbl&gt;, Beak.Length_Culmen &lt;dbl&gt;, Beak.Length_Nares &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   Beak.Width &lt;dbl&gt;, Beak.Depth &lt;dbl&gt;, Tarsus.Length &lt;dbl&gt;, Wing.Length &lt;dbl&gt;,</span></span></span>

@@ -31,7 +31,19 @@
     <loc>https://rdinnager.github.io/phyf/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_anc.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_as_pfc.phylo.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_flow_cumsum.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_flow_sum.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_internal.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_phyloflow.html</loc>
@@ -50,5 +62,8 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/rpfc.html</loc>
   </url>
 </urlset>
