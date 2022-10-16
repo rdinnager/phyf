@@ -1,3 +1,4 @@
+#' @importFrom methods setClass
 #' @export
 pf_as_pfc <- function(x, ...) {
   UseMethod("pf_as_pfc")
@@ -79,6 +80,9 @@ pf_as_pfc.dgCMatrix <- function(x, is_tip = NULL, internal = NULL, ...) {
   el <- split_xs(Matrix::t(x))
   edge_names <- colnames(x)
   tip_names <- rownames(x)
+  
+  np[empty] <- list(integer(0))
+  el[empty] <- list(numeric(0))
   
   new_pfc(tip_names,
           np,
@@ -210,8 +214,8 @@ pf_is_pfc <- function(x) {
 format.pfc <- function(x, ...) {
   edge_names <- edge_names(x)
   ch <- setNames(purrr::map2_chr(vctrs::field(x, "pfp"), vctrs::field(x, "pfl"),
-                 function(x, y) paste0("root", 
-                                       paste0("-", stringr::str_pad(format(y, digits = 1, trim = TRUE),
+                 function(x, y) paste0("", 
+                                       paste0("-", stringr::str_pad(format(y, digits = 3, trim = TRUE),
                                                                     8, side = "both", pad = "-"),
                                               ">",
                                               edge_names[x],
@@ -279,22 +283,73 @@ internal_edges <- function(x) {
   attr(x, "internal")
 }
 
+
+#' Extract or assign into the internal or terminal edges of a `pfc`
+#' 
+#' `pf_internal` extracts or assigns a `pfc` or `dgCMatrix` into the internal
+#' edges of a `pfc`. 
+#' 
+#' `pf_terminal` extracts or assigns a `pfc` or `dgCMatrix` into the terminal
+#' edges of a `pfc`. 
+#'
+#' @param x a `pfc` object
+#' @param value a `pfc` or `dgCMatrix` with the
+#' same dimensions as `pf_internal(x)` or `pf_terminal(x)`
+#'
+#' @return a `pfc` object with flows truncated to internal nodes.
 #' @export
-internal <- function(x, ...) {
-  UseMethod("internal")
+#'
+#' @examples
+#' pfc1 <- rpfc(100)
+#' # Pagel's lambda transformation:
+#' lambda <- 0.5
+#' lambda_pfc <- pfc1
+#' root2node_lens <- pf_flow_sum(lambda_pfc)
+#' pf_internal(lambda_pfc) <- pf_internal(lambda_pfc) * lambda
+#' pf_terminal(lambda_pfc) <- pf_terminal(lambda_pfc) * (root2node_lens / pf_flow_sum(lambda_pfc))
+#' plot(lambda_pfc)
+pf_internal <- function(x, ...) {
+  UseMethod("pf_internal")
 }
 
 #' @export
-internal.pfc <- function(x, ...) {
+pf_internal.pfc <- function(x, ...) {
   edges <- internal_edges(x)
   is_tip <- field(x, "is_tip")
   m <- pf_as_sparse(x)[ , edges]
   pf_as_pfc(m, is_tip = is_tip, internal = edges[edges])
 }
 
+
+#' @rdname pf_internal
 #' @export
-`internal<-` <- function(x, value) {
+`pf_internal<-` <- function(x, value) {
   edges <- internal_edges(x)
+  is_tip <- field(x, "is_tip")
+  m <- pf_as_sparse(x)
+  m[ , edges] <- pf_as_sparse(value)
+  pf_as_pfc(m, is_tip = is_tip, internal = edges)
+}
+
+#' @rdname pf_internal
+#' @export
+pf_terminal <- function(x, ...) {
+  UseMethod("pf_terminal")
+}
+
+#' @export
+pf_terminal.pfc <- function(x, ...) {
+  edges <- !internal_edges(x)
+  is_tip <- field(x, "is_tip")
+  m <- pf_as_sparse(x)[ , edges]
+  pf_as_pfc(m, is_tip = is_tip, internal = edges[edges])
+}
+
+
+#' @rdname pf_internal
+#' @export
+`pf_terminal<-` <- function(x, value) {
+  edges <- !internal_edges(x)
   is_tip <- field(x, "is_tip")
   m <- pf_as_sparse(x)
   m[ , edges] <- pf_as_sparse(value)
@@ -519,6 +574,11 @@ vec_arith.pfc.default <- function(op, x, y, ...) {
 #' @method vec_arith.pfc pfc
 #' @export
 vec_arith.pfc.pfc <- function(op, x, y, ...) {
+  
+  if(!structure_equal(x, y)) {
+    rlang::warn("You are doing arithmetic on phylogenetic flows with a different structures. Are you sure this is what you want to do?")
+  }
+  
   if(!identical(field(x, "is_tip"), field(y, "is_tip"))) {
     rlang::abort("Both pfc objects must have the same elements as tips")
   }
@@ -527,9 +587,7 @@ vec_arith.pfc.pfc <- function(op, x, y, ...) {
   }
   m1 <- pf_as_sparse(x)
   m2 <- pf_as_sparse(y)
-  if(!structure_equal(m1, m2)) {
-    rlang::warn("You are doing arithmetic on phylogenetic flows with a different structures. Are you sure this is what you want to do?")
-  }
+  
   m <- vec_arith_sparse(op, m1, m2)
   pf_as_pfc(m, field(x, "is_tip"))
 }
@@ -539,6 +597,14 @@ vec_arith.pfc.pfc <- function(op, x, y, ...) {
 vec_arith.pfc.numeric <- function(op, x, y, ...) {
   
   m1 <- pf_as_sparse(x)
+  
+  if(length(y) > 1) {
+    if(length(y) == nrow(m1)) {
+      return(vec_arith_sparse(op, m1, structural_sparse(m1) * y))  
+    } else {
+      rlang::abort("Arithmetic with a pfc and a vector only works if the length of the vector is 1 or eqal to the number of flows in the `pfc`")
+    }
+  }
   
   m <- m1
   m@x <- vec_arith_base(op, m1@x, y)
@@ -551,6 +617,14 @@ vec_arith.pfc.numeric <- function(op, x, y, ...) {
 vec_arith.numeric.pfc <- function(op, x, y, ...) {
   
   m1 <- pf_as_sparse(y)
+  
+  if(length(x) > 1) {
+    if(length(x) == nrow(m1)) {
+      return(vec_arith_sparse(structural_sparse(m1) * x, m1))  
+    } else {
+      rlang::abort("Arithmetic with a pfc and a vector only works if the length of the vector is 1 or eqal to the number of flows in the `pfc`")
+    }
+  }
   
   m <- m1
   m@x <- vec_arith_base(op, x, m1@x)
@@ -566,9 +640,9 @@ vec_arith.pfc.dgCMatrix <- function(op, x, y, ...) {
     rlang::abort("objects must have the same labels")
   }
   m1 <- pf_as_sparse(x)
-  if(!structure_equal(m1, y)) {
-    rlang::warn("You are doing arithmetic on phylogenetic flows with a different structures. Are you sure this is what you want to do?")
-  }
+  # if(!structure_equal(m1, y)) {
+  #   rlang::warn("You are doing arithmetic on phylogenetic flows with a different structures. Are you sure this is what you want to do?")
+  # }
   m <- vec_arith_sparse(op, m1, y)
   pf_as_pfc(m, field(x, "is_tip"))
   
@@ -591,15 +665,38 @@ vec_arith_sparse <- function(op, x, y) {
   op_fn(x, y)
 }
 
-structure_equal <- function(pfc1, pfc2) {
-  m1 <- pf_as_sparse(pfc1)
-  m2 <- pf_as_sparse(pfc2)
-  m1@x <- 1
-  m2@x <- 1
-  identical(m1, m2)
+structural_sparse <- function(m) {
+  m@x <- 1
+  m
 }
 
+# structure_equal <- function(pfc1, pfc2) {
+#   m1 <- pf_as_sparse(pfc1)
+#   m2 <- pf_as_sparse(pfc2)
+#   m1@x <- 1
+#   m2@x <- 1
+#   identical(m1, m2)
+# }
+
+structure_equal <- function(pfc1, pfc2) {
+  all(vec_equal(unlist(field(pfc1, "pfp")),
+            unlist(field(pfc2, "pfp"))))
+}
+
+#' Calculate the sum of features for each flow
+#' 
+#' Sums the phylogenetic flow features for each flow
+#' in a `pfc`, returning a vector of values.
+#'
+#' @param x A `pfc` object
+#' @param ... Other arguments to pass to or from other methods
+#'
+#' @return A vector equal to the length of `x` with the 
+#' sum of each flow's features
 #' @export
+#'
+#' @examples
+#' pf_flow_sum(rpfc(100))
 pf_flow_sum <- function(x, ...) {
   UseMethod("pf_flow_sum")
 }
@@ -614,4 +711,82 @@ pf_flow_sum.pfc <- function(x, ...) {
   Matrix::rowSums(pf_as_sparse(x))
 }
 
+#' Calculate the sum of features for each flow
+#' 
+#' Cumulative sum the phylogenetic flow features for each flow
+#' in a `pfc`, returning a `pfc`.
+#'
+#' @param x A `pfc` object
+#' @param ... Other arguments to pass to or from other methods
+#'
+#' @return A `pfc` object with cumulative sums of features in
+#' place of the original features
+#' @export
+#'
+#' @examples
+#' pf_flow_cumsum(rpfc(100))
+pf_flow_cumsum <- function(x, ...) {
+  UseMethod("pf_flow_cumsum")
+}
 
+#' @export
+pf_flow_cumsum.default <- function(x, ...) {
+  rlang::abort("flow_sums only works on pf and pfc objects")
+}
+
+#' @export
+pf_flow_cumsum.pfc <- function(x, ...) {
+  field(x, "pfl") <- purrr::map(field(x, "pfl"),
+                                cumsum)
+  refresh_features(x)
+}
+
+#' Return a `pfc` with ancestral features
+#'  
+#' @param x A `pfc` object
+#' @param replace Value to replace edge feature with no
+#' ancestral value (such as when the ancestor is the root)
+#'
+#' @return A new `pfc` with the same structure as `x`, but with
+#' the features of each edge's ancestors instead
+#' 
+#' @export
+#'
+#' @examples
+#' pf_anc(rpfc(100))
+pf_anc <- function(x, replace = 0) {
+  field(x, "pfl") <- purrr::map(field(x, "pfl"),
+                                function(y) c(replace, 
+                                              y[-length(y)]))
+  refresh_features(x)
+}
+
+#' Generate a random tree and return it as a 
+#' `pfc` object
+#'
+#' @param n Number of tips in the generated tree.
+#' @param method A function to generate a tree. Default
+#' is `ape::rcoal`. See `ape::rtree()` for more options.
+#' @param ... Additional arguments to pass to `method` 
+#'
+#' @return a `pfc` object
+#' @export
+#'
+#' @examples
+#' plot(rpfc(100))
+rpfc <- function(n, method = ape::rcoal, ...) {
+  pf_as_pfc(method(n, ...))
+}
+
+refresh_features <- function(x) {
+  p <- new_pfc(field(x, "pfn"),
+               field(x, "pfp"),
+               field(x, "pfl"),
+               field(x, "is_tip"),
+               edge_names(x),
+               edge_lengths(x),
+               internal_edges(x))
+  attr(p, "edge_lengths") <- purrr::map_dbl(split_xs(pf_as_sparse(p)), 
+                                            mean)
+  p
+}

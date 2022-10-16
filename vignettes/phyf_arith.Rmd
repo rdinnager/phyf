@@ -27,6 +27,7 @@ In this vignette we will see how the `{phyf}` package makes it easy to manipulat
 We will start with the kappa transformation because it is the simplest one from the perspective of a phylogenetic flow. It is simply raising the branch lengths of a phylogenetic tree to some power (which is the kappa parameter). Typically, kappa values less than one are used, but values greater than one are also possible. Kappa values less than one tend to 'shrink' branch lengths non-linearly towards 1, until we have at kappa = 0, all branch lengths are exactly one. This is sometimes used to model 'speciational' change along branches, because any model weighted by the branch lengths will be insensitive to branch length, only the branching structure itself. First we start by generating a random tree using `ape`, converting that to a `pfc`. Then we demonstrate the transformation.
 
 ```{r generate}
+set.seed(3445564)
 tree <- rcoal(100)
 tree_pfc <- pf_as_pfc(tree)
 plot(tree_pfc)
@@ -57,8 +58,57 @@ Pagel's lambda transformation multiplies the internal branch lengths by a consta
 So to do the transformation in `{phyf}` we need to do two transformations, one on the internal branches and one on the external branches. We also need information on the root to tips lengths, which is the sum of each phylogenetic flow feature.
 
 ```{r lambda}
+lambda <- 0.5
 lambda_pfc <- tree_pfc
 root2node_lens <- pf_flow_sum(lambda_pfc)
-internal(lambda_pfc) <- internal(lambda_pfc) * 0.5
-plot(lambda_pfc)
+pf_internal(lambda_pfc) <- pf_internal(lambda_pfc) * lambda
+pf_terminal(lambda_pfc) <- pf_terminal(lambda_pfc) + (root2node_lens - pf_flow_sum(lambda_pfc))
+plot(lambda_pfc, show.tip.label = FALSE)
+```
+
+```{r lambda_series}
+lambda_trans <- function(x, lambda = 0.5) {
+  root2node_lens <- pf_flow_sum(x)
+  pf_internal(x) <- pf_internal(x) * lambda
+  pf_terminal(x) <- pf_terminal(x) + (root2node_lens - pf_flow_sum(x))
+  x
+}
+with_par(list(mfrow = c(3, 3), mar = c(2, 2, 1, 1), xpd = NA), {
+  for(i in seq(1, 0, length.out = 9)) plot(lambda_trans(tree_pfc, i), type = "f", main = sprintf("lambda = %s", i), show.tip.label = FALSE)
+})
+```
+## Pagel's Delta
+
+Lastly, Pagel's delta transformation is a transformation of the node heights of a phylogeny, raising each to the power of the delta parameter. This has the effect of shrinking branches near the tips more than those near the root. In the context of a model of evolution on the tree, this is used to model a 'slow-down' of evolution through time. We can acheive this transformation by first generating a `pfc` where the node heights are the phylogenetic flow features instead of the branch lengths. Node heights can be calculated as the cumulative sum of branch lengths down each phylogenetic flow. `{phyf}` has the `pf_flow_cumsum()` function for this.
+
+```{r node_heights}
+node_heights <- pf_flow_cumsum(tree_pfc)
+node_heights
+plot(node_heights)
+```
+
+```{r trans_nodeh}
+delta <- 0.4
+new_pfc <- node_heights^delta
+```
+
+Now to get back branch lengths instead of node heights all we need to do is subtract from each node height the node height of its immediate ancestor. `{phyf}` also has a convenient function for this: `pf_anc()`, which returns a `pfc` with each feature replaces by the feature value of its ancestor.
+
+```{r anc}
+head(pf_anc(new_pfc))
+new_pfc <- new_pfc - pf_anc(new_pfc)
+plot(new_pfc)
+```
+
+A series of deltas:
+
+```{r delta_series}
+delta_trans <- function(x, delta = 0.5) {
+  new_pfc <- pf_flow_cumsum(tree_pfc)^delta
+  new_pfc <- new_pfc - pf_anc(new_pfc)
+  new_pfc
+}
+with_par(list(mfrow = c(3, 3), mar = c(2, 2, 1, 1), xpd = NA), {
+  for(i in seq(0.5, 4, length.out = 9)) plot(delta_trans(tree_pfc, i), type = "f", main = sprintf("delta = %s", i), show.tip.label = FALSE)
+})
 ```
