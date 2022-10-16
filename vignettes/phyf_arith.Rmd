@@ -83,7 +83,7 @@ Lastly, Pagel's delta transformation is a transformation of the node heights of 
 
 ```{r node_heights}
 node_heights <- pf_flow_cumsum(tree_pfc)
-node_heights
+head(node_heights)
 plot(node_heights)
 ```
 
