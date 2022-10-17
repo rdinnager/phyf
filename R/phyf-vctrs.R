@@ -854,3 +854,23 @@ refresh_features <- function(x) {
                                             mean)
   p
 }
+
+#' Scale the phylogenetic flow features to a constant sum. 
+#' 
+#' Can be used to standardise branch lengths to reasonable values
+#'
+#' @param x a `pfc` object
+#' @param scale_to The value to scale the sums to. Default is 1.
+#'
+#' @return a scaled `pfc` object
+#' @export
+#'
+#' @examples
+#' pf_scale_flow_sums(rpfc(100))
+pf_scale_flow_sum <- function(x, scale_to = 1) {
+  
+  field(x, "pfl") <- purrr::map(field(x, "pfl"),
+                                function(y) (y / sum(y)) * scale_to)
+  refresh_features(x)
+  
+}

@@ -5,16 +5,15 @@
 \alias{avonet}
 \title{AVONET Bird Trait Data with Phylogeny}
 \format{
-\subsection{\code{who}}{
+\subsection{\code{avonet}}{
 
 A 'pf' data frame (subclasses \code{tibble}) with 13,338 rows and 38 columns:
 \describe{
-\item{node_name}{Node labels including species name for the tip labels}
-\item{phyf}{The phylogenetic flow column which stores the phylogenetic information}
+\item{label}{Node labels including species name for the tip labels}
+\item{phlo}{The phylogenetic flow column which stores the phylogenetic information}
 \item{Species3, Family3, Order3}{Taxonomic names -- Names of the species, family and order, respectively}
 \item{Total.individuals}{Number of individuals used to measure the data}
 \item{Beak.Length_Culmen:Species.Status}{Various traits of the bird species, see Source section to get more detailed information}
-...
 }
 }
 }
@@ -26,5 +25,8 @@ avonet
 }
 \description{
 The AVONET Bird Trait Database joined to a \code{pf} object (for \code{{phyf}})
+}
+\references{
+Tobias JA, Sheard C, Pigot AL, Devenish AJ, Yang J, Sayol F, Neate-Clegg MH, Alioravainen N, Weeks TL, Barber RA, Walkden PA. AVONET: morphological, ecological and geographical data for all birds. Ecology Letters. 2022 Mar 1;25(3):581-97.
 }
 \keyword{datasets}
