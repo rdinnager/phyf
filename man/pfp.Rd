@@ -3,14 +3,11 @@
 \name{pfp}
 \alias{pfp}
 \alias{pf_is_pfp}
-\alias{pf_is_pfc}
 \title{Create a new phylogenetic flow path object (\code{pfp})}
 \usage{
 pfp(x = list())
 
 pf_is_pfp(x)
-
-pf_is_pfc(x)
 }
 \arguments{
 \item{x}{\itemize{

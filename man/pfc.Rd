@@ -2,6 +2,7 @@
 % Please edit documentation in R/phyf-vctrs.R
 \name{pfc}
 \alias{pfc}
+\alias{pf_is_pfc}
 \title{Create a new phylogenetic flow collection object (\code{pfc})}
 \usage{
 pfc(
@@ -14,12 +15,33 @@ pfc(
   internal = logical(),
   sparse_mat = NULL
 )
+
+pf_is_pfc(x)
 }
 \arguments{
-\item{x}{\itemize{
-\item For \code{pfc()}: A phylogenetic tree in \code{ape::phylo} format
-\item For \code{is_pfc()}: An object to test.
-}}
+\item{pfn}{A character vector of names for each phylogenetic flow}
+
+\item{pfpp}{A vector of phylogenetic flow paths of class \code{pfp}}
+
+\item{pfl}{A list of phylogenetic flow feature. Should be numeric.}
+
+\item{is_tip}{A logical vector specifying whether the phylogenetic
+flow reaches the phylogeny's tips}
+
+\item{edge_names}{A character vector of names for the phylogeny's
+edges}
+
+\item{edge_lengths}{A numeric vector with a representation of
+overall features on each edge}
+
+\item{internal}{A logical vector specifying whether each edge
+is internal (not leading to a tip)}
+
+\item{sparse_mat}{A sparse matrix representation of the phylogenetic
+flow collection. Can be left \code{NULL}, in which case it is constructed
+from the other arguments.}
+
+\item{x}{An object to be tested}
 }
 \value{
 A \code{pfc} object

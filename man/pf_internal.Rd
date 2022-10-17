@@ -18,6 +18,8 @@ pf_terminal(x) <- value
 \arguments{
 \item{x}{a \code{pfc} object}
 
+\item{...}{Arguments passed to or from other methods.}
+
 \item{value}{a \code{pfc} or \code{dgCMatrix} with the
 same dimensions as \code{pf_internal(x)} or \code{pf_terminal(x)}}
 }
