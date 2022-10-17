@@ -67,7 +67,7 @@
 <div class="page-header"><h1 id="phyf">phyf<a class="anchor" aria-label="anchor" href="#phyf"></a>
 </h1></div>
 <!-- badges: start -->
-<p>The goal of phyf is to implement a <code>tibble</code> subclass useful for statistical modelling on phylogenetic trees. It mainly implements an phylogenetic flow (<code>pf</code>) object that is essentially a tibble with one or more phylogenetic flow collection (<code>pfc</code>) columns. Phylogenetic flow collection columns are collections of phylogenetic flow paths (<code>pfp</code>), which store data on how information flows through a phylogeny from its root node (phylogenies must be rooted to work with <code>phyf</code>) to its tips (and its internal nodes). This allows for easy manipulation of the phylogeny and associated data. The objects are used in the package <code>fibre</code> for phylogenetic branch regression models, a highly felxible framework for comparative analysis and modelling trait evolution across a phylogeny.</p>
+<p>The goal of phyf is to implement a <code>tibble</code> subclass useful for statistical modelling on phylogenetic trees. It mainly implements an phylogenetic flow (<code>pf</code>) object that is essentially a tibble with one or more phylogenetic flow collection (<code>pfc</code>) columns. Phylogenetic flow collection columns are collections of phylogenetic flow paths (<code>pfp</code>) and phylogenetic flow features (<code>pff</code>), which store data on how information flows through a phylogeny from its root node (phylogenies must be rooted to work with <code>phyf</code>) to its tips (and its internal nodes). This allows for easy manipulation of the phylogeny and associated data. The objects are used in the package <code>fibre</code> for phylogenetic branch regression models, a highly felxible framework for comparative analysis and modelling trait evolution across a phylogeny.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -92,25 +92,52 @@
 <code class="sourceCode R"><span><span class="va">test_tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ape/man/rtree.html" class="external-link">rtree</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test_tree</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-phyf_ob-1.png" width="100%"></p>
-<p>Turn it into a <code>tibble</code>-based phylogenetic flow format (<code>pf</code>) using <code>as_pf()</code>:</p>
+<p>Turn it into a <code>tibble</code>-based phylogenetic flow format (<code>pf</code>) using <code><a href="reference/pf_as_pf.html">pf_as_pf()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tree_pf</span> <span class="op">&lt;-</span> <span class="fu">as_pf</span><span class="op">(</span><span class="va">test_tree</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">tree_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pf_as_pf.html">pf_as_pf</a></span><span class="op">(</span><span class="va">test_tree</span><span class="op">)</span></span>
 <span><span class="va">tree_pf</span></span>
-<span><span class="co">#&gt; # A tibble: 198 × 2</span></span>
-<span><span class="co">#&gt;    node_name phyf                                                               </span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;     &lt;pf&lt;:198&gt;&gt;                                                         </span></span>
-<span><span class="co">#&gt;  1 t61       root---0.2---&gt;Node2---0.9---&gt;Node…Node4---0.4---&gt;Node5---0.9---&gt;t61</span></span>
-<span><span class="co">#&gt;  2 t76       root---0.2---&gt;Node2---0.9---&gt;Node…Node4---0.4---&gt;Node5---0.7---&gt;t76</span></span>
-<span><span class="co">#&gt;  3 t71       root---0.2---&gt;Node2---0.9---&gt;Node…Node4---0.9---&gt;Node6---0.3---&gt;t71</span></span>
-<span><span class="co">#&gt;  4 t75       root---0.2---&gt;Node2---0.9---&gt;Node…Node6---0.4---&gt;Node7---0.2---&gt;t75</span></span>
-<span><span class="co">#&gt;  5 t53       root---0.2---&gt;Node2---0.9---&gt;Node…Node6---0.4---&gt;Node7---0.2---&gt;t53</span></span>
-<span><span class="co">#&gt;  6 t49       root---0.2---&gt;Node2---0.9---&gt;Node…Node8---0.8---&gt;Node9---0.5---&gt;t49</span></span>
-<span><span class="co">#&gt;  7 t91       root---0.2---&gt;Node2---0.9---&gt;Node…Node8---0.8---&gt;Node9---0.8---&gt;t91</span></span>
-<span><span class="co">#&gt;  8 t34       root---0.2---&gt;Node2---0.9---&gt;Node3---0.8---&gt;Node8---0.6---&gt;t34     </span></span>
-<span><span class="co">#&gt;  9 t45       root---0.23--&gt;Node2---0.13--&gt;Node…de11---0.38--&gt;Node12---0.69--&gt;t45</span></span>
-<span><span class="co">#&gt; 10 t81       root---0.23--&gt;Node2---0.13--&gt;Node…de11---0.38--&gt;Node12---0.11--&gt;t81</span></span>
+<span><span class="co">#&gt; # A tibble: 198 × 3</span></span>
+<span><span class="co">#&gt;    label is_tip phlo                                                            </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;lgl&gt;  &lt;pf&lt;:198&gt;&gt;                                                      </span></span>
+<span><span class="co">#&gt;  1 t63   TRUE   --0.0149-&gt;Node2--0.0189-&gt;Node3-…ode6--0.4966-&gt;Node7--0.1160-&gt;t63</span></span>
+<span><span class="co">#&gt;  2 t38   TRUE   --0.0149-&gt;Node2--0.0189-&gt;Node3-…ode7--0.7707-&gt;Node8--0.9350-&gt;t38</span></span>
+<span><span class="co">#&gt;  3 t2    TRUE   --0.0149-&gt;Node2--0.0189-&gt;Node3-…Node7--0.7707-&gt;Node8--0.7191-&gt;t2</span></span>
+<span><span class="co">#&gt;  4 t15   TRUE   --0.0149-&gt;Node2--0.0189-&gt;Node3-…ode6--0.1673-&gt;Node9--0.6670-&gt;t15</span></span>
+<span><span class="co">#&gt;  5 t9    TRUE   --0.0149-&gt;Node2--0.0189-&gt;Node3-…Node6--0.1673-&gt;Node9--0.1002-&gt;t9</span></span>
+<span><span class="co">#&gt;  6 t53   TRUE   --0.0149-&gt;Node2--0.0189-&gt;Node3-…e10--0.4071-&gt;Node11--0.0782-&gt;t53</span></span>
+<span><span class="co">#&gt;  7 t8    TRUE   --0.0149-&gt;Node2--0.0189-&gt;Node3-…de10--0.4071-&gt;Node11--0.9337-&gt;t8</span></span>
+<span><span class="co">#&gt;  8 t92   TRUE   --0.0149-&gt;Node2--0.0189-&gt;Node3-…e10--0.3109-&gt;Node12--0.5324-&gt;t92</span></span>
+<span><span class="co">#&gt;  9 t72   TRUE   --0.0149-&gt;Node2--0.0189-&gt;Node3-…e14--0.4390-&gt;Node15--0.5888-&gt;t72</span></span>
+<span><span class="co">#&gt; 10 t56   TRUE   --0.0149-&gt;Node2--0.0189-&gt;Node3-…e14--0.4390-&gt;Node15--0.1674-&gt;t56</span></span>
 <span><span class="co">#&gt; # … with 188 more rows</span></span></code></pre></div>
-<p>This <code>tibble</code> is easy to join data by using the <code>node_name</code>, which include the tip labels from the phylogeny as well as ‘NodeXX’ for internal nodes, where XX starts a 1 and goes to the total number of internal nodes. You can also use <code>node_nums</code> to join by the node number, where the node number uses the traditional ordering of the nodes used in the <code>ape</code> package in <code>phylo</code> objects. Usually you will only have data on the tips, and so when joining to the <code>pf</code> object (using e.g. <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>) the internal node rows will recieve <code>NA</code> values. This is the desired behaviour. The missing values are easy to drop for fitting a model, but are useful later when making prediction (that is, ancestral state estimates).</p>
+<p>This <code>tibble</code> is easy to join data by using the <code>label</code>, which include the tip labels from the phylogeny as well as ‘NodeXX’ for internal nodes, where XX starts a 1 and goes to the total number of internal nodes (the names are generated using <code><a href="https://rdrr.io/pkg/ape/man/makeNodeLabel.html" class="external-link">ape::makeNodeLabel()</a></code>). You can also use the <code>node_num</code> column (not yet implemented) to join by the node number, where the node number is based on the node at the end of each phylogeny edge, and uses the traditional ordering of the nodes from the <code>ape</code> package in <code>phylo</code> objects. Usually you will only have data on the tips, and so when joining to the <code>pf</code> object (using e.g. <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>) the internal node rows will recieve <code>NA</code> values. This is the desired behaviour. The missing values are easy to drop for fitting a model, but are useful later when making predictions (that is, ancestral state estimates).</p>
+</div>
+<div class="section level2">
+<h2 id="built-in-datasets">Built-in Datasets<a class="anchor" aria-label="anchor" href="#built-in-datasets"></a>
+</h2>
+<p><a href="https://rdinnager.github.io/phyf/">phyf</a> includes a number of built-in datasets to demonstrate the format. For example the <a href="https://figshare.com/articles/dataset/AVONET_morphological_ecological_and_geographical_data_for_all_birds_Tobias_et_al_2021_Ecology_Letters_/16586228" class="external-link">AVONET dataset</a>, can be accessed as <code>avonet</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">avonet</span></span>
+<span><span class="co">#&gt; # A tibble: 13,338 × 39</span></span>
+<span><span class="co">#&gt;    label      is_tip phlo            Speci…¹ Family3 Order3 Total…² Female  Male</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;      &lt;lgl&gt;  &lt;p&lt;:13338&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Struthio_… TRUE   ---26.8…camelus Struth… Struth… Strut…       8      1     4</span></span>
+<span><span class="co">#&gt;  2 Rhea_amer… TRUE   --26.84…ericana Rhea a… Rheidae Rheif…       5      2     2</span></span>
+<span><span class="co">#&gt;  3 Rhea_penn… TRUE   --26.84…pennata Rhea p… Rheidae Rheif…       6      3     2</span></span>
+<span><span class="co">#&gt;  4 Apteryx_a… TRUE   --26.84…stralis Aptery… Aptery… Apter…       6      2     2</span></span>
+<span><span class="co">#&gt;  5 Apteryx_m… TRUE   --26.84…antelli Aptery… Aptery… Apter…       4      2     2</span></span>
+<span><span class="co">#&gt;  6 Apteryx_o… TRUE   --26.84…_owenii Aptery… Aptery… Apter…       5      2     3</span></span>
+<span><span class="co">#&gt;  7 Apteryx_h… TRUE   --26.84…haastii Aptery… Aptery… Apter…       9      6     3</span></span>
+<span><span class="co">#&gt;  8 Dromaius_… TRUE   --26.84…landiae Dromai… Dromai… Casua…       5      2     3</span></span>
+<span><span class="co">#&gt;  9 Casuarius… TRUE   --26.84…suarius Casuar… Casuar… Casua…       7      2     3</span></span>
+<span><span class="co">#&gt; 10 Casuarius… TRUE   --26.84…ennetti Casuar… Casuar… Casua…       4      1     0</span></span>
+<span><span class="co">#&gt; # … with 13,328 more rows, 30 more variables: Unknown &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Complete.measures &lt;dbl&gt;, Beak.Length_Culmen &lt;dbl&gt;, Beak.Length_Nares &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Beak.Width &lt;dbl&gt;, Beak.Depth &lt;dbl&gt;, Tarsus.Length &lt;dbl&gt;, Wing.Length &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Kipps.Distance &lt;dbl&gt;, Secondary1 &lt;dbl&gt;, `Hand-Wing.Index` &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Tail.Length &lt;dbl&gt;, Mass &lt;dbl&gt;, Mass.Source &lt;chr&gt;, Mass.Refs.Other &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Inference &lt;chr&gt;, Traits.inferred &lt;chr&gt;, Reference.species &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Habitat &lt;chr&gt;, Habitat.Density &lt;dbl&gt;, Migration &lt;dbl&gt;, …</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
