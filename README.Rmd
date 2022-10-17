@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/rdinnager/phyf/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rdinnager/phyf/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of phyf is to implement a `tibble` subclass useful for statistical modelling on phylogenetic trees. It mainly implements an phylogenetic flow (`pf`) object that is essentially a tibble with one or more phylogenetic flow collection (`pfc`) columns. Phylogenetic flow collection columns are collections of phylogenetic flow paths (`pfp`), which store data on how information flows through a phylogeny from its root node (phylogenies must be rooted to work with `phyf`) to its tips (and its internal nodes). This allows for easy manipulation of the phylogeny and associated data. The objects are used in the package `fibre` for phylogenetic branch regression models, a highly felxible framework for comparative analysis and modelling trait evolution across a phylogeny.
+The goal of phyf is to implement a `tibble` subclass useful for statistical modelling on phylogenetic trees. It mainly implements an phylogenetic flow (`pf`) object that is essentially a tibble with one or more phylogenetic flow collection (`pfc`) columns. Phylogenetic flow collection columns are collections of phylogenetic flow paths (`pfp`) and phylogenetic flow features (`pff`), which store data on how information flows through a phylogeny from its root node (phylogenies must be rooted to work with `phyf`) to its tips (and its internal nodes). This allows for easy manipulation of the phylogeny and associated data. The objects are used in the package `fibre` for phylogenetic branch regression models, a highly felxible framework for comparative analysis and modelling trait evolution across a phylogeny.
 
 ## Installation
 
@@ -44,11 +44,19 @@ test_tree <- rtree(100)
 plot(test_tree)
 ```
 
-Turn it into a `tibble`-based phylogenetic flow format (`pf`) using `as_pf()`:
+Turn it into a `tibble`-based phylogenetic flow format (`pf`) using `pf_as_pf()`:
 
 ```{r new_pf}
-tree_pf <- as_pf(test_tree)
+tree_pf <- pf_as_pf(test_tree)
 tree_pf
 ```
 
-This `tibble` is easy to join data by using the `node_name`, which include the tip labels from the phylogeny as well as 'NodeXX' for internal nodes, where XX starts a 1 and goes to the total number of internal nodes. You can also use `node_nums` to join by the node number, where the node number uses the traditional ordering of the nodes used in the `ape` package in `phylo` objects. Usually you will only have data on the tips, and so when joining to the `pf` object (using e.g. `dplyr::left_join()`) the internal node rows will recieve `NA` values. This is the desired behaviour. The missing values are easy to drop for fitting a model, but are useful later when making prediction (that is, ancestral state estimates).
+This `tibble` is easy to join data by using the `label`, which include the tip labels from the phylogeny as well as 'NodeXX' for internal nodes, where XX starts a 1 and goes to the total number of internal nodes (the names are generated using `ape::makeNodeLabel()`). You can also use the `node_num` column (not yet implemented) to join by the node number, where the node number is based on the node at the end of each phylogeny edge, and uses the traditional ordering of the nodes from the `ape` package in `phylo` objects. Usually you will only have data on the tips, and so when joining to the `pf` object (using e.g. `dplyr::left_join()`) the internal node rows will recieve `NA` values. This is the desired behaviour. The missing values are easy to drop for fitting a model, but are useful later when making predictions (that is, ancestral state estimates).
+
+## Built-in Datasets
+
+`{phyf}` includes a number of built-in datasets to demonstrate the format. For example the [AVONET dataset](https://figshare.com/articles/dataset/AVONET_morphological_ecological_and_geographical_data_for_all_birds_Tobias_et_al_2021_Ecology_Letters_/16586228), can be accessed as `avonet`:
+
+```{r avonet}
+avonet
+```

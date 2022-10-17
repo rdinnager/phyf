@@ -2,7 +2,7 @@
 #'
 #' The AVONET Bird Trait Database joined to a `pf` object (for `{phyf}`)
 #'
-#' @format ## `who`
+#' @format ## `avonet`
 #' A 'pf' data frame (subclasses `tibble`) with 13,338 rows and 38 columns:
 #' \describe{
 #'   \item{node_name}{Node labels including species name for the tip labels}
