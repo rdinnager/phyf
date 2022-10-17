@@ -61,6 +61,9 @@
     <loc>https://rdinnager.github.io/phyf/reference/pf_phyloflow.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_scale_flow_sum.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/phyf/reference/pfc.html</loc>
   </url>
   <url>
@@ -77,5 +80,8 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/rpfc.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/vert_bmr.html</loc>
   </url>
 </urlset>
