@@ -88,7 +88,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">3445564</span><span class="op">)</span></span>
 <span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ape/man/rtree.html" class="external-link">rcoal</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">tree_pfc</span> <span class="op">&lt;-</span> <span class="fu">pf_as_pfc</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span><span class="va">tree_pfc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pf_as_pfc.html">pf_as_pfc</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree_pfc</span><span class="op">)</span></span></code></pre></div>
 <p><img src="phyf_arith_files/figure-html/generate-1.png" width="700"></p>
 <p>When we create a <code>pfc</code> object from a <code>phylo</code> object, the branch lengths of the tree are automatically used as the phylogenetic flow feature. We can easily perform a kappa transformation by directly raising the <code>pfc</code> object to the desired kappa parameter. Let’s test it with kappa = 0.5</p>

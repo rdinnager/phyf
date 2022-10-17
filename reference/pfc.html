@@ -58,15 +58,53 @@
 <span>  edge_lengths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">double</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  internal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  sparse_mat <span class="op">=</span> <span class="cn">NULL</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">pf_is_pfc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>x</dt>
-<dd><ul><li><p>For <code>pfc()</code>: A phylogenetic tree in <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">ape::phylo</a></code> format</p></li>
-<li><p>For <code>is_pfc()</code>: An object to test.</p></li>
-</ul></dd>
+    <dl><dt>pfn</dt>
+<dd><p>A character vector of names for each phylogenetic flow</p></dd>
+
+
+<dt>pfpp</dt>
+<dd><p>A vector of phylogenetic flow paths of class <code>pfp</code></p></dd>
+
+
+<dt>pfl</dt>
+<dd><p>A list of phylogenetic flow feature. Should be numeric.</p></dd>
+
+
+<dt>is_tip</dt>
+<dd><p>A logical vector specifying whether the phylogenetic
+flow reaches the phylogeny's tips</p></dd>
+
+
+<dt>edge_names</dt>
+<dd><p>A character vector of names for the phylogeny's
+edges</p></dd>
+
+
+<dt>edge_lengths</dt>
+<dd><p>A numeric vector with a representation of
+overall features on each edge</p></dd>
+
+
+<dt>internal</dt>
+<dd><p>A logical vector specifying whether each edge
+is internal (not leading to a tip)</p></dd>
+
+
+<dt>sparse_mat</dt>
+<dd><p>A sparse matrix representation of the phylogenetic
+flow collection. Can be left <code>NULL</code>, in which case it is constructed
+from the other arguments.</p></dd>
+
+
+<dt>x</dt>
+<dd><p>An object to be tested</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -31,10 +31,22 @@
     <loc>https://rdinnager.github.io/phyf/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_anc.html</loc>
   </url>
   <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_as_pfc.phylo.html</loc>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_as_pf.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_as_pfc.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_as_phylo.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_as_sparse.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_flow_cumsum.html</loc>
