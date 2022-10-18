@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   getting_started: getting_started.html
   phyf_arith: phyf_arith.html
-last_built: 2022-10-17T21:21Z
+last_built: 2022-10-18T03:34Z
 urls:
   reference: https://rdinnager.github.io/phyf/reference
   article: https://rdinnager.github.io/phyf/articles
