@@ -18,5 +18,5 @@ a scaled \code{pfc} object
 Can be used to standardise branch lengths to reasonable values
 }
 \examples{
-pf_scale_flow_sums(rpfc(100))
+pf_scale_flow_sum(rpfc(100))
 }

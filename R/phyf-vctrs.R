@@ -866,11 +866,24 @@ refresh_features <- function(x) {
 #' @export
 #'
 #' @examples
-#' pf_scale_flow_sums(rpfc(100))
+#' pf_scale_flow_sum(rpfc(100))
 pf_scale_flow_sum <- function(x, scale_to = 1) {
   
   field(x, "pfl") <- purrr::map(field(x, "pfl"),
                                 function(y) (y / sum(y)) * scale_to)
   refresh_features(x)
   
+}
+
+#' Return the number of edges in a `pfc`
+#'
+#' @param x a `pfc` object
+#'
+#' @return The number of edges
+#' @export
+#'
+#' @examples
+#' pf_nedges(rpfc(100))
+pf_nedges <- function(x) {
+  length(edge_names(x))
 }
