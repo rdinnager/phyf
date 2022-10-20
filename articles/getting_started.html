@@ -87,16 +87,16 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 198 × 3</span></span></span>
 <span><span class="co">#&gt;    label is_tip phlo                                                            </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;pf&lt;:198&gt;&gt;</span>                                                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> t37   TRUE   --0.794--&gt;Node2--0.381--&gt;Node3--0.842--&gt;t37                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> t98   TRUE   --0.794--&gt;Node2--0.381--&gt;Node3--0.240--&gt;t98                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> t44   TRUE   --0.794--&gt;Node2--0.839--&gt;Node4--0.038--&gt;t44                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> t22   TRUE   --0.794--&gt;Node2--0.839--&gt;Node4--0.968--&gt;t22                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> t3    TRUE   --0.107--&gt;Node5--0.825--&gt;Node6--0.589--&gt;Node7--0.978--&gt;t3       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> t87   TRUE   --0.107--&gt;Node5--0.825--&gt;Node6-…ode8--0.695--&gt;Node9--0.903--&gt;t87</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> t74   TRUE   --0.107--&gt;Node5--0.825--&gt;Node6-…ode8--0.695--&gt;Node9--0.102--&gt;t74</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> t64   TRUE   --0.1065-&gt;Node5--0.8254-&gt;Node6-…ode7--0.7020-&gt;Node8--0.0646-&gt;t64</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> t15   TRUE   --0.107--&gt;Node5--0.825--&gt;Node6--0.530--&gt;t15                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> t29   TRUE   --0.107--&gt;Node5--0.180--&gt;Node10…e12--0.975--&gt;Node13--0.760--&gt;t29</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> t26   TRUE   --0.719--&gt;Node2--0.881--&gt;Node3-…ode6--0.357--&gt;Node7--0.978--&gt;t26</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> t33   TRUE   --0.719--&gt;Node2--0.881--&gt;Node3-…ode7--0.904--&gt;Node8--0.570--&gt;t33</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> t86   TRUE   --0.719--&gt;Node2--0.881--&gt;Node3-…ode7--0.904--&gt;Node8--0.403--&gt;t86</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> t12   TRUE   --0.719--&gt;Node2--0.881--&gt;Node3-…ode6--0.138--&gt;Node9--0.647--&gt;t12</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> t7    TRUE   --0.719--&gt;Node2--0.881--&gt;Node3-…de10--0.529--&gt;Node11--0.142--&gt;t7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> t41   TRUE   --0.719--&gt;Node2--0.881--&gt;Node3-…e10--0.529--&gt;Node11--0.996--&gt;t41</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> t47   TRUE   --0.719--&gt;Node2--0.881--&gt;Node3-…e12--0.242--&gt;Node13--0.712--&gt;t47</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> t10   TRUE   --0.719--&gt;Node2--0.881--&gt;Node3-…e12--0.242--&gt;Node13--0.540--&gt;t10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> t54   TRUE   --0.719--&gt;Node2--0.881--&gt;Node3-…e10--0.718--&gt;Node12--0.870--&gt;t54</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> t80   TRUE   --0.719--&gt;Node2--0.881--&gt;Node3-…e14--0.477--&gt;Node15--0.962--&gt;t80</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 188 more rows</span></span></span></code></pre></div>
 <p>This <code>tibble</code> is easy to join data by using the <code>node_names</code>, which include the tip labels from the phylogeny as well as ‘NodeXX’ for internal nodes, where XX starts a 1 and goes to the total number of internal nodes. You can also use <code>node_nums</code> to join by the node number, where the node number uses the traditional ordering of the nodes used in the <code>ape</code> package in <code>phylo</code> objects. Usually you will only have data on the tips, and so when joining to the <code>pf</code> object (using e.g. <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>) the internal node rows will recieve <code>NA</code> values. This is the desired behaviour. The missing values are easy to drop for fitting a model, but are useful later when making prediction (that is, ancestral state estimates).</p>
 <p>Here, we will use one of the built-in <code>pf</code> datasets in <a href="https://rdinnager.github.io/phyf/">phyf</a> to show off some of its feature.</p>
