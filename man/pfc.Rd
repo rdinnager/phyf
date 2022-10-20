@@ -11,7 +11,6 @@ pfc(
   pfl = list(),
   is_tip = logical(),
   edge_names = character(),
-  edge_lengths = double(),
   internal = logical(),
   sparse_mat = NULL
 )
@@ -30,9 +29,6 @@ flow reaches the phylogeny's tips}
 
 \item{edge_names}{A character vector of names for the phylogeny's
 edges}
-
-\item{edge_lengths}{A numeric vector with a representation of
-overall features on each edge}
 
 \item{internal}{A logical vector specifying whether each edge
 is internal (not leading to a tip)}

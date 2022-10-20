@@ -62,7 +62,6 @@ pf_as_pfc.phylo <- function(x, ...) {
           el,
           is_tip,
           edge_names,
-          new_lens,
           internal,
           rtp)
   
@@ -90,7 +89,6 @@ pf_as_pfc.dgCMatrix <- function(x, is_tip = NULL, internal = NULL, ...) {
           el,
           is_tip,
           edge_names,
-          purrr::map_dbl(split_xs(x), mean),
           internal,
           Matrix::drop0(x, 1e-10))
   
@@ -101,7 +99,6 @@ new_pfc <- function(pfn = character(),
                     pfl = list(),
                     is_tip = logical(),
                     edge_names = character(),
-                    edge_lengths = double(),
                     internal = logical(),
                     sparse_mat = NULL) {
   
@@ -117,7 +114,6 @@ new_pfc <- function(pfn = character(),
   new_rcrd(list(pfn = unname(pfn), pfp = unname(pfpp), pfl = unname(pfl),
                 is_tip = unname(is_tip)),
            edge_names = edge_names,
-           edge_lengths = edge_lengths,
            internal = internal,
            sparse_rep = sparse_mat,
            class = "pfc")
@@ -171,8 +167,6 @@ format.pfp <- function(x, ...) {
 #' flow reaches the phylogeny's tips 
 #' @param edge_names A character vector of names for the phylogeny's
 #' edges
-#' @param edge_lengths A numeric vector with a representation of 
-#' overall features on each edge 
 #' @param internal A logical vector specifying whether each edge
 #' is internal (not leading to a tip) 
 #' @param sparse_mat A sparse matrix representation of the phylogenetic
@@ -186,7 +180,6 @@ pfc <- function(pfn = character(),
                 pfl = list(),
                 is_tip = logical(),
                 edge_names = character(),
-                edge_lengths = double(),
                 internal = logical(),
                 sparse_mat = NULL) {
   
@@ -194,7 +187,6 @@ pfc <- function(pfn = character(),
   vec_assert(pfpp, pfp())
   vec_assert(pfl, list())
   vec_assert(edge_names, character())
-  vec_assert(edge_lengths, double())
   vec_assert(is_tip, logical())
   vec_assert(internal, logical())
   
@@ -210,7 +202,6 @@ pfc <- function(pfn = character(),
           pfl,
           is_tip,
           edge_names,
-          edge_lengths,
           internal,
           sparse_mat)
 }
@@ -244,36 +235,74 @@ pillar_shaft.pfc <- function(x, ...) {
   pillar::new_pillar_shaft_simple(out, shorten = "mid", min_width = 15)
 }
 
+
 #' @export
 vec_restore.pfc <- function(x, to, ..., i = NULL) {
+  
+  new_sm <- as_sparse(field(x, "pfn"),
+                      field(x, "pfp"),
+                      field(x, "pfl"),
+                      edge_names(to))
+  
   new_pfc(field(x, "pfn"),
           field(x, "pfp"),
           field(x, "pfl"),
           field(x, "is_tip"),
           edge_names(to),
-          edge_lengths(to),
-          internal_edges(to))  
+          internal_edges(to),
+          new_sm)
+
 }
 
+#' @method vec_ptype2 pfc
 #' @export
-vec_ptype2.pfc.pfc <- function(x, y, ...) new_pfc()
+vec_ptype2.pfc <- function(x, y, ...) {
+  UseMethod("vec_ptype2.pfc", y)
+}
+
+#' @method vec_ptype2.pfc default
+#' @export
+vec_ptype2.pfc.default <- function(x, y, ...) {
+  vec_ptype(x, y)
+}
+
+#' @method vec_ptype2.pfc pfc
+#' @export
+vec_ptype2.pfc.pfc <- function(x, y, ...) {
+  
+  edge_names1 <- edge_names(x)
+  edge_names2 <- edge_names(y)
+  
+  if(length(edge_names1) != length(edge_names2)) {
+    rlang::abort("Cannot combine pfc objects with different number of edges.")
+  }
+  if(any(edge_names1 != edge_names2)) {
+    rlang::abort("Cannot combine pfc object with different edge names.")
+  }
+  
+  new_pfc(field(x, "pfn"), field(x, "pfp"),
+          field(x, "pfl"), field(x, "is_tip"),
+          edge_names(x),
+          internal_edges(x),
+          pf_as_sparse(x))
+}
 
 #' @export
 vec_cast.pfc.pfc <- function(x, to, ...) x
 
 #' @export
-vec_ptype.pfc <- function(x, ...) {
-  spm <- attr(x, "sparse_rep")
-  if(any(dim(spm)) != 0) {
-    spm <- spm[0, 0]
-  }
-  new_pfc(field(x, "pfn"), field(x, "pfp"),
-          field(x, "pfl"), field(x, "is_tip"), 
-          edge_names(x)[integer()],
-          edge_lengths(x)[integer()],
-          internal_edges(x)[integer()],
-          spm)
-}
+# vec_ptype.pfc <- function(x, ...) {
+#   spm <- attr(x, "sparse_rep")
+#   if(any(dim(spm)) != 0) {
+#     spm <- spm[0, 0]
+#   }
+#   new_pfc(field(x, "pfn"), field(x, "pfp"),
+#           field(x, "pfl"), field(x, "is_tip"), 
+#           edge_names(x)[integer()],
+#           edge_lengths(x)[integer()],
+#           internal_edges(x)[integer()],
+#           spm)
+# }
 
 #' @export
 vec_ptype_full.pfc <- function(x, ...) {
@@ -284,8 +313,8 @@ edge_names <- function(x) {
   attr(x, "edge_names")  
 }
 
-edge_lengths <- function(x) {
-  attr(x, "edge_lengths")  
+edge_lengths <- function(x, fun = mean) {
+  purrr::map_dbl(split_xs(pf_as_sparse(x)), fun)
 }
 
 tip_names <- function(x) {
@@ -371,6 +400,15 @@ pf_terminal.pfc <- function(x, ...) {
 }
 
 as_sparse <- function(pfn, pfp, pfl, edge_names) {
+  
+  if(length(purrr::compact(pfp)) == 0) {
+    rtp <- MatrixExtra::emptySparse(ncol = length(edge_names),
+                                    nrow = length(pfn))
+    rownames(rtp) <- pfn
+    colnames(rtp) <- edge_names
+    return(rtp)
+  }
+  
   rtp <- Matrix::t(build_rtp(pfp, length(edge_names),
                    lens = pfl))
   rownames(rtp) <- pfn
@@ -394,7 +432,8 @@ as_sparse <- function(pfn, pfp, pfl, edge_names) {
 #' @examples
 #' pf(rpfc(100))
 pf <- function(x = pfc(), pf_column = "phlo", ...) {
-  vec_assert(x, pfc())
+  #vec_assert(x, pfc())
+  assertthat::assert_that(inherits(x, "pfc"))
   out <- tibble::tibble(label = field(x, "pfn"),
                         is_tip = field(x, "is_tip"),
                         "{pf_column}" := x)
@@ -848,10 +887,8 @@ refresh_features <- function(x) {
                field(x, "pfl"),
                field(x, "is_tip"),
                edge_names(x),
-               edge_lengths(x),
                internal_edges(x))
-  attr(p, "edge_lengths") <- purrr::map_dbl(split_xs(pf_as_sparse(p)), 
-                                            mean)
+
   p
 }
 
@@ -886,4 +923,9 @@ pf_scale_flow_sum <- function(x, scale_to = 1) {
 #' pf_nedges(rpfc(100))
 pf_nedges <- function(x) {
   length(edge_names(x))
+}
+
+#' @export
+pf_as_pfc.factor <- function(x, ...) {
+  
 }
