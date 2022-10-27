@@ -29,3 +29,23 @@ split_xs <- function(x) {
   res <- split(x@x, findInterval(seq_len(Matrix::nnzero(x)), x@p, left.open = TRUE))
   res
 }
+
+force_dgCMatrix <- function(x) {
+  if(!inherits(x, "dgCMatrix")) {
+    return(as(x, "dgCMatrix"))
+  } else {
+    return(x)
+  }
+}
+
+dimnames_kron <- function(x, y) {
+  
+  rnames_x <- rep(rownames(x), each = nrow(y))
+  cnames_x <- rep(colnames(x), each = ncol(y))
+  rnames_y <- rep(rownames(y), nrow(x))
+  cnames_y <- rep(colnames(y), ncol(x))
+  rsep <- ifelse(is.null(rnames_x) || is.null(rnames_y), "", ":")
+  csep <- ifelse(is.null(cnames_x) || is.null(cnames_y), "", ":")
+  list(rownames = paste(rnames_x, rnames_y, sep = rsep),
+       colnames = paste(cnames_x, cnames_y, sep = csep))
+}

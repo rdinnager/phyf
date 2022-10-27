@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# phyf
+# phyf <a href="https://rdinnager.github.io/phyf/"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/rdinnager/phyf/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rdinnager/phyf/actions/workflows/R-CMD-check.yaml)

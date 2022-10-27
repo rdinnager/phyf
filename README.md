@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# phyf
+# phyf <a href="https://rdinnager.github.io/phyf/"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
 <!-- badges: start -->
 
@@ -60,17 +60,17 @@ tree_pf <- pf_as_pf(test_tree)
 tree_pf
 #> # A tibble: 198 × 3
 #>    label is_tip phlo                                                            
-#>    <chr> <lgl>  <pf<:198>>                                                      
-#>  1 t63   TRUE   --0.0149->Node2--0.0189->Node3-…ode6--0.4966->Node7--0.1160->t63
-#>  2 t38   TRUE   --0.0149->Node2--0.0189->Node3-…ode7--0.7707->Node8--0.9350->t38
-#>  3 t2    TRUE   --0.0149->Node2--0.0189->Node3-…Node7--0.7707->Node8--0.7191->t2
-#>  4 t15   TRUE   --0.0149->Node2--0.0189->Node3-…ode6--0.1673->Node9--0.6670->t15
-#>  5 t9    TRUE   --0.0149->Node2--0.0189->Node3-…Node6--0.1673->Node9--0.1002->t9
-#>  6 t53   TRUE   --0.0149->Node2--0.0189->Node3-…e10--0.4071->Node11--0.0782->t53
-#>  7 t8    TRUE   --0.0149->Node2--0.0189->Node3-…de10--0.4071->Node11--0.9337->t8
-#>  8 t92   TRUE   --0.0149->Node2--0.0189->Node3-…e10--0.3109->Node12--0.5324->t92
-#>  9 t72   TRUE   --0.0149->Node2--0.0189->Node3-…e14--0.4390->Node15--0.5888->t72
-#> 10 t56   TRUE   --0.0149->Node2--0.0189->Node3-…e14--0.4390->Node15--0.1674->t56
+#>    <chr> <lgl>  <pfc>                                                           
+#>  1 t88   TRUE   --0.373-->Node2--0.271-->Node3-…ode4--0.241-->Node5--0.368-->t88
+#>  2 t29   TRUE   --0.373-->Node2--0.271-->Node3-…ode6--0.678-->Node7--0.104-->t29
+#>  3 t95   TRUE   --0.373-->Node2--0.271-->Node3-…ode6--0.678-->Node7--0.176-->t95
+#>  4 t21   TRUE   --0.373-->Node2--0.271-->Node3-…e10--0.513-->Node11--0.920-->t21
+#>  5 t40   TRUE   --0.373-->Node2--0.271-->Node3-…e10--0.513-->Node11--0.372-->t40
+#>  6 t30   TRUE   --0.373-->Node2--0.271-->Node3-…e12--0.493-->Node13--0.622-->t30
+#>  7 t85   TRUE   --0.373-->Node2--0.271-->Node3-…e12--0.493-->Node13--0.123-->t85
+#>  8 t92   TRUE   --0.373-->Node2--0.271-->Node3-…e10--0.761-->Node12--0.193-->t92
+#>  9 t11   TRUE   --0.373-->Node2--0.271-->Node3-…de9--0.979-->Node14--0.611-->t11
+#> 10 t39   TRUE   --0.373-->Node2--0.271-->Node3-…de9--0.979-->Node14--0.871-->t39
 #> # … with 188 more rows
 ```
 
@@ -99,7 +99,7 @@ can be accessed as `avonet`:
 avonet
 #> # A tibble: 13,338 × 39
 #>    label      is_tip phlo            Speci…¹ Family3 Order3 Total…² Female  Male
-#>    <chr>      <lgl>  <p<:13338>      <chr>   <chr>   <chr>    <dbl>  <dbl> <dbl>
+#>    <chr>      <lgl>  <pfc>           <chr>   <chr>   <chr>    <dbl>  <dbl> <dbl>
 #>  1 Struthio_… TRUE   ---26.8…camelus Struth… Struth… Strut…       8      1     4
 #>  2 Rhea_amer… TRUE   --26.84…ericana Rhea a… Rheidae Rheif…       5      2     2
 #>  3 Rhea_penn… TRUE   --26.84…pennata Rhea p… Rheidae Rheif…       6      3     2

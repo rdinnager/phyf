@@ -70,6 +70,8 @@ pf_as_pfc.phylo <- function(x, ...) {
 #' @export
 pf_as_pfc.dgCMatrix <- function(x, is_tip = NULL, internal = NULL, ...) {
   
+  x <- force_dgCMatrix(x)
+  
   ## deal with possible empty cols
   empty <- Matrix::rowSums(x) == 0
   if(any(empty)) {
@@ -93,6 +95,25 @@ pf_as_pfc.dgCMatrix <- function(x, is_tip = NULL, internal = NULL, ...) {
           Matrix::drop0(x, 1e-10))
   
 }
+
+#' @export
+pf_as_pfc.Matrix <- function(x, is_tip = NULL, internal = NULL, ...) {
+  
+  x <- force_dgCMatrix(x)
+  
+  pf_as_pfc(x, is_tip = is_tip, internal = internal, ...)
+  
+}
+
+#' @export
+pf_as_pfc.matrix <- function(x, is_tip = NULL, internal = NULL, ...) {
+  
+  x <- force_dgCMatrix(x)
+  
+  pf_as_pfc(x, is_tip = is_tip, internal = internal, ...)
+  
+}
+
 
 new_pfc <- function(pfn = character(), 
                     pfpp = pfp(), 
@@ -325,6 +346,31 @@ internal_edges <- function(x) {
   attr(x, "internal")
 }
 
+#' Get only the tip elements of a `pfc`
+#'
+#' @param x A `pfc` object 
+#'
+#' @return A `pfc` object with only tip elements
+#' @export
+#'
+#' @examples
+#' pf_tips(rpfc(100))
+pf_tips <- function(x) {
+  x[field(x, "is_tip")]
+}
+
+#' Get only the (internal) node elements of a `pfc`
+#'
+#' @param x A `pfc` object 
+#'
+#' @return A `pfc` object with only internal node elements
+#' @export
+#'
+#' @examples
+#' pf_nodes(rpfc(100))
+pf_nodes <- function(x) {
+  x[!field(x, "is_tip")]
+}
 
 #' Extract or assign into the internal or terminal edges of a `pfc`
 #' 
@@ -769,7 +815,7 @@ vec_arith_sparse <- function(op, x, y) {
 }
 
 structural_sparse <- function(m) {
-  m@x <- 1
+  m@x[] <- 1
   m
 }
 
@@ -928,4 +974,213 @@ pf_nedges <- function(x) {
 #' @export
 pf_as_pfc.factor <- function(x, ...) {
   
+  levs <- levels(x) 
+  m <- Matrix::.sparseDiagonal(length(levs), shape = "g")
+  colnames(m) <- rownames(m) <- levs
+  m_expand <- m[as.character(x), ] 
+  pf_as_pfc(m_expand, is_tip = rep(1, length(x)))
+  
+}
+
+#' Replace features with ones
+#'
+#' @param x A `pfc` object
+#'
+#' @return A `pfc` object with all feature values replaced with ones
+#' @export
+#'
+#' @examples
+#' pf_ones(rpfc(100))
+pf_ones <- function(x) {
+  m <- structural_sparse(pf_as_sparse(x))
+  pf_as_pfc(m, field(x, "is_tip"))
+}
+
+#' Replace features with zeros
+#'
+#' @param x A `pfc` object
+#'
+#' @return A `pfc` object with all feature values replaced with zeros
+#' @export
+#'
+#' @examples
+#' pf_zeros(rpfc(100))
+pf_zeros <- function(x) {
+  m <- pf_as_sparse(x)
+  m@x[] <- 0
+  pf_as_pfc(m, field(x, "is_tip"))
+}
+
+#' @export
+pf_kronecker <- function(x, y, ...) {
+  UseMethod("pf_kronecker")
+}
+
+#' @method pf_kronecker pfc
+#' @export
+pf_kronecker.pfc <- function(x, y, ...) {
+  UseMethod("pf_kronecker.pfc", y)
+}
+
+#' @method pf_kronecker.pfc default
+#' @export
+pf_kronecker.pfc.default <- function(x, y, ...) {
+  stop_incompatible_op("pf_kronecker", x, y)
+}
+
+#' @method pf_kronecker Matrix
+#' @export
+pf_kronecker.Matrix <- function(x, y, ...) {
+  UseMethod("pf_kronecker.Matrix", y)
+}
+
+#' @method pf_kronecker.Matrix default
+#' @export
+pf_kronecker.Matrix.default <- function(x, y, ...) {
+  stop_incompatible_op("pf_kronecker", x, y)
+}
+
+#' @method pf_kronecker dgCMatrix
+#' @export
+pf_kronecker.dgCMatrix <- function(x, y, ...) {
+  UseMethod("pf_kronecker.dgCMatrix", y)
+}
+
+#' @method pf_kronecker.dgCMatrix default
+#' @export
+pf_kronecker.dgCMatrix.default <- function(x, y, ...) {
+  stop_incompatible_op("pf_kronecker", x, y)
+}
+
+#' @method pf_kronecker matrix
+#' @export
+pf_kronecker.matrix <- function(x, y, ...) {
+  UseMethod("pf_kronecker.matrix", y)
+}
+
+#' @method pf_kronecker.matrix default
+#' @export
+pf_kronecker.matrix.default <- function(x, y, ...) {
+  stop_incompatible_op("pf_kronecker", x, y)
+}
+
+#' @method pf_kronecker.pfc pfc
+#' @export
+pf_kronecker.pfc.pfc <- function(x, y, ...) {
+  
+  m1 <- pf_as_sparse(x)
+  m2 <- pf_as_sparse(y)
+
+  new_is_tip <- rep(field(x, "is_tip"), each = nrow(m2)) * rep(field(y, "is_tip"), nrow(m1))
+  
+  m <- force_dgCMatrix(kronecker(m1, m2, ...))
+  new_names <- dimnames_kron(m1, m2)
+  
+  rownames(m) <- new_names$rownames
+  colnames(m) <- new_names$colnames
+  
+  pf_as_pfc(m, new_is_tip)
+}
+
+#' @method pf_kronecker.pfc dgCMatrix
+#' @export
+pf_kronecker.pfc.dgCMatrix <- function(x, y, ...) {
+  
+  m1 <- pf_as_sparse(x)
+  
+  new_is_tip <- rep(field(x, "is_tip"), each = nrow(y))
+  
+  m <- force_dgCMatrix(kronecker(m1, y, ...))
+  new_names <- dimnames_kron(m1, y)
+  
+  rownames(m) <- new_names$rownames
+  colnames(m) <- new_names$colnames
+  
+  pf_as_pfc(m, new_is_tip)
+}
+
+#' @method pf_kronecker.pfc matrix
+#' @export
+pf_kronecker.pfc.matrix <- function(x, y, ...) {
+  
+  m1 <- pf_as_sparse(x)
+  
+  new_is_tip <- rep(field(x, "is_tip"), each = nrow(y))
+  
+  m <- force_dgCMatrix(kronecker(m1, y, ...))
+  new_names <- dimnames_kron(m1, y)
+  
+  rownames(m) <- new_names$rownames
+  colnames(m) <- new_names$colnames
+  
+  pf_as_pfc(m, new_is_tip)
+}
+
+#' @method pf_kronecker.pfc Matrix
+#' @export
+pf_kronecker.pfc.Matrix <- function(x, y, ...) {
+  
+  m1 <- pf_as_sparse(x)
+  
+  new_is_tip <- rep(field(x, "is_tip"), each = nrow(y))
+  
+  m <- force_dgCMatrix(kronecker(m1, y, ...))
+  new_names <- dimnames_kron(m1, y)
+  
+  rownames(m) <- new_names$rownames
+  colnames(m) <- new_names$colnames
+  
+  pf_as_pfc(m, new_is_tip)
+}
+
+
+#' @method pf_kronecker.dgCMatrix pfc
+#' @export
+pf_kronecker.dgCMatrix.pfc <- function(x, y, ...) {
+  
+  m2 <- pf_as_sparse(y)
+  
+  new_is_tip <- rep(field(y, "is_tip"), nrow(x))
+  
+  m <- force_dgCMatrix(kronecker(x, m2, ...))
+  new_names <- dimnames_kron(x, m2)
+  
+  rownames(m) <- new_names$rownames
+  colnames(m) <- new_names$colnames
+  
+  pf_as_pfc(m, new_is_tip)
+}
+
+#' @method pf_kronecker.matrix pfc
+#' @export
+pf_kronecker.matrix.pfc <- function(x, y, ...) {
+  
+  m2 <- pf_as_sparse(y)
+  
+  new_is_tip <- rep(field(y, "is_tip"), nrow(x))
+  
+  m <- force_dgCMatrix(kronecker(x, m2, ...))
+  new_names <- dimnames_kron(x, m2)
+  
+  rownames(m) <- new_names$rownames
+  colnames(m) <- new_names$colnames
+  
+  pf_as_pfc(m, new_is_tip)
+}
+
+#' @method pf_kronecker.Matrix pfc
+#' @export
+pf_kronecker.Matrix.pfc <- function(x, y, ...) {
+  
+  m2 <- pf_as_sparse(y)
+  
+  new_is_tip <- rep(field(y, "is_tip"), nrow(x))
+  
+  m <- force_dgCMatrix(kronecker(x, m2, ...))
+  new_names <- dimnames_kron(x, m2)
+  
+  rownames(m) <- new_names$rownames
+  colnames(m) <- new_names$colnames
+  
+  pf_as_pfc(m, new_is_tip)
 }
