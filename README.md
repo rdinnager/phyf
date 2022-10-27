@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# phyf <a href="https://rdinnager.github.io/phyf/"><img src="man/figures/logo.png" align="right" height="139" /></a>
+# phyf <a href="https://rdinnager.github.io/phyf/"><img src="man/figures/logo.png" align="right" height="278" /></a>
 
 <!-- badges: start -->
 
@@ -61,16 +61,16 @@ tree_pf
 #> # A tibble: 198 × 3
 #>    label is_tip phlo                                                            
 #>    <chr> <lgl>  <pfc>                                                           
-#>  1 t88   TRUE   --0.373-->Node2--0.271-->Node3-…ode4--0.241-->Node5--0.368-->t88
-#>  2 t29   TRUE   --0.373-->Node2--0.271-->Node3-…ode6--0.678-->Node7--0.104-->t29
-#>  3 t95   TRUE   --0.373-->Node2--0.271-->Node3-…ode6--0.678-->Node7--0.176-->t95
-#>  4 t21   TRUE   --0.373-->Node2--0.271-->Node3-…e10--0.513-->Node11--0.920-->t21
-#>  5 t40   TRUE   --0.373-->Node2--0.271-->Node3-…e10--0.513-->Node11--0.372-->t40
-#>  6 t30   TRUE   --0.373-->Node2--0.271-->Node3-…e12--0.493-->Node13--0.622-->t30
-#>  7 t85   TRUE   --0.373-->Node2--0.271-->Node3-…e12--0.493-->Node13--0.123-->t85
-#>  8 t92   TRUE   --0.373-->Node2--0.271-->Node3-…e10--0.761-->Node12--0.193-->t92
-#>  9 t11   TRUE   --0.373-->Node2--0.271-->Node3-…de9--0.979-->Node14--0.611-->t11
-#> 10 t39   TRUE   --0.373-->Node2--0.271-->Node3-…de9--0.979-->Node14--0.871-->t39
+#>  1 t95   TRUE   --0.136-->Node2--0.275-->Node3-…ode5--0.203-->Node6--0.713-->t95
+#>  2 t42   TRUE   --0.136-->Node2--0.275-->Node3-…ode6--0.136-->Node7--0.869-->t42
+#>  3 t85   TRUE   --0.136-->Node2--0.275-->Node3-…ode6--0.136-->Node7--0.232-->t85
+#>  4 t93   TRUE   --0.136-->Node2--0.275-->Node3-…de9--0.176-->Node10--0.527-->t93
+#>  5 t91   TRUE   --0.136-->Node2--0.275-->Node3-…de9--0.176-->Node10--0.440-->t91
+#>  6 t94   TRUE   --0.136-->Node2--0.275-->Node3-…ode8--0.309-->Node9--0.139-->t94
+#>  7 t50   TRUE   --0.136-->Node2--0.275-->Node3-…ode5--0.981-->Node8--0.103-->t50
+#>  8 t4    TRUE   --0.1357->Node2--0.2746->Node3-…de12--0.8658->Node13--0.2638->t4
+#>  9 t3    TRUE   --0.1357->Node2--0.2746->Node3-…de12--0.8658->Node13--0.2185->t3
+#> 10 t6    TRUE   --0.1357->Node2--0.2746->Node3-…de11--0.0886->Node12--0.4599->t6
 #> # … with 188 more rows
 ```
 
