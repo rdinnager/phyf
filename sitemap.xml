@@ -28,7 +28,13 @@
     <loc>https://rdinnager.github.io/phyf/reference/avonet.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/phyf/reference/ecoregion_ids.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/phyf/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/mammal_biogeo.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf.html</loc>
@@ -49,10 +55,19 @@
     <loc>https://rdinnager.github.io/phyf/reference/pf_as_sparse.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_desc.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_edge_apply.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_flow_cumsum.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_flow_sum.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_indexes.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_internal.html</loc>
@@ -68,6 +83,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_phyloflow.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_position.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_scale_flow_sum.html</loc>
@@ -92,6 +110,12 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/primate_diet.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/primate_diet_hierarchy.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/rpfc.html</loc>
