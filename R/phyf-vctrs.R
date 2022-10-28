@@ -897,7 +897,7 @@ pf_flow_cumsum.pfc <- function(x, ...) {
 #' ancestral value (such as when the ancestor is the root)
 #'
 #' @return A new `pfc` with the same structure as `x`, but with
-#' the features of each edge's ancestors instead
+#' the features of each edge's ancestor instead
 #' 
 #' @export
 #'
@@ -907,6 +907,66 @@ pf_anc <- function(x, replace = 0) {
   field(x, "pfl") <- purrr::map(field(x, "pfl"),
                                 function(y) c(replace, 
                                               y[-length(y)]))
+  refresh_features(x)
+}
+
+#' Return a `pfc` with descendent's features
+#' 
+#' Note that in the context of a phylogenetic flow, each element of the flow
+#' only has a single descendent, which is the next edge on the sequence between
+#' the root and the terminal node of the flow in question.
+#'  
+#' @param x A `pfc` object
+#' @param replace Value to replace edge feature with no
+#' descendent values (such as when the edges are the tip edges).
+#'
+#' @return A new `pfc` with the same structure as `x`, but with
+#' the features of each edge's descendant instead
+#' 
+#' @export
+#'
+#' @examples
+#' pf_desc(rpfc(100))
+pf_desc <- function(x, replace = 0) {
+  field(x, "pfl") <- purrr::map(field(x, "pfl"),
+                                function(y) c(y[-1],
+                                              replace))
+  refresh_features(x)
+}
+
+#' Replace feature with edge index in a `pfc`
+#' 
+#' This is similar to base R's `col()` function, it returns a `pfc` with features
+#' that are just the index of the edge. Useful for complex indexing procedures 
+#'
+#' @param x A `pfc` object
+#'
+#' @return A new `pfc` with the same structure as `x`, but with
+#' the features of each edge equal to the edge index (the column number in the 
+#' sparse matrix representation)
+#' @export
+#'
+#' @examples
+#' pf_indexes(rpfc(100))
+pf_indexes <- function(x) {
+  field(x, "pfl") <- field(x, "pfp")
+  refresh_features(x)
+}
+
+#' Replace feature with edge position in flow in a `pfc`
+#' 
+#' @param x A `pfc` object
+#'
+#' @return A new `pfc` with the same structure as `x`, but with
+#' the features of each edge equal to the position along the flow as an integer
+#' index
+#' @export
+#'
+#' @examples
+#' pf_position(rpfc(100))
+pf_position <- function(x) {
+  field(x, "pfl") <- purrr::map(field(x, "pfp"),
+                                seq_along)
   refresh_features(x)
 }
 
@@ -1183,4 +1243,38 @@ pf_kronecker.Matrix.pfc <- function(x, y, ...) {
   colnames(m) <- new_names$colnames
   
   pf_as_pfc(m, new_is_tip)
+}
+
+#' Apply a function along edges within a `pfc` object
+#'
+#' Features of the returned `pfc` will be the output of the function applied
+#' to the original features. Therefore the functionm provided must return a
+#' vector the same length of the input.
+#'
+#' @param x A `pfc` object
+#' @param fun A function to apply to the edge vectors, which will be passed as 
+#' the first argument. Must return a vector the same length and type as the input.
+#' @param ... Any additional arguments to pass to `fun`
+#'
+#' @return A `pfc` object with the same structure as `x` but with features 
+#' replaced with the output of `fun`
+#' @export
+#'
+#' @examples
+#' ## average features of descendents of each edge as a pfc:
+#' pf_edge_apply(pf_desc(pf_indexes(rpfc(100))), function(x) rep(mean(x), length(x)))
+pf_edge_apply <- function(x, fun, ...) {
+  x_sp <- pf_as_sparse(x)
+  xs <- split_xs(x_sp)
+  xs <- purrr::map(xs,
+                   fun, 
+                   ...)
+  xs <- unlist(xs)
+  if(length(xs) != length(x_sp@x)) {
+    rlang::abort("Length of output does not match length of input!")
+  }
+  x_sp@x <- xs
+  m <- pf_as_pfc(x_sp, is_tip = field(x, "is_tip"),
+                 internal = attr(x, "internal"))
+  m
 }

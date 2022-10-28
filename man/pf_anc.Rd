@@ -14,7 +14,7 @@ ancestral value (such as when the ancestor is the root)}
 }
 \value{
 A new \code{pfc} with the same structure as \code{x}, but with
-the features of each edge's ancestors instead
+the features of each edge's ancestor instead
 }
 \description{
 Return a \code{pfc} with ancestral features

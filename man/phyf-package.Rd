@@ -6,6 +6,8 @@
 \alias{phyf-package}
 \title{phyf: Phylogenetic Flow Objects for Easy Manipulation and Modelling of Data on Phylogenetic Trees and Graphs}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 The {phyf} package implements a tibble and vctrs based object for storing phylogenetic trees along with data. It is fast and flexible and directly produces data structures useful for phylogenetic modelling in the {fibre} package.
 }
 \seealso{
