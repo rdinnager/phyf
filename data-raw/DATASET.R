@@ -6,6 +6,7 @@ library(ape)
 library(fasterize)
 library(raster)
 library(readr)
+library(exactextractr)
 
 avonet_tree <- ape::read.nexus("extdata/HackettStage1_0001_1000_MCCTreeTargetHeights.nex")
 avonet_dat <- readr::read_csv("extdata/AVONET3_BirdTree.csv")
@@ -54,6 +55,8 @@ not_valid <- !st_is_valid(mammal_maps)
 sum(not_valid)
 plot(mammal_maps[not_valid, "geometry"])
 
+## A few extremely large ranges overlap the datetime boundary
+## Just excluding them for now because it is annoying
 mammal_maps <- mammal_maps[!not_valid, ]
 
 mammal_maps <- mammal_maps %>%
@@ -62,16 +65,44 @@ mammal_maps <- mammal_maps %>%
 
 nrow(mammal_maps)
 
-readr::write_rds(mammal_maps, "exdata/mammal_ranges_processed.rds")
+readr::write_rds(mammal_maps, "extdata/mammal_ranges_processed.rds")
 
-ecoregion_ex <- raster::extract(ecoregions_rast, mammal_maps)
+#ecoregions_stars <- st_as_stars(ecoregions_rast)
+
+ecoregion_ex <- exact_extract(ecoregions_rast, mammal_maps, 'frac')
+readr::write_rds(ecoregion_ex, "extdata/mammal_ecoregions_intermediate.rds")
+
+eco_ids <- unglue::unglue_vec(colnames(ecoregion_ex), "frac_{id}")
+
+ecoregion_ids <- ecoregions %>%
+  as_tibble() %>%
+  group_by(ECO_ID) %>%
+  summarise(ECO_NAME = ECO_NAME[1])
+
+frac_names <- paste0("ecoregion:", eco_ids)
+
+colnames(ecoregion_ex) <- frac_names
+
+mammal_ecoregions <- mammal_maps %>%
+  bind_cols(ecoregion_ex) %>%
+  as_tibble() %>%
+  dplyr::select(-geometry)
+  
+mammal_traits <- readr::read_csv("extdata/mammal_tip_trait_data.csv")
 
 mammal_biogeo <- pf_as_pf(mammal_tree)
 mammal_biogeo <- mammal_biogeo %>%
-  left_join(vert_dat %>%
-              rename(label = `...1`))
+  left_join(mammal_traits %>%
+              dplyr::select(label = phylogeny_binomial,
+                            IUCN_binomial,
+                            body_mass_median:diet_5cat,
+                            range_size_km2,
+                            threat)) %>%
+  left_join(mammal_ecoregions %>%
+              mutate(binomial = gsub(" ", "_", binomial)) %>%
+              rename(IUCN_binomial = binomial))
 
-usethis::use_data(vert_bmr, overwrite = TRUE)
+usethis::use_data(mammal_biogeo, ecoregion_ids, overwrite = TRUE)
 
 ###### Primate Diet Data ############
 primate_tree <- read.tree("extdata/tree1_final_cap2_2021_.txt")

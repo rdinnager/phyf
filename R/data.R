@@ -85,11 +85,11 @@
 
 #' Primate Diet Data References
 #' 
-#' A `data.frame` with references for the Primate Data. See the `primate_diet`
+#' A `data.frame` with references for the Primate Diet Data. See the `primate_diet`
 #' data set.
 #'
-#' @format ## `primate_refs`
-#' A 'pf' data frame (subclasses `tibble`) with 40 rows and 6 columns:
+#' @format ## `primate_diet_refs`
+#' A 'pf' data frame (subclasses `tibble`) with 4 rows and 3 columns:
 #' \describe{
 #'   \item{FOOD ITEM}{Food item name. This matches the 'item' 'diet_item:item' 
 #'   columns in  the `primate_diet` data set}
@@ -101,3 +101,46 @@
 #' @source <https://zslpublications.onlinelibrary.wiley.com/doi/full/10.1111/acv.12823>
 #' @references Machado, F. F., Jardim, L., Dinnage, R., Brito, D., & Cardillo, M. (2022). Diet disparity and diversity predict extinction risk in primates. Animal Conservation.
 "primate_diet_hierarchy"
+
+
+#' Terrestrial Mammal Bioegeography Data with Phylogeny
+#'
+#' Data on terrestrial mammals biogeographic distributions across the world's ecoregions 
+#' joined to a `pf` object (for `{phyf}`)
+#'
+#' @format ## `mammal_biogeo`
+#' A 'pf' data frame (subclasses `tibble`) with 10,648 rows and 844 columns:
+#' \describe{
+#'   \item{label}{Node labels including species name for the tip labels}
+#'   \item{phlo}{The phylogenetic flow column which stores the phylogenetic information}
+#'   \item{IUCN_binomial}{Species name used by the IUCN, matches with IUCN range polygons}
+#'   \item{body_mass_median}{Mammal species' body mass}
+#'   \item{litter_clutch_size}{Mammal species' average clutch size 
+#'   (# of offspring in a litter)}
+#'   \item{activity)}{Mammal species' primary time of activity}
+#'   \item{hab_breadth}{...}
+#'   \item{volant}{...}
+#'   \item{diet_5cat}{...}
+#'   \item{range_size_km2}{Mammal species' range size in kilometers squared}
+#'   \item{threat}{Mammal species' IUCN threat category}
+#'   \item{ecoregion:eco_id}{Each of the 832 columns starting with "ecoregion:"
+#'   represents the proportion of the mammal species' range that fall in the ecoregion 
+#'   with id equal to "eco_id".}
+#' }
+#' @source <https://ecoregions.appspot.com>, <https://www.iucnredlist.org/resources/spatial-data-download>
+#' @references None yet.
+"mammal_biogeo"
+
+#' Ecoregion IDs
+#' 
+#' A `data.frame` with ecoregion ids and their name. This can be matched to the
+#' ecoregions referred to in the dataset `mammal_biogeo`. 
+#'
+#' @format ## `ecoregion_ids`
+#' A 'pf' data frame (subclasses `tibble`) with 847 rows and 2 columns:
+#' \describe{
+#'   \item{ECO_ID}{ID numbers for 847 ecoregions across the world}
+#'   \item{ECO_NAME}{The name for the corresponding ecoregion ID}
+#' }
+#' @source <https://ecoregions.appspot.com>
+"ecoregion_ids"

@@ -7,7 +7,20 @@
 \format{
 \subsection{\code{primate_hierarchy}}{
 
-A 'pf' data frame (subclasses \code{tibble}) with 40 rows and 6 columns:
+A data frame with 40 rows and 6 columns:
+\describe{
+\item{FOOD ITEM}{Food item name. This matches the 'item' 'diet_item:item'
+columns in  the \code{primate_diet} data set}
+\item{level 2}{A category categorizing the food items immediately above
+the items themselves}
+\item{level 3:level 6 (4 columns)}{Additional categories arranged in an
+heirarchy}
+}
+}
+
+\subsection{\code{primate_diet_refs}}{
+
+A 'pf' data frame (subclasses \code{tibble}) with 4 rows and 3 columns:
 \describe{
 \item{FOOD ITEM}{Food item name. This matches the 'item' 'diet_item:item'
 columns in  the \code{primate_diet} data set}
@@ -20,14 +33,23 @@ heirarchy}
 }
 \source{
 \url{https://zslpublications.onlinelibrary.wiley.com/doi/full/10.1111/acv.12823}
+
+\url{https://zslpublications.onlinelibrary.wiley.com/doi/full/10.1111/acv.12823}
 }
 \usage{
+primate_diet_hierarchy
+
 primate_diet_hierarchy
 }
 \description{
 A \code{data.frame} representing an hierarchical categorization of primate diet items
+
+A \code{data.frame} with references for the Primate Diet Data. See the \code{primate_diet}
+data set.
 }
 \references{
+Machado, F. F., Jardim, L., Dinnage, R., Brito, D., & Cardillo, M. (2022). Diet disparity and diversity predict extinction risk in primates. Animal Conservation.
+
 Machado, F. F., Jardim, L., Dinnage, R., Brito, D., & Cardillo, M. (2022). Diet disparity and diversity predict extinction risk in primates. Animal Conservation.
 }
 \keyword{datasets}
