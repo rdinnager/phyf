@@ -82,7 +82,7 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of phyf from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version of <a href="https://rdinnager.github.io/phyf/">phyf</a> from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rdinnager/phyf"</span><span class="op">)</span></span></code></pre></div>
@@ -110,16 +110,16 @@
 <span><span class="co">#&gt; # A tibble: 198 × 3</span></span>
 <span><span class="co">#&gt;    label is_tip phlo                                                            </span></span>
 <span><span class="co">#&gt;    &lt;chr&gt; &lt;lgl&gt;  &lt;pfc&gt;                                                           </span></span>
-<span><span class="co">#&gt;  1 t95   TRUE   --0.136--&gt;Node2--0.275--&gt;Node3-…ode5--0.203--&gt;Node6--0.713--&gt;t95</span></span>
-<span><span class="co">#&gt;  2 t42   TRUE   --0.136--&gt;Node2--0.275--&gt;Node3-…ode6--0.136--&gt;Node7--0.869--&gt;t42</span></span>
-<span><span class="co">#&gt;  3 t85   TRUE   --0.136--&gt;Node2--0.275--&gt;Node3-…ode6--0.136--&gt;Node7--0.232--&gt;t85</span></span>
-<span><span class="co">#&gt;  4 t93   TRUE   --0.136--&gt;Node2--0.275--&gt;Node3-…de9--0.176--&gt;Node10--0.527--&gt;t93</span></span>
-<span><span class="co">#&gt;  5 t91   TRUE   --0.136--&gt;Node2--0.275--&gt;Node3-…de9--0.176--&gt;Node10--0.440--&gt;t91</span></span>
-<span><span class="co">#&gt;  6 t94   TRUE   --0.136--&gt;Node2--0.275--&gt;Node3-…ode8--0.309--&gt;Node9--0.139--&gt;t94</span></span>
-<span><span class="co">#&gt;  7 t50   TRUE   --0.136--&gt;Node2--0.275--&gt;Node3-…ode5--0.981--&gt;Node8--0.103--&gt;t50</span></span>
-<span><span class="co">#&gt;  8 t4    TRUE   --0.1357-&gt;Node2--0.2746-&gt;Node3-…de12--0.8658-&gt;Node13--0.2638-&gt;t4</span></span>
-<span><span class="co">#&gt;  9 t3    TRUE   --0.1357-&gt;Node2--0.2746-&gt;Node3-…de12--0.8658-&gt;Node13--0.2185-&gt;t3</span></span>
-<span><span class="co">#&gt; 10 t6    TRUE   --0.1357-&gt;Node2--0.2746-&gt;Node3-…de11--0.0886-&gt;Node12--0.4599-&gt;t6</span></span>
+<span><span class="co">#&gt;  1 t62   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…── 0.23──→ Node4 ── 0.14──→ t62 </span></span>
+<span><span class="co">#&gt;  2 t55   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…── 0.61──→ Node6 ── 0.66──→ t55 </span></span>
+<span><span class="co">#&gt;  3 t74   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…── 0.61──→ Node6 ── 0.28──→ t74 </span></span>
+<span><span class="co">#&gt;  4 t1    TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No… ── 0.99──→ Node7 ── 0.30──→ t1 </span></span>
+<span><span class="co">#&gt;  5 t30   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…── 0.99──→ Node7 ── 0.91──→ t30 </span></span>
+<span><span class="co">#&gt;  6 t19   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…─ 0.13──→ Node10 ── 0.52──→ t19 </span></span>
+<span><span class="co">#&gt;  7 t54   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…─ 0.17──→ Node11 ── 0.98──→ t54 </span></span>
+<span><span class="co">#&gt;  8 t10   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…─ 0.36──→ Node12 ── 0.13──→ t10 </span></span>
+<span><span class="co">#&gt;  9 t34   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…─ 0.36──→ Node12 ── 0.02──→ t34 </span></span>
+<span><span class="co">#&gt; 10 t14   TRUE   ◎──0.508──→ Node2 ──0.931──→ No…─0.097──→ Node14 ──0.162──→ t14 </span></span>
 <span><span class="co">#&gt; # … with 188 more rows</span></span></code></pre></div>
 <p>This <code>tibble</code> is easy to join data by using the <code>label</code>, which include the tip labels from the phylogeny as well as ‘NodeXX’ for internal nodes, where XX starts a 1 and goes to the total number of internal nodes (the names are generated using <code><a href="https://rdrr.io/pkg/ape/man/makeNodeLabel.html" class="external-link">ape::makeNodeLabel()</a></code>). You can also use the <code>node_num</code> column (not yet implemented) to join by the node number, where the node number is based on the node at the end of each phylogeny edge, and uses the traditional ordering of the nodes from the <code>ape</code> package in <code>phylo</code> objects. Usually you will only have data on the tips, and so when joining to the <code>pf</code> object (using e.g. <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>) the internal node rows will recieve <code>NA</code> values. This is the desired behaviour. The missing values are easy to drop for fitting a model, but are useful later when making predictions (that is, ancestral state estimates).</p>
 </div>
@@ -132,16 +132,16 @@
 <span><span class="co">#&gt; # A tibble: 13,338 × 39</span></span>
 <span><span class="co">#&gt;    label      is_tip phlo            Speci…¹ Family3 Order3 Total…² Female  Male</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;      &lt;lgl&gt;  &lt;pfc&gt;           &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 Struthio_… TRUE   ---26.8…camelus Struth… Struth… Strut…       8      1     4</span></span>
-<span><span class="co">#&gt;  2 Rhea_amer… TRUE   --26.84…ericana Rhea a… Rheidae Rheif…       5      2     2</span></span>
-<span><span class="co">#&gt;  3 Rhea_penn… TRUE   --26.84…pennata Rhea p… Rheidae Rheif…       6      3     2</span></span>
-<span><span class="co">#&gt;  4 Apteryx_a… TRUE   --26.84…stralis Aptery… Aptery… Apter…       6      2     2</span></span>
-<span><span class="co">#&gt;  5 Apteryx_m… TRUE   --26.84…antelli Aptery… Aptery… Apter…       4      2     2</span></span>
-<span><span class="co">#&gt;  6 Apteryx_o… TRUE   --26.84…_owenii Aptery… Aptery… Apter…       5      2     3</span></span>
-<span><span class="co">#&gt;  7 Apteryx_h… TRUE   --26.84…haastii Aptery… Aptery… Apter…       9      6     3</span></span>
-<span><span class="co">#&gt;  8 Dromaius_… TRUE   --26.84…landiae Dromai… Dromai… Casua…       5      2     3</span></span>
-<span><span class="co">#&gt;  9 Casuarius… TRUE   --26.84…suarius Casuar… Casuar… Casua…       7      2     3</span></span>
-<span><span class="co">#&gt; 10 Casuarius… TRUE   --26.84…ennetti Casuar… Casuar… Casua…       4      1     0</span></span>
+<span><span class="co">#&gt;  1 Struthio_… TRUE   ◎──   2…amelus  Struth… Struth… Strut…       8      1     4</span></span>
+<span><span class="co">#&gt;  2 Rhea_amer… TRUE   ◎── 26.…ricana  Rhea a… Rheidae Rheif…       5      2     2</span></span>
+<span><span class="co">#&gt;  3 Rhea_penn… TRUE   ◎── 26.…ennata  Rhea p… Rheidae Rheif…       6      3     2</span></span>
+<span><span class="co">#&gt;  4 Apteryx_a… TRUE   ◎──26.8…tralis  Aptery… Aptery… Apter…       6      2     2</span></span>
+<span><span class="co">#&gt;  5 Apteryx_m… TRUE   ◎──26.8…ntelli  Aptery… Aptery… Apter…       4      2     2</span></span>
+<span><span class="co">#&gt;  6 Apteryx_o… TRUE   ◎──26.8…owenii  Aptery… Aptery… Apter…       5      2     3</span></span>
+<span><span class="co">#&gt;  7 Apteryx_h… TRUE   ◎──26.8…aastii  Aptery… Aptery… Apter…       9      6     3</span></span>
+<span><span class="co">#&gt;  8 Dromaius_… TRUE   ◎──26.8…andiae  Dromai… Dromai… Casua…       5      2     3</span></span>
+<span><span class="co">#&gt;  9 Casuarius… TRUE   ◎──26.8…uarius  Casuar… Casuar… Casua…       7      2     3</span></span>
+<span><span class="co">#&gt; 10 Casuarius… TRUE   ◎──26.8…nnetti  Casuar… Casuar… Casua…       4      1     0</span></span>
 <span><span class="co">#&gt; # … with 13,328 more rows, 30 more variables: Unknown &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   Complete.measures &lt;dbl&gt;, Beak.Length_Culmen &lt;dbl&gt;, Beak.Length_Nares &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   Beak.Width &lt;dbl&gt;, Beak.Depth &lt;dbl&gt;, Tarsus.Length &lt;dbl&gt;, Wing.Length &lt;dbl&gt;,</span></span>
