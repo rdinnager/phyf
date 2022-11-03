@@ -23,7 +23,7 @@ comparative analysis and modelling trait evolution across a phylogeny.
 
 ## Installation
 
-You can install the development version of phyf from
+You can install the development version of `{phyf}` from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -61,16 +61,16 @@ tree_pf
 #> # A tibble: 198 × 3
 #>    label is_tip phlo                                                            
 #>    <chr> <lgl>  <pfc>                                                           
-#>  1 t95   TRUE   --0.136-->Node2--0.275-->Node3-…ode5--0.203-->Node6--0.713-->t95
-#>  2 t42   TRUE   --0.136-->Node2--0.275-->Node3-…ode6--0.136-->Node7--0.869-->t42
-#>  3 t85   TRUE   --0.136-->Node2--0.275-->Node3-…ode6--0.136-->Node7--0.232-->t85
-#>  4 t93   TRUE   --0.136-->Node2--0.275-->Node3-…de9--0.176-->Node10--0.527-->t93
-#>  5 t91   TRUE   --0.136-->Node2--0.275-->Node3-…de9--0.176-->Node10--0.440-->t91
-#>  6 t94   TRUE   --0.136-->Node2--0.275-->Node3-…ode8--0.309-->Node9--0.139-->t94
-#>  7 t50   TRUE   --0.136-->Node2--0.275-->Node3-…ode5--0.981-->Node8--0.103-->t50
-#>  8 t4    TRUE   --0.1357->Node2--0.2746->Node3-…de12--0.8658->Node13--0.2638->t4
-#>  9 t3    TRUE   --0.1357->Node2--0.2746->Node3-…de12--0.8658->Node13--0.2185->t3
-#> 10 t6    TRUE   --0.1357->Node2--0.2746->Node3-…de11--0.0886->Node12--0.4599->t6
+#>  1 t62   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…── 0.23──→ Node4 ── 0.14──→ t62 
+#>  2 t55   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…── 0.61──→ Node6 ── 0.66──→ t55 
+#>  3 t74   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…── 0.61──→ Node6 ── 0.28──→ t74 
+#>  4 t1    TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No… ── 0.99──→ Node7 ── 0.30──→ t1 
+#>  5 t30   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…── 0.99──→ Node7 ── 0.91──→ t30 
+#>  6 t19   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…─ 0.13──→ Node10 ── 0.52──→ t19 
+#>  7 t54   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…─ 0.17──→ Node11 ── 0.98──→ t54 
+#>  8 t10   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…─ 0.36──→ Node12 ── 0.13──→ t10 
+#>  9 t34   TRUE   ◎── 0.51──→ Node2 ── 0.93──→ No…─ 0.36──→ Node12 ── 0.02──→ t34 
+#> 10 t14   TRUE   ◎──0.508──→ Node2 ──0.931──→ No…─0.097──→ Node14 ──0.162──→ t14 
 #> # … with 188 more rows
 ```
 
@@ -100,16 +100,16 @@ avonet
 #> # A tibble: 13,338 × 39
 #>    label      is_tip phlo            Speci…¹ Family3 Order3 Total…² Female  Male
 #>    <chr>      <lgl>  <pfc>           <chr>   <chr>   <chr>    <dbl>  <dbl> <dbl>
-#>  1 Struthio_… TRUE   ---26.8…camelus Struth… Struth… Strut…       8      1     4
-#>  2 Rhea_amer… TRUE   --26.84…ericana Rhea a… Rheidae Rheif…       5      2     2
-#>  3 Rhea_penn… TRUE   --26.84…pennata Rhea p… Rheidae Rheif…       6      3     2
-#>  4 Apteryx_a… TRUE   --26.84…stralis Aptery… Aptery… Apter…       6      2     2
-#>  5 Apteryx_m… TRUE   --26.84…antelli Aptery… Aptery… Apter…       4      2     2
-#>  6 Apteryx_o… TRUE   --26.84…_owenii Aptery… Aptery… Apter…       5      2     3
-#>  7 Apteryx_h… TRUE   --26.84…haastii Aptery… Aptery… Apter…       9      6     3
-#>  8 Dromaius_… TRUE   --26.84…landiae Dromai… Dromai… Casua…       5      2     3
-#>  9 Casuarius… TRUE   --26.84…suarius Casuar… Casuar… Casua…       7      2     3
-#> 10 Casuarius… TRUE   --26.84…ennetti Casuar… Casuar… Casua…       4      1     0
+#>  1 Struthio_… TRUE   ◎──   2…amelus  Struth… Struth… Strut…       8      1     4
+#>  2 Rhea_amer… TRUE   ◎── 26.…ricana  Rhea a… Rheidae Rheif…       5      2     2
+#>  3 Rhea_penn… TRUE   ◎── 26.…ennata  Rhea p… Rheidae Rheif…       6      3     2
+#>  4 Apteryx_a… TRUE   ◎──26.8…tralis  Aptery… Aptery… Apter…       6      2     2
+#>  5 Apteryx_m… TRUE   ◎──26.8…ntelli  Aptery… Aptery… Apter…       4      2     2
+#>  6 Apteryx_o… TRUE   ◎──26.8…owenii  Aptery… Aptery… Apter…       5      2     3
+#>  7 Apteryx_h… TRUE   ◎──26.8…aastii  Aptery… Aptery… Apter…       9      6     3
+#>  8 Dromaius_… TRUE   ◎──26.8…andiae  Dromai… Dromai… Casua…       5      2     3
+#>  9 Casuarius… TRUE   ◎──26.8…uarius  Casuar… Casuar… Casua…       7      2     3
+#> 10 Casuarius… TRUE   ◎──26.8…nnetti  Casuar… Casuar… Casua…       4      1     0
 #> # … with 13,328 more rows, 30 more variables: Unknown <dbl>,
 #> #   Complete.measures <dbl>, Beak.Length_Culmen <dbl>, Beak.Length_Nares <dbl>,
 #> #   Beak.Width <dbl>, Beak.Depth <dbl>, Tarsus.Length <dbl>, Wing.Length <dbl>,

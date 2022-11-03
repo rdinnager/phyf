@@ -23,7 +23,7 @@ The goal of phyf is to implement a `tibble` subclass useful for statistical mode
 
 ## Installation
 
-You can install the development version of phyf from [GitHub](https://github.com/) with:
+You can install the development version of `{phyf}` from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
