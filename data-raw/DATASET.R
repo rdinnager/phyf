@@ -122,3 +122,7 @@ primate_diet <- pf_as_pf(primate_tree) %>%
                           Spiders_and_opiliones:Moss))
 
 usethis::use_data(primate_diet, primate_diet_hierarchy, primate_diet_refs, overwrite = TRUE)
+
+########### plant - fungus cophylogeny data - MycoDB ###########
+
+plfu_dat <- readr::read_csv("extdata/MycoDB_version4.csv")

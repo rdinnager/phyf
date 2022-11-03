@@ -2,12 +2,17 @@
 % Please edit documentation in R/phyf-vctrs.R
 \name{pf_flow_cumsum}
 \alias{pf_flow_cumsum}
-\title{Calculate the sum of features for each flow}
+\title{Calculate the cumulative sum of features for each flow}
 \usage{
-pf_flow_cumsum(x, ...)
+pf_flow_cumsum(x, direction = c("from_root", "to_root"), ...)
 }
 \arguments{
 \item{x}{A \code{pfc} object}
+
+\item{direction}{Which direction to take the cumulative sum along?
+"from_root", the default, goes from the root to the terminal nodes.
+"to_root" goes in the opposite direction, from the terminal nodes to
+the root.}
 
 \item{...}{Other arguments to pass to or from other methods}
 }

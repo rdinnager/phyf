@@ -18,7 +18,10 @@ make_interp.pfc <- function(x, ...) {
   zero_br <- Matrix::colSums(structural_sparse(new_mat)) != 0
   new_mat <- new_mat[ , zero_br]
   
-  new_pfc <- pf_as_pfc(new_mat, is_tip = field(x, "is_tip"))
+  new_pfc <- pf_as_pfc(new_mat, is_tip = rep(FALSE, nrow(new_mat)),
+                       internal = rep(TRUE, ncol(new_mat)))
+  
+  class(new_pfc) <- c("pfc_contrast", class(new_pfc))
   
   new_pfc
 }

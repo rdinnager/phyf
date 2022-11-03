@@ -16,9 +16,7 @@ Imports:
     ape,
     assertthat,
     fastmatch,
-    ghibli,
     Matrix,
-    MatrixExtra,
     phangorn,
     phytools,
     pillar,
@@ -30,8 +28,12 @@ Imports:
     rlang,
     magrittr,
     dplyr,
-    methods
+    methods,
+    inlabru,
+    colourvalues,
+    scales
 Suggests: 
+    cli,
     knitr,
     rmarkdown
 VignetteBuilder: knitr

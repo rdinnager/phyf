@@ -128,7 +128,7 @@ new_pfc <- function(pfn = character(),
       sparse_mat <- as_sparse(pfn, pfpp, pfl,
                               edge_names)
     } else {
-      sparse_mat <- MatrixExtra::emptySparse(format = "C")
+      sparse_mat <- empty_sparse()
     }
   } 
 
@@ -175,8 +175,13 @@ pf_is_pfp <- function(x) {
 
 #' @export
 format.pfp <- function(x, ...) {
-  purrr::map_chr(x,
-                 function(y) paste(y, collapse = "->"))
+  if(rlang::is_installed("cli")) {
+    purrr::map_chr(x,
+                   function(y) paste(y, collapse = "->"))
+  } else {
+    purrr::map_chr(x,
+                   function(y) paste(y, collapse = "->"))
+  }
 }
 
 #' Create a new phylogenetic flow collection object (`pfc`)
@@ -236,23 +241,101 @@ pf_is_pfc <- function(x) {
 
 #' @importFrom stats setNames
 #' @export
-format.pfc <- function(x, ...) {
+format.pfc <- function(x, ansi = length(x) <= 100, colour = length(x) <= 25, ...) {
+  
   edge_names <- edge_names(x)
-  ch <- setNames(purrr::map2_chr(vctrs::field(x, "pfp"), vctrs::field(x, "pfl"),
-                 function(x, y) paste0("", 
-                                       paste0("-", stringr::str_pad(format(y, digits = 3, trim = TRUE),
-                                                                    8, side = "both", pad = "-"),
-                                              ">",
-                                              edge_names[x],
-                                              collapse = ""))), 
-           vctrs::field(x, "pfn"))
+  
+  if(rlang::is_installed("cli") & ansi) {
+    
+    root_sym <- cli::format_inline(cli::col_red("{cli::symbol$circle_double}"))
+    line_sym <- cli::format_inline(rep(cli::col_red("{cli::symbol$line}"), 2))
+    arrow_sym <- cli::format_inline(line_sym, cli::col_red("{cli::symbol$arrow_right}"))
+    
+    if(colour) {
+      col_range <- range(unlist(field(x, "pfl")))
+      col_pal <- scales::col_bin(palette = "viridis",
+                                 bins = 10,
+                                 domain = col_range)
+      
+      colors <- purrr::map(field(x, "pfl"),
+                           col_pal)
+      all_cols <- unique(unlist(colors))
+      names(all_cols) <- all_cols
+    
+      ansi_funs <- purrr::map(all_cols,
+                              ~ cli::make_ansi_style(.x, bg = TRUE)) 
+      
+      ch <- purrr::pmap_chr(list(vctrs::field(x, "pfp"), vctrs::field(x, "pfl"), colors),
+                   function(x, y, z) paste0(root_sym, 
+                                            paste0(line_sym, 
+                                                   purrr::map2_chr(z, format(y, digits = 2, trim = TRUE, width = I(5)),
+                                                                   function(z, y) cli::col_white(ansi_funs[[z]](y))),
+                                                   arrow_sym, " ",
+                                                   if(length(x) > 1)  {
+                                                     c(cli::col_blue(cli::style_bold(edge_names[x[-length(x)]])),
+                                                       cli::bg_white(cli::style_bold(cli::style_italic(edge_names[x[length(x)]]))))
+                                                   } else {
+                                                       cli::bg_white(cli::style_bold(cli::style_italic(edge_names[x[length(x)]]))) 
+                                                   }, 
+                                                   " ",
+                                                   collapse = "")))
+    } else {
+      ch <- purrr::pmap_chr(list(vctrs::field(x, "pfp"), vctrs::field(x, "pfl")),
+                            function(x, y, z) paste0(root_sym, 
+                                                     paste0(line_sym, 
+                                                            cli::bg_white(format(y, digits = 2, trim = TRUE, width = I(5))),
+                                                            arrow_sym, " ",
+                                                            if(length(x) > 1)  {
+                                                              c(cli::col_blue(cli::style_bold(edge_names[x[-length(x)]])),
+                                                                cli::bg_white(cli::style_bold(cli::style_italic(edge_names[x[length(x)]]))))
+                                                              } else {
+                                                                cli::bg_white(cli::style_bold(cli::style_italic(edge_names[x[length(x)]]))) 
+                                                              },
+                                                            " ",
+                                                            collapse = ""))) 
+    }
+    
+  } else {
+    root_sym <- "O"
+    line_sym <- "=="
+    arrow_sym <- "==>"
+    ch <- purrr::map2_chr(vctrs::field(x, "pfp"), vctrs::field(x, "pfl"),
+                   function(x, y) paste0(root_sym, 
+                                         paste0(line_sym, format(y, digits = 2, trim = TRUE,
+                                                                 width = I(5)),
+                                                arrow_sym, " ",
+                                                edge_names[x], " ",
+                                                collapse = "")))
+    
+  }
   ch
+}
+
+#' @export
+obj_print_data.pfc <- function(x, max = 10, ansi = max <= 100, colour = max <= 25, ...) {
+  ch <- format(head(x, max), ansi = ansi, colour = colour)
+  ch <- paste0("[", seq_along(ch), "] ", ch)
+  cat(ch, sep = "\n\n")
+}
+
+#' @export
+obj_print_header.pfc <- function(x, max = 10, ...) {
+  NextMethod("obj_print_header")
+  cat("First ", min(max, length(x)), "phylogenetic flows: \n")
+}
+
+#' @method obj_print pfc
+#' @importFrom vctrs obj_print
+#' @export
+obj_print.pfc <- function(x, max = 10, ansi = max <= 100, colour = max <= 25, ...) {
+  obj_print_header(x, ...)
+  obj_print_data(x, max = max, ansi = ansi, colour = colour, ...)
 }
 
 #' @importFrom pillar pillar_shaft
 #' @export
 pillar_shaft.pfc <- function(x, ...) {
-  out <- format(x, ...)
+  out <- format(x, ansi = length(x) <= 100, colour = length(x) <= 25, ...)
   pillar::new_pillar_shaft_simple(out, shorten = "mid", min_width = 15)
 }
 
@@ -372,6 +455,19 @@ pf_nodes <- function(x) {
   x[!field(x, "is_tip")]
 }
 
+#' Return a vector of labels for a `pfc` object
+#'
+#' @param x A `pfc` object
+#'
+#' @return A character vector of labels
+#' @export
+#'
+#' @examples
+#' pf_labels(rpfc(100))
+pf_labels <- function(x) {
+  field(x, "pfn")
+}
+
 #' Extract or assign into the internal or terminal edges of a `pfc`
 #' 
 #' `pf_internal` extracts or assigns a `pfc` or `dgCMatrix` into the internal
@@ -448,8 +544,8 @@ pf_terminal.pfc <- function(x, ...) {
 as_sparse <- function(pfn, pfp, pfl, edge_names) {
   
   if(length(purrr::compact(pfp)) == 0) {
-    rtp <- MatrixExtra::emptySparse(ncol = length(edge_names),
-                                    nrow = length(pfn))
+    rtp <- empty_sparse(ncol = length(edge_names),
+                        nrow = length(pfn))
     rownames(rtp) <- pfn
     colnames(rtp) <- edge_names
     return(rtp)
@@ -708,111 +804,6 @@ plot.pfc <- function(x, scale_bar_len = 0.5, ...) {
   ape::add.scale.bar(length = scale_bar_len)
 }
 
-#' @method vec_arith pfc
-#' @export
-vec_arith.pfc <- function(op, x, y, ...) {
-  UseMethod("vec_arith.pfc", y)
-}
-
-#' @method vec_arith.pfc default
-#' @export
-vec_arith.pfc.default <- function(op, x, y, ...) {
-  stop_incompatible_op(op, x, y)
-}
-
-#' @method vec_arith.pfc pfc
-#' @export
-vec_arith.pfc.pfc <- function(op, x, y, ...) {
-  
-  if(!structure_equal(x, y)) {
-    rlang::warn("You are doing arithmetic on phylogenetic flows with a different structures. Are you sure this is what you want to do?")
-  }
-  
-  if(!identical(field(x, "is_tip"), field(y, "is_tip"))) {
-    rlang::abort("Both pfc objects must have the same elements as tips")
-  }
-  if(!identical(field(x, "pfn"), field(y, "pfn"))) {
-    rlang::abort("Both pfc objects must have the same labels")
-  }
-  m1 <- pf_as_sparse(x)
-  m2 <- pf_as_sparse(y)
-  
-  m <- vec_arith_sparse(op, m1, m2)
-  pf_as_pfc(m, field(x, "is_tip"))
-}
-
-#' @method vec_arith.pfc numeric
-#' @export
-vec_arith.pfc.numeric <- function(op, x, y, ...) {
-  
-  m1 <- pf_as_sparse(x)
-  
-  if(length(y) > 1) {
-    if(length(y) == nrow(m1)) {
-      return(vec_arith_sparse(op, m1, structural_sparse(m1) * y))  
-    } else {
-      rlang::abort("Arithmetic with a pfc and a vector only works if the length of the vector is 1 or eqal to the number of flows in the `pfc`")
-    }
-  }
-  
-  m <- m1
-  m@x <- vec_arith_base(op, m1@x, y)
-  pf_as_pfc(m, field(x, "is_tip"))
-  
-}
-
-#' @method vec_arith.numeric pfc
-#' @export
-vec_arith.numeric.pfc <- function(op, x, y, ...) {
-  
-  m1 <- pf_as_sparse(y)
-  
-  if(length(x) > 1) {
-    if(length(x) == nrow(m1)) {
-      return(vec_arith_sparse(structural_sparse(m1) * x, m1))  
-    } else {
-      rlang::abort("Arithmetic with a pfc and a vector only works if the length of the vector is 1 or eqal to the number of flows in the `pfc`")
-    }
-  }
-  
-  m <- m1
-  m@x <- vec_arith_base(op, x, m1@x)
-  pf_as_pfc(m, field(y, "is_tip"))
-  
-}
-
-#' @method vec_arith.pfc dgCMatrix
-#' @export
-vec_arith.pfc.dgCMatrix <- function(op, x, y, ...) {
-  
-  if(!identical(field(x, "pfn"), rownames(y))) {
-    rlang::abort("objects must have the same labels")
-  }
-  m1 <- pf_as_sparse(x)
-  # if(!structure_equal(m1, y)) {
-  #   rlang::warn("You are doing arithmetic on phylogenetic flows with a different structures. Are you sure this is what you want to do?")
-  # }
-  m <- vec_arith_sparse(op, m1, y)
-  pf_as_pfc(m, field(x, "is_tip"))
-  
-}
-
-#' @method vec_arith.numeric pfc
-#' @export
-vec_arith.numeric.pfc <- function(op, x, y, ...) {
-  
-  m1 <- pf_as_sparse(y)
-  
-  m <- m1
-  m@x <- vec_arith_base(op, x, m1@x)
-  pf_as_pfc(m, field(y, "is_tip"))
-  
-}
-
-vec_arith_sparse <- function(op, x, y) {
-  op_fn <- getExportedValue("base", op)
-  op_fn(x, y)
-}
 
 structural_sparse <- function(m) {
   m@x[] <- 1
@@ -860,12 +851,16 @@ pf_flow_sum.pfc <- function(x, ...) {
   Matrix::rowSums(pf_as_sparse(x))
 }
 
-#' Calculate the sum of features for each flow
+#' Calculate the cumulative sum of features for each flow
 #' 
 #' Cumulative sum the phylogenetic flow features for each flow
 #' in a `pfc`, returning a `pfc`.
 #'
 #' @param x A `pfc` object
+#' @param direction Which direction to take the cumulative sum along? 
+#' "from_root", the default, goes from the root to the terminal nodes. 
+#' "to_root" goes in the opposite direction, from the terminal nodes to
+#' the root.
 #' @param ... Other arguments to pass to or from other methods
 #'
 #' @return A `pfc` object with cumulative sums of features in
@@ -874,21 +869,28 @@ pf_flow_sum.pfc <- function(x, ...) {
 #'
 #' @examples
 #' pf_flow_cumsum(rpfc(100))
-pf_flow_cumsum <- function(x, ...) {
+pf_flow_cumsum <- function(x, direction = c("from_root", "to_root"), ...) {
   UseMethod("pf_flow_cumsum")
 }
 
 #' @export
-pf_flow_cumsum.default <- function(x, ...) {
+pf_flow_cumsum.default <- function(x, direction = c("from_root", "to_root"), ...) {
   rlang::abort("flow_sums only works on pf and pfc objects")
 }
 
 #' @export
-pf_flow_cumsum.pfc <- function(x, ...) {
-  field(x, "pfl") <- purrr::map(field(x, "pfl"),
-                                cumsum)
+pf_flow_cumsum.pfc <- function(x, direction = c("from_root", "to_root"), ...) {
+  direction <- match.arg(direction)
+  if(direction == "from_root") {
+    field(x, "pfl") <- purrr::map(field(x, "pfl"),
+                                  cumsum)
+  } else {
+    field(x, "pfl") <- purrr::map(field(x, "pfl"),
+                                  function(x) rev(cumsum(rev(x))))
+  }
   refresh_features(x)
 }
+
 
 #' Return a `pfc` with ancestral features
 #'  
@@ -1071,180 +1073,6 @@ pf_zeros <- function(x) {
   pf_as_pfc(m, field(x, "is_tip"))
 }
 
-#' @export
-pf_kronecker <- function(x, y, ...) {
-  UseMethod("pf_kronecker")
-}
-
-#' @method pf_kronecker pfc
-#' @export
-pf_kronecker.pfc <- function(x, y, ...) {
-  UseMethod("pf_kronecker.pfc", y)
-}
-
-#' @method pf_kronecker.pfc default
-#' @export
-pf_kronecker.pfc.default <- function(x, y, ...) {
-  stop_incompatible_op("pf_kronecker", x, y)
-}
-
-#' @method pf_kronecker Matrix
-#' @export
-pf_kronecker.Matrix <- function(x, y, ...) {
-  UseMethod("pf_kronecker.Matrix", y)
-}
-
-#' @method pf_kronecker.Matrix default
-#' @export
-pf_kronecker.Matrix.default <- function(x, y, ...) {
-  stop_incompatible_op("pf_kronecker", x, y)
-}
-
-#' @method pf_kronecker dgCMatrix
-#' @export
-pf_kronecker.dgCMatrix <- function(x, y, ...) {
-  UseMethod("pf_kronecker.dgCMatrix", y)
-}
-
-#' @method pf_kronecker.dgCMatrix default
-#' @export
-pf_kronecker.dgCMatrix.default <- function(x, y, ...) {
-  stop_incompatible_op("pf_kronecker", x, y)
-}
-
-#' @method pf_kronecker matrix
-#' @export
-pf_kronecker.matrix <- function(x, y, ...) {
-  UseMethod("pf_kronecker.matrix", y)
-}
-
-#' @method pf_kronecker.matrix default
-#' @export
-pf_kronecker.matrix.default <- function(x, y, ...) {
-  stop_incompatible_op("pf_kronecker", x, y)
-}
-
-#' @method pf_kronecker.pfc pfc
-#' @export
-pf_kronecker.pfc.pfc <- function(x, y, ...) {
-  
-  m1 <- pf_as_sparse(x)
-  m2 <- pf_as_sparse(y)
-
-  new_is_tip <- rep(field(x, "is_tip"), each = nrow(m2)) * rep(field(y, "is_tip"), nrow(m1))
-  
-  m <- force_dgCMatrix(kronecker(m1, m2, ...))
-  new_names <- dimnames_kron(m1, m2)
-  
-  rownames(m) <- new_names$rownames
-  colnames(m) <- new_names$colnames
-  
-  pf_as_pfc(m, new_is_tip)
-}
-
-#' @method pf_kronecker.pfc dgCMatrix
-#' @export
-pf_kronecker.pfc.dgCMatrix <- function(x, y, ...) {
-  
-  m1 <- pf_as_sparse(x)
-  
-  new_is_tip <- rep(field(x, "is_tip"), each = nrow(y))
-  
-  m <- force_dgCMatrix(kronecker(m1, y, ...))
-  new_names <- dimnames_kron(m1, y)
-  
-  rownames(m) <- new_names$rownames
-  colnames(m) <- new_names$colnames
-  
-  pf_as_pfc(m, new_is_tip)
-}
-
-#' @method pf_kronecker.pfc matrix
-#' @export
-pf_kronecker.pfc.matrix <- function(x, y, ...) {
-  
-  m1 <- pf_as_sparse(x)
-  
-  new_is_tip <- rep(field(x, "is_tip"), each = nrow(y))
-  
-  m <- force_dgCMatrix(kronecker(m1, y, ...))
-  new_names <- dimnames_kron(m1, y)
-  
-  rownames(m) <- new_names$rownames
-  colnames(m) <- new_names$colnames
-  
-  pf_as_pfc(m, new_is_tip)
-}
-
-#' @method pf_kronecker.pfc Matrix
-#' @export
-pf_kronecker.pfc.Matrix <- function(x, y, ...) {
-  
-  m1 <- pf_as_sparse(x)
-  
-  new_is_tip <- rep(field(x, "is_tip"), each = nrow(y))
-  
-  m <- force_dgCMatrix(kronecker(m1, y, ...))
-  new_names <- dimnames_kron(m1, y)
-  
-  rownames(m) <- new_names$rownames
-  colnames(m) <- new_names$colnames
-  
-  pf_as_pfc(m, new_is_tip)
-}
-
-
-#' @method pf_kronecker.dgCMatrix pfc
-#' @export
-pf_kronecker.dgCMatrix.pfc <- function(x, y, ...) {
-  
-  m2 <- pf_as_sparse(y)
-  
-  new_is_tip <- rep(field(y, "is_tip"), nrow(x))
-  
-  m <- force_dgCMatrix(kronecker(x, m2, ...))
-  new_names <- dimnames_kron(x, m2)
-  
-  rownames(m) <- new_names$rownames
-  colnames(m) <- new_names$colnames
-  
-  pf_as_pfc(m, new_is_tip)
-}
-
-#' @method pf_kronecker.matrix pfc
-#' @export
-pf_kronecker.matrix.pfc <- function(x, y, ...) {
-  
-  m2 <- pf_as_sparse(y)
-  
-  new_is_tip <- rep(field(y, "is_tip"), nrow(x))
-  
-  m <- force_dgCMatrix(kronecker(x, m2, ...))
-  new_names <- dimnames_kron(x, m2)
-  
-  rownames(m) <- new_names$rownames
-  colnames(m) <- new_names$colnames
-  
-  pf_as_pfc(m, new_is_tip)
-}
-
-#' @method pf_kronecker.Matrix pfc
-#' @export
-pf_kronecker.Matrix.pfc <- function(x, y, ...) {
-  
-  m2 <- pf_as_sparse(y)
-  
-  new_is_tip <- rep(field(y, "is_tip"), nrow(x))
-  
-  m <- force_dgCMatrix(kronecker(x, m2, ...))
-  new_names <- dimnames_kron(x, m2)
-  
-  rownames(m) <- new_names$rownames
-  colnames(m) <- new_names$colnames
-  
-  pf_as_pfc(m, new_is_tip)
-}
-
 #' Apply a function along edges within a `pfc` object
 #'
 #' Features of the returned `pfc` will be the output of the function applied
@@ -1278,3 +1106,19 @@ pf_edge_apply <- function(x, fun, ...) {
                  internal = attr(x, "internal"))
   m
 }
+
+pf_apply_sparse_fn <- function(.x, .fn,
+                               is_tip = field(.x, "is_tip"),
+                               internal = attr(.x, "internal"),                            
+                               ...) {
+  m <- pf_as_sparse(.x)
+  m2 <- force_dgCMatrix(.fn(m, ...))
+  if(is.null(colnames(m2))) {
+    colnames(m2) <- colnames(m)[seq_len(ncol(m2))]
+  }
+  if(is.null(rownames(m2))) {
+    rownames(m2) <- rownames(m)[seq_len(nrow(m2))]
+  }
+  pf_as_pfc(m2, is_tip = is_tip, internal = internal)
+}
+

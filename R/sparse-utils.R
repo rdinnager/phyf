@@ -31,6 +31,9 @@ split_xs <- function(x) {
 }
 
 force_dgCMatrix <- function(x) {
+  if(inherits(x, "sparseVector")) {
+    x <- Matrix::Matrix(x, nrow = 1)
+  }
   if(!inherits(x, "dgCMatrix")) {
     return(as(x, "dgCMatrix"))
   } else {
@@ -48,4 +51,25 @@ dimnames_kron <- function(x, y) {
   csep <- ifelse(is.null(cnames_x) || is.null(cnames_y), "", ":")
   list(rownames = paste(rnames_x, rnames_y, sep = rsep),
        colnames = paste(cnames_x, cnames_y, sep = csep))
+}
+
+dimnames_row_kron <- function(x, y) {
+  
+  rnames_x <- rownames(x)
+  cnames_x <- rep(colnames(x), each = ncol(y))
+  rnames_y <- rownames(y)
+  cnames_y <- rep(colnames(y), ncol(x))
+  rsep <- ifelse(is.null(rnames_x) || is.null(rnames_y), "", ":")
+  csep <- ifelse(is.null(cnames_x) || is.null(cnames_y), "", ":")
+  list(rownames = paste(rnames_x, rnames_y, sep = rsep),
+       colnames = paste(cnames_x, cnames_y, sep = csep))
+}
+
+empty_sparse <- function(nrow = 0, ncol = 0) {
+  nrow <- as.integer(nrow)
+  ncol <- as.integer(ncol)
+  out <- new("dgCMatrix")
+  out@Dim <- as.integer(c(nrow, ncol))
+  out@p <- integer(ncol + 1L)
+  out
 }
