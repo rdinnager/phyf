@@ -112,7 +112,7 @@ representation.</dd>
           
           <code><a href="pf_flow_cumsum.html">pf_flow_cumsum()</a></code> 
         </dt>
-        <dd>Calculate the sum of features for each flow</dd>
+        <dd>Calculate the cumulative sum of features for each flow</dd>
       </dl><dl><dt>
           
           <code><a href="pf_flow_sum.html">pf_flow_sum()</a></code> 
@@ -128,6 +128,11 @@ representation.</dd>
           <code><a href="pf_internal.html">pf_internal()</a></code> <code><a href="pf_internal.html">`pf_internal&lt;-`()</a></code> <code><a href="pf_internal.html">pf_terminal()</a></code> <code><a href="pf_internal.html">`pf_terminal&lt;-`()</a></code> 
         </dt>
         <dd>Extract or assign into the internal or terminal edges of a <code>pfc</code></dd>
+      </dl><dl><dt>
+          
+          <code><a href="pf_labels.html">pf_labels()</a></code> 
+        </dt>
+        <dd>Return a vector of labels for a <code>pfc</code> object</dd>
       </dl><dl><dt>
           
           <code><a href="pf_nedges.html">pf_nedges()</a></code> 
@@ -158,6 +163,15 @@ representation.</dd>
           <code><a href="pf_scale_flow_sum.html">pf_scale_flow_sum()</a></code> 
         </dt>
         <dd>Scale the phylogenetic flow features to a constant sum.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="pf_second_order.html">pf_second_order()</a></code> 
+        </dt>
+        <dd>Calculate a 'second order' <code>pfc</code>, which represents summed
+branch length from each node to the terminal node along each flow.
+When used in modelling traits, a second order <code>pfc</code> implies that
+rates of evolution of the trait are themselves evolving according to
+Brownian motion.</dd>
       </dl><dl><dt>
           
           <code><a href="pf_tips.html">pf_tips()</a></code> 
