@@ -126,3 +126,39 @@ usethis::use_data(primate_diet, primate_diet_hierarchy, primate_diet_refs, overw
 ########### plant - fungus cophylogeny data - MycoDB ###########
 
 plfu_dat <- readr::read_csv("extdata/MycoDB_version4.csv")
+plant_tree <- read.tree("extdata/PlantTree_version2.tre")
+fungus_tree <- read.tree("extdata/FungalTree_version2.tre")
+
+plant_pf <- pf_as_pf(plant_tree) %>%
+  dplyr::select(PlantSpecies2018 = label,
+         plant_is_tip = is_tip, 
+         plant_phlo = phlo)
+
+fungus_pf <- pf_as_pf(fungus_tree) %>%
+  dplyr::select(FungalGenus2018 = label,
+         fungus_is_tip = is_tip, 
+         fungus_phlo = phlo)
+
+plfu_combos <- plfu_dat %>%
+  left_join(plant_pf, by = "PlantSpecies2018") %>%
+  left_join(fungus_pf, "FungalGenus2018") %>%
+  distinct(PlantSpecies2018, FungalGenus2018,
+           .keep_all = TRUE) %>%
+  rowwise() %>%
+  mutate(plant_nodes = list(pf_edge_names(plant_phlo)[pf_path(plant_phlo)[[1]]]),
+         fungus_nodes = list(pf_edge_names(fungus_phlo)[pf_path(fungus_phlo)[[1]]])) %>%
+  summarise(tidyr::expand_grid(plant_nodes, fungus_nodes)) %>%
+  ungroup() %>%
+  distinct()
+
+plant_fungus <- plfu_combos %>%
+              rename(PlantSpecies2018 = plant_nodes,
+                     FungalGenus2018 = fungus_nodes) %>%
+  left_join(plfu_dat) %>%
+  left_join(plant_pf, by = "PlantSpecies2018") %>%
+  left_join(fungus_pf, by = "FungalGenus2018") %>%
+  arrange(desc(plant_is_tip), desc(fungus_is_tip))
+
+class(plant_fungus) <- c("pf", class(plant_fungus))
+
+usethis::use_data(plant_fungus, overwrite = TRUE)

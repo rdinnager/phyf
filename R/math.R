@@ -374,6 +374,11 @@ vec_arith.pfc.default <- function(op, x, y, ...) {
 vec_arith.pfc.pfc <- function(op, x, y, ...) {
   
   if(!structure_equal(x, y)) {
+    if(op == '*') {
+      rlang::warn("pfcs have different structures, doing a rowwise kronecker product instead of elementwise.",
+                  class = "warning_asterisk_kronecker")
+      return(pf_row_kron(x, y))
+    }
     rlang::warn("You are doing arithmetic on phylogenetic flows with a different structures. Are you sure this is what you want to do?")
   }
   
@@ -383,6 +388,7 @@ vec_arith.pfc.pfc <- function(op, x, y, ...) {
   if(!identical(field(x, "pfn"), field(y, "pfn"))) {
     rlang::abort("Both pfc objects must have the same labels")
   }
+  
   m1 <- pf_as_sparse(x)
   m2 <- pf_as_sparse(y)
   
@@ -398,11 +404,43 @@ vec_arith.pfc.numeric <- function(op, x, y, ...) {
   
   if(length(y) > 1) {
     if(length(y) == nrow(m1)) {
-      return(vec_arith_sparse(op, m1, structural_sparse(m1) * y))  
+      m <- vec_arith_sparse(op, m1, structural_sparse(m1) * y)
+      return(pf_as_pfc(m, field(x, "is_tip")))  
     } else {
-      rlang::abort("Arithmetic with a pfc and a vector only works if the length of the vector is 1 or eqal to the number of flows in the `pfc`")
+      rlang::abort("Arithmetic with a pfc and a vector only works if the length of the vector is 1 or equal to the number of flows in the `pfc`")
     }
   }
+  
+  m <- m1
+  m@x <- vec_arith_base(op, m1@x, y)
+  pf_as_pfc(m, field(x, "is_tip"))
+  
+}
+
+#' @method vec_arith.pfc matrix
+#' @export
+vec_arith.pfc.matrix <- function(op, x, y, ...) {
+  
+  m1 <- pf_as_sparse(x)
+  if(all(dim(y) == dim(m1))) {
+    m <- vec_arith_sparse(op, m1, structural_sparse(m1) * y)
+    return(pf_as_pfc(m, field(x, "is_tip")))  
+  }
+  if(!any(dim(y) == 1)) {
+    rlang::abort("One dimension of the matrix must be one.")
+  }
+  if(dim(y)[1] == nrow(m1)) {
+     m <- vec_arith_sparse(op, m1, structural_sparse(m1) * as.vector(y))
+     return(pf_as_pfc(m, field(x, "is_tip")))  
+  } else {
+    if(dim(y)[2] == ncol(m1)) {
+      m <- vec_arith_sparse(op, m1, Matrix::t(structural_sparse(Matrix::t(m1)) * as.vector(y)))
+      return(pf_as_pfc(m, field(x, "is_tip"))) 
+    } else {
+      rlang::abort("Arithmetic with a pfc and a matrix only works if one of the dims is equal to one of the `pfc` dims")
+    }
+  }
+
   
   m <- m1
   m@x <- vec_arith_base(op, m1@x, y)
@@ -418,7 +456,8 @@ vec_arith.numeric.pfc <- function(op, x, y, ...) {
   
   if(length(x) > 1) {
     if(length(x) == nrow(m1)) {
-      return(vec_arith_sparse(structural_sparse(m1) * x, m1))  
+      m <- vec_arith_sparse(structural_sparse(m1) * x, m1)
+      return( pf_as_pfc(m, field(y, "is_tip")))  
     } else {
       rlang::abort("Arithmetic with a pfc and a vector only works if the length of the vector is 1 or eqal to the number of flows in the `pfc`")
     }
@@ -446,17 +485,6 @@ vec_arith.pfc.dgCMatrix <- function(op, x, y, ...) {
   
 }
 
-#' @method vec_arith.numeric pfc
-#' @export
-vec_arith.numeric.pfc <- function(op, x, y, ...) {
-  
-  m1 <- pf_as_sparse(y)
-  
-  m <- m1
-  m@x <- vec_arith_base(op, x, m1@x)
-  pf_as_pfc(m, field(y, "is_tip"))
-  
-}
 
 vec_arith_sparse <- function(op, x, y) {
   op_fn <- getExportedValue("base", op)

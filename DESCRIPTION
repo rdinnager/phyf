@@ -31,7 +31,8 @@ Imports:
     methods,
     inlabru,
     colourvalues,
-    scales
+    scales,
+    viridis
 Suggests: 
     cli,
     knitr,
