@@ -115,3 +115,31 @@ plot.pf <- function(object, columns = dplyr::everything(),
   
 }
 
+#' @importFrom ggplot2 fortify
+#' @export
+ggplot2::fortify
+
+#' @export
+fortify.pfc <- function(model, data, ...) {
+  
+  tree <- pf_as_phylo(model)
+  ggtree::fortify(tree, ...)
+  
+}
+
+#' @export
+fortify.pf <- function(model, data, ...) {
+  
+  tree <- pf_as_phylo(model)
+  pf_col <- attr(model, "pf_column")[1]
+  dat <- model[ , -which(colnames(model) == pf_col)]
+  if(!"label" %in% colnames(model)) {
+     dat <- dat %>%
+      dplyr::mutate(label = pf_labels(model[[pf_col]]))
+  }
+  tree_df <- ggtree::fortify(tree, ...) %>%
+    dplyr::left_join(dat, by = "label")
+  tree_df
+  
+}
+
