@@ -32,7 +32,8 @@ Imports:
     inlabru,
     colourvalues,
     scales,
-    viridis
+    viridis,
+    ggplot2
 Suggests: 
     cli,
     knitr,
