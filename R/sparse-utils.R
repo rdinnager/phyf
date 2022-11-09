@@ -35,7 +35,7 @@ force_dgCMatrix <- function(x) {
     x <- Matrix::Matrix(x, nrow = 1)
   }
   if(!inherits(x, "dgCMatrix")) {
-    return(as(x, "dgCMatrix"))
+    return(as(x, "CsparseMatrix"))
   } else {
     return(x)
   }
@@ -65,6 +65,7 @@ dimnames_row_kron <- function(x, y) {
        colnames = paste(cnames_x, cnames_y, sep = csep))
 }
 
+#' @importClassesFrom Matrix "dgCMatrix"
 empty_sparse <- function(nrow = 0, ncol = 0) {
   nrow <- as.integer(nrow)
   ncol <- as.integer(ncol)

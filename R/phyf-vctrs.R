@@ -417,7 +417,7 @@ edge_names <- function(x) {
   attr(x, "edge_names")  
 }
 
-edge_lengths <- function(x, fun = mean) {
+edge_lengths <- function(x, fun) {
   purrr::map_dbl(split_xs(pf_as_sparse(x)), fun)
 }
 
@@ -586,18 +586,27 @@ pf <- function(x = pfc(), pf_column = "phlo", ...) {
                      class = "pf")
 }
 
-
-#' Convert a `ape::phylo` object to a `pf` object
+#' Convert an object to a `pf` object
 #'
-#' @param phy A `phylo` object
+#' @param x An object to convert
 #'
 #' @return a `pf` object with branch lengths as features
 #' @export
 #'
 #' @examples
 #' pf_as_pf(ape::rtree(100))
-pf_as_pf <- function(phy) {
-  pf(pf_as_pfc(phy))
+pf_as_pf <- function(x, ...) {
+  UseMethod("pf_as_pf")
+}
+
+#' @export
+pf_as_pf.phylo <- function(x, ...) {
+  pf(pf_as_pfc(x, ...))
+}
+
+#' @export
+pf_as_pf.pfc <- function(x, ...) {
+  pf(x, ...)
 }
 
 
@@ -656,10 +665,11 @@ pf_as_phylo.pfc <- function(x, ...) {
   new_phylo$tip.label <- tip_lab
   new_phylo$node.label <- node_lab
   new_phylo$Nnode <- length(node_lab)
-  new_phylo$edge.length <- edge_lengths(x)[edge_mat[ , 2] - 1]
+  new_phylo$edge.length <- purrr::map_dbl(split_xs(pf_as_sparse(x)[ , edge_mat[ , 2] - 1]), mean)
+  
   class(new_phylo) <- "phylo"
   
-  new_phylo <- ape::collapse.singles(new_phylo)
+  new_phylo <- ape::collapse.singles(new_phylo, root.edge = TRUE)
   
   # ape::checkValidPhylo(new_phylo)
   # plot(new_phylo)
@@ -753,50 +763,6 @@ pf_phyloflow <- function(x) {
   
 }
 
-#' @importFrom utils head
-#' @export
-plot.pf <- function(x, n = 4, ...) {
-  phy <- pf_as_phylo(x)
-  labels <- c(attr(x, "label_column"))
-  ignore <- c(labels,
-              attr(x, "is_tip_column"),
-              attr(x, "pf_column"))
-  
-  if((ncol(x) - 3 ) == 0) {
-    p <- phytools::contMap(phy, main = "A phylogenetic tree with no features",
-                           x = rep(0, ape::Ntip(phy)) %>% setNames(phy$tip.label),
-                           method = "user", anc.states = rep(0, ape::Nnode(phy)) %>%
-                                                               setNames(ape::Ntip(phy) +
-                                                                          seq_len(ape::Nnode(phy)))
-                           )
-    plot(p)
-    return(p)
-  }
-  
-  pcols <- setdiff(names(x), ignore)
-  
-  if((ncol(x) - 3 ) == 1) {
-    sel <- c(labels, pcols)
-    df <- dplyr::tibble("{labels}" := c(phy$tip.label,
-                                       phy$node.label)) %>%
-      dplyr::left_join(x %>%
-                         dplyr::select(dplyr::all_of(sel))) 
-  }
-  
-  if((ncol(x) - 3 ) > 1) {
-    sel <- c(labels, head(pcols, n))
-    df <- dplyr::tibble("{labels}" := c(phy$tip.label,
-                                       phy$node.label)) %>%
-      dplyr::left_join(x %>%
-                         dplyr::select(dplyr::all_of(sel)))
-    withr::with_par(list(mfrow = c(2, 2)), 
-                    {
-                      "not implemented yet!"
-                    })
-  }
-  
-}
-
 #' @export
 plot.pfc <- function(x, scale_bar_len = 0.5, ...) {
   phy <- pf_as_phylo(x)
@@ -819,6 +785,9 @@ structural_sparse <- function(m) {
 # }
 
 structure_equal <- function(pfc1, pfc2) {
+  if(pf_nedges(pfc1) != pf_nedges(pfc2)) {
+    return(FALSE)
+  }
   all(vec_equal(unlist(field(pfc1, "pfp")),
             unlist(field(pfc2, "pfp"))))
 }
@@ -1020,6 +989,28 @@ pf_scale_flow_sum <- function(x, scale_to = 1) {
   
 }
 
+#' Standardise the phylogenetic flow features to an implied typical
+#' variance of 1. 
+#' 
+#' Can be used to make random effects based on `pfc`s comparable.
+#'
+#' @param x a `pfc` object
+#'
+#' @return a scaled `pfc` object
+#' @export
+#'
+#' @examples
+#' pf_standardise(rpfc(100))
+pf_standardise <- function(x) {
+  
+  fact <- mean(pf_flow_sum(x))
+  
+  field(x, "pfl") <- purrr::map(field(x, "pfl"),
+                                function(y) y / fact)
+  refresh_features(x)
+  
+}
+
 #' Return the number of edges in a `pfc`
 #'
 #' @param x a `pfc` object
@@ -1041,6 +1032,14 @@ pf_as_pfc.factor <- function(x, ...) {
   colnames(m) <- rownames(m) <- levs
   m_expand <- m[as.character(x), ] 
   pf_as_pfc(m_expand, is_tip = rep(1, length(x)))
+  
+}
+
+#' @export
+pf_as_pfc.character <- function(x, ...) {
+  
+  x <- as.factor(x)
+  pf_as_pfc(x)
   
 }
 
@@ -1122,3 +1121,55 @@ pf_apply_sparse_fn <- function(.x, .fn,
   pf_as_pfc(m2, is_tip = is_tip, internal = internal)
 }
 
+#' Extract edge names from `pfc` object 
+#'
+#' @param x `pfc` object
+#'
+#' @return A character vector of edge names
+#' @export
+#'
+#' @examples
+#' pf_edge_names(rpfc(100))
+pf_edge_names <- function(x) {
+  edge_names(x)
+}
+
+
+#' Extract mean edge features from `pfc` object 
+#'
+#' @param x `pfc` object
+#'
+#' @return A numeric vector of mean edge features
+#' @export
+#'
+#' @examples
+#' pf_mean_edge_features(rpfc(100))
+pf_mean_edge_features <- function(x) {
+  edge_lengths(x, mean)
+}
+
+#' @export
+`[.pfc` <- function(x, i, j = NULL) {
+  if(is.character(i)) {
+    i <- vec_match(i, field(x, "pfn"))
+    return(NextMethod("["))
+  } else {
+    if(is.null(j)) {
+      return(NextMethod("["))
+    }
+  }
+}
+
+#' Extract `pfp` object from `pfc`, the paths of
+#' each flow from root to terminal node.
+#'
+#' @param x A `pfc` object
+#'
+#' @return A `pfp` object
+#' @export
+#'
+#' @examples
+#' pf_path(rpfc(100))
+pf_path <- function(x) {
+  field(x, "pfp")
+}

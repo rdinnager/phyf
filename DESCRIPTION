@@ -31,7 +31,9 @@ Imports:
     methods,
     inlabru,
     colourvalues,
-    scales
+    scales,
+    viridis,
+    ggplot2
 Suggests: 
     cli,
     knitr,
