@@ -7,6 +7,7 @@ library(fasterize)
 library(raster)
 library(readr)
 library(exactextractr)
+library(tidyr)
 
 avonet_tree <- ape::read.nexus("extdata/HackettStage1_0001_1000_MCCTreeTargetHeights.nex")
 avonet_dat <- readr::read_csv("extdata/AVONET3_BirdTree.csv")
@@ -17,6 +18,25 @@ avonet <- avonet %>%
               mutate(label = gsub(" ", "_", Species3)))
 
 usethis::use_data(avonet, overwrite = TRUE)
+
+#### 3d bird beak latent codes ############
+
+codes <- readr::read_rds("extdata/latent_code_reconstructions.rds")
+bird_tree <- ape::read.tree("extdata/Stage2_MayrParSho_Ericson_set1_decisive.tre")
+bird_tree <- bird_tree[[1]]
+
+tree_beaks <- ape::drop.tip(bird_tree, which(!bird_tree$tip.label %in% codes$Binomal_Jetz))
+
+bird_beak_codes <- pf_as_pf(tree_beaks)
+
+codes <- codes %>%
+  dplyr::select(label = Binomal_Jetz, Common_name = English.x,
+               Sex, Scientific, Clade:BLFamilyEnglish,
+               Order:latent_code)
+code_dat <- unnest_wider(codes, latent_code, names_sep = "_")
+
+bird_beak_codes <- bird_beak_codes %>%
+  dplyr::left_join(code_dat)
 
 #### Uyeda et al data ############
 
