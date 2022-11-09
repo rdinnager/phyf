@@ -25,6 +25,9 @@
     <loc>https://rdinnager.github.io/phyf/index.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/phyf/reference/autoplot.pf.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/phyf/reference/avonet.html</loc>
   </url>
   <url>
@@ -61,6 +64,9 @@
     <loc>https://rdinnager.github.io/phyf/reference/pf_edge_apply.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_edge_names.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_flow_cumsum.html</loc>
   </url>
   <url>
@@ -73,7 +79,16 @@
     <loc>https://rdinnager.github.io/phyf/reference/pf_internal.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_is_desc.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_labels.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_mean_edge_features.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_mrca.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_nedges.html</loc>
@@ -83,6 +98,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_ones.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_path.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_phyloflow.html</loc>
@@ -95,6 +113,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_second_order.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_standardise.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_tips.html</loc>
@@ -118,10 +139,16 @@
     <loc>https://rdinnager.github.io/phyf/reference/pipe.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/phyf/reference/plot.pf.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/phyf/reference/primate_diet.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/primate_diet_hierarchy.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/rpfc.html</loc>
