@@ -38,6 +38,8 @@ code_dat <- unnest_wider(codes, latent_code, names_sep = "_")
 bird_beak_codes <- bird_beak_codes %>%
   dplyr::left_join(code_dat)
 
+usethis::use_data(bird_beak_codes, overwrite = TRUE)
+
 #### Uyeda et al data ############
 
 vert_tree <- ape::read.tree("extdata/vertTree.tre")
