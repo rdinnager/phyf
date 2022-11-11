@@ -4,16 +4,16 @@
 \alias{plot.pf}
 \title{Make a plot for a \code{pf} object}
 \usage{
-\method{plot}{pf}(object, columns = dplyr::everything(), layout = "fan", ...)
+\method{plot}{pf}(x, columns = dplyr::everything(), layout = "fan", ...)
 }
 \arguments{
-\item{object}{A \code{pf} obect to plot}
-
 \item{columns}{Bare column names of variables to plot with tree.}
 
 \item{layout}{Either 'phylogram' or 'fan'}
 
 \item{...}{Other arguments passed to \code{phytools::contMap()}}
+
+\item{object}{A \code{pf} obect to plot}
 
 \item{direction}{plotting direction for type="phylogram".}
 }
@@ -22,8 +22,4 @@ A \code{phytools::contMap()} object.
 }
 \description{
 Make a plot for a \code{pf} object
-}
-\examples{
-plot(pf(rpfc(100)) \%>\% dplyr::mutate(trait = rnorm(dplyr::n())), trait,
-layout = "rectangular")
 }

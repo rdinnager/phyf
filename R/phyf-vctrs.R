@@ -311,6 +311,7 @@ format.pfc <- function(x, ansi = length(x) <= 100, colour = length(x) <= 25, ...
   ch
 }
 
+#' @importFrom utils head
 #' @export
 obj_print_data.pfc <- function(x, max = 10, ansi = max <= 100, colour = max <= 25, ...) {
   ch <- format(head(x, max), ansi = ansi, colour = colour)
@@ -1173,3 +1174,11 @@ pf_mean_edge_features <- function(x) {
 pf_path <- function(x) {
   field(x, "pfp")
 }
+
+#' @export
+pf_is_tips <- function(x, ...) {
+  
+  field(x, "is_tip")
+  
+}
+  

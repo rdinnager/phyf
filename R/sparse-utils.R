@@ -66,6 +66,7 @@ dimnames_row_kron <- function(x, y) {
 }
 
 #' @importClassesFrom Matrix "dgCMatrix"
+#' @importFrom methods as new
 empty_sparse <- function(nrow = 0, ncol = 0) {
   nrow <- as.integer(nrow)
   ncol <- as.integer(ncol)

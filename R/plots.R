@@ -61,12 +61,10 @@ autoplot.pf <- function(object, columns = dplyr::everything(), layout = "circula
 #'
 #' @return A `phytools::contMap()` object.
 #' @export 
-#'
-#' @examples
-#' plot(pf(rpfc(100)) %>% dplyr::mutate(trait = rnorm(dplyr::n())), trait,
-#' layout = "rectangular")
-plot.pf <- function(object, columns = dplyr::everything(), 
+plot.pf <- function(x, columns = dplyr::everything(), 
                         layout = "fan", ...) {
+  
+  object <- x
   
   sel <- dplyr::select(object, {{ columns }})
   
