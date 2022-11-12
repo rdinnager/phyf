@@ -7,15 +7,13 @@
 \method{plot}{pf}(x, columns = dplyr::everything(), layout = "fan", ...)
 }
 \arguments{
+\item{x}{A \code{pf} obect to plot}
+
 \item{columns}{Bare column names of variables to plot with tree.}
 
 \item{layout}{Either 'phylogram' or 'fan'}
 
 \item{...}{Other arguments passed to \code{phytools::contMap()}}
-
-\item{object}{A \code{pf} obect to plot}
-
-\item{direction}{plotting direction for type="phylogram".}
 }
 \value{
 A \code{phytools::contMap()} object.

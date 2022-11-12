@@ -8,6 +8,8 @@ pf_as_pf(x, ...)
 }
 \arguments{
 \item{x}{An object to convert}
+
+\item{...}{Other arguments pass to or from other methods.}
 }
 \value{
 a \code{pf} object with branch lengths as features

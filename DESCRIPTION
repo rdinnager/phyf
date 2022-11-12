@@ -21,16 +21,13 @@ Imports:
     phytools,
     pillar,
     purrr,
-    stringr,
     tibble,
     vctrs,
-    withr,
     rlang,
     magrittr,
     dplyr,
     methods,
     inlabru,
-    colourvalues,
     scales,
     viridis,
     ggplot2,
@@ -39,7 +36,8 @@ Imports:
 Suggests: 
     cli,
     knitr,
-    rmarkdown
+    rmarkdown,
+    withr
 VignetteBuilder: knitr
 URL: https://rdinnager.github.io/phyf/
 Depends: 

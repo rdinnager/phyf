@@ -13,11 +13,16 @@
 )
 }
 \arguments{
-\item{object}{}
+\item{object}{A \code{pf} object to plot}
 
-\item{...}{}
+\item{columns}{Columns to plot along with the phylogeny.
+Can use bare column names or any other \code{tidyselect} syntax}
 
-\item{element}{}
+\item{layout}{\code{ggtree::ggtree()} layout to use.}
+
+\item{suppress_tiplabels}{If \code{TRUE}, don't draw tip labels.}
+
+\item{...}{Other arguments passed to or from other methods.}
 }
 \value{
 A \code{ggplot} object.

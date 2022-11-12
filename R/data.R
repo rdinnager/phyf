@@ -100,8 +100,7 @@
 #' }
 #' @source <https://zslpublications.onlinelibrary.wiley.com/doi/full/10.1111/acv.12823>
 #' @references Machado, F. F., Jardim, L., Dinnage, R., Brito, D., & Cardillo, M. (2022). Diet disparity and diversity predict extinction risk in primates. Animal Conservation.
-"primate_diet_hierarchy"
-
+"primate_diet_refs"
 
 #' Terrestrial Mammal Bioegeography Data with Phylogeny
 #'
@@ -144,3 +143,60 @@
 #' }
 #' @source <https://ecoregions.appspot.com>
 "ecoregion_ids"
+
+#' Dataset of latent codes representing bird beak 3D shapes
+#'
+#' A deep learning model was trained on the signed distance field of
+#' 3d bird beak scans. This dataset contain the learned latent codes that
+#' produce the bird beak shapes when passed through the trained companion
+#' neural network. The trained neural network is available from `load_model()`
+#' #d scans used to train the model were retrieved from the MarkMyBird project
+#' dataset (https://www.markmybird.org/).
+#'
+#' @format ## `bird_beak_codes`
+#' A 'pf' data frame (subclasses `tibble`) with 4,040 rows and 80 columns:
+#' \describe{
+#'   \item{label}{Node labels including species name for the tip labels}
+#'   \item{is_tip}{Logical specifying whether the row represents a tip on the phylogeny}
+#'   \item{phlo}{The phylogenetic flow column which stores the phylogenetic information}
+#'   \item{Common_name}{The English common name for the bird species}
+#'   \item{Scientific}{The scientific name for the bird species}
+#'   \item{Clade}{Various traits of the bird species, see Source section to get more detailed information}
+#'   \item{BLFamilyLatin}{Taxonomic family latin name}
+#'   \item{BLFamilyEnglish}{Taxonomic family English common name}
+#'   \item{Order}{Taxonomic order}
+#'   \item{OscSubOsc}{Oscine or Sub-Oscine}
+#'   \item{X and Y}{Two dimensional UMAP dimension reduction of the 64 latent variables}
+#'   \item{X0, Y0, and Z0}{Three dimensional UMAP dimension reduction of the 64 latent variables}
+#'   \item{latent_code_1:latent_code_63}{64 latent codes representing bird bealk shapes, estimated using a autodecoder neural network architecture}
+#' }
+"bird_beak_codes"
+
+#' Dataset of latent codes representing bird beak 3D shapes
+#'
+#' A deep learning model was trained on the signed distance field of
+#' 3d bird beak scans. This dataset contain the learned latent codes that
+#' produce the bird beak shapes when passed through the trained companion
+#' neural network. The trained neural network is available from `load_model()`
+#' #d scans used to train the model were retrieved from the MarkMyBird project
+#' dataset (https://www.markmybird.org/).
+#'
+#' @format ## `plant_fungus`
+#' A 'pf' data frame (subclasses `tibble`) with 4,040 rows and 80 columns:
+#' \describe{
+#'   \item{label}{Node labels including species name for the tip labels}
+#'   \item{is_tip}{Logical specifying whether the row represents a tip on the phylogeny}
+#'   \item{phlo}{The phylogenetic flow column which stores the phylogenetic information}
+#'   \item{Common_name}{The English common name for the bird species}
+#'   \item{Scientific}{The scientific name for the bird species}
+#'   \item{Clade}{Various traits of the bird species, see Source section to get more detailed information}
+#'   \item{BLFamilyLatin}{Taxonomic family latin name}
+#'   \item{BLFamilyEnglish}{Taxonomic family English common name}
+#'   \item{Order}{Taxonomic order}
+#'   \item{OscSubOsc}{Oscine or Sub-Oscine}
+#'   \item{X and Y}{Two dimensional UMAP dimension reduction of the 64 latent variables}
+#'   \item{X0, Y0, and Z0}{Three dimensional UMAP dimension reduction of the 64 latent variables}
+#'   \item{latent_code_1:latent_code_63}{64 latent codes representing bird bealk shapes, estimated using a autodecoder neural network architecture}
+#' }
+#' @source <https://datadryad.org/stash/dataset/doi:10.5061/dryad.723m1>
+"plant_fungus"

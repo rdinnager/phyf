@@ -1,4 +1,15 @@
+#' Calculate a kronecker product when a `pfc` is the 
+#' multiplicand or the multiplier.
+#'
+#' @param x The kronecker multiplicand.
+#' @param y The kronecker multiplier.
+#' @param ... Other arguments passed to or from other methods.
+#'
+#' @return A `pfc` object
 #' @export
+#'
+#' @examples
+#' pf_kronecker(rpfc(20), rpfc(20))
 pf_kronecker <- function(x, y, ...) {
   UseMethod("pf_kronecker")
 }
@@ -173,9 +184,18 @@ pf_kronecker.Matrix.pfc <- function(x, y, ...) {
 }
 
 
-########## row_kron ############
-
+#' Calculate a rowwise kronecker product when the multiplicand or multiplier
+#' is a `pfc`.
+#'
+#' @param x The rowwise kronecker multiplicand
+#' @param y The rowwise kronecker multiplier
+#' @param ... Other arguments passed to or from other methods.
+#'
+#' @return A `pfc` object.
 #' @export
+#'
+#' @examples
+#' pf_row_kron(rpfc(20), rpfc(20))
 pf_row_kron <- function(x, y, ...) {
   UseMethod("pf_row_kron")
 }
@@ -298,7 +318,7 @@ pf_row_kron.pfc.Matrix <- function(x, y, ...) {
   rownames(m) <- new_names$rownames
   colnames(m) <- new_names$colnames
   
-  pf_as_pfc(m, is_tip = new_is_tip, internal = internal)
+  pf_as_pfc(m, is_tip = new_is_tip, internal = new_internal)
 }
 
 
@@ -335,7 +355,7 @@ pf_row_kron.matrix.pfc <- function(x, y, ...) {
   rownames(m) <- new_names$rownames
   colnames(m) <- new_names$colnames
   
-  pf_as_pfc(m, is_tip = new_is_tip, internal = internal)
+  pf_as_pfc(m, is_tip = new_is_tip, internal = new_internal)
 }
 
 #' @method pf_row_kron.Matrix pfc

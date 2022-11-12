@@ -1,3 +1,8 @@
+#' Make a phylogenetic interpolation `pfc`
+#' 
+#' @param x A `pfc` or `pf` object 
+#' @param ... Other arguments passed to or from other methods
+#'
 #' @export
 make_interp <- function(x, ...) {
   UseMethod("make_interp")

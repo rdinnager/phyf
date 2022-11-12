@@ -4,9 +4,12 @@ ggplot2::autoplot
 
 #' Make an automatic `ggplot2` plot for a `pf` object
 #'
-#' @param object 
-#' @param element 
-#' @param ... 
+#' @param object A `pf` object to plot
+#' @param columns Columns to plot along with the phylogeny.
+#' Can use bare column names or any other `tidyselect` syntax 
+#' @param layout `ggtree::ggtree()` layout to use.
+#' @param suppress_tiplabels If `TRUE`, don't draw tip labels.
+#' @param ... Other arguments passed to or from other methods.
 #'
 #' @return A `ggplot` object.
 #' @export
@@ -53,10 +56,9 @@ autoplot.pf <- function(object, columns = dplyr::everything(), layout = "circula
 
 #' Make a plot for a `pf` object
 #'
-#' @param object A `pf` obect to plot
+#' @param x A `pf` obect to plot
 #' @param columns Bare column names of variables to plot with tree.
 #' @param layout Either 'phylogram' or 'fan'
-#' @param direction plotting direction for type="phylogram".
 #' @param ... Other arguments passed to `phytools::contMap()`
 #'
 #' @return A `phytools::contMap()` object.

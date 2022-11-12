@@ -590,6 +590,7 @@ pf <- function(x = pfc(), pf_column = "phlo", ...) {
 #' Convert an object to a `pf` object
 #'
 #' @param x An object to convert
+#' @param ... Other arguments pass to or from other methods.
 #'
 #' @return a `pf` object with branch lengths as features
 #' @export
@@ -1175,7 +1176,14 @@ pf_path <- function(x) {
   field(x, "pfp")
 }
 
+#' Return a logical vector which is `TRUE` for the elements
+#' of a `pfc` whci reprsent tips of a phylogeny
+#' @param x A `pfc` object.
+#' @param ... Other arguments passed to or from other methods
+#'
 #' @export
+#' @examples
+#' pf_is_tips(rpfc(100)) 
 pf_is_tips <- function(x, ...) {
   
   field(x, "is_tip")
