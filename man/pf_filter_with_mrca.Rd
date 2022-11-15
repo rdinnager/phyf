@@ -31,5 +31,5 @@ of \code{descendents}
 }
 \examples{
 avonet \%>\% 
-    pf_filter_with_mrca(c("Platalea_minor", "Pelecanus_occidentalis"))
+    pf_filter_with_mrca(label \%in\% c("Platalea_minor", "Pelecanus_occidentalis"))
 }
