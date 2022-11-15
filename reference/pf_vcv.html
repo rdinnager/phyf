@@ -77,64 +77,64 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">pf_vcv</span><span class="op">(</span><span class="fu"><a href="rpfc.html">rpfc</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18 x 18 sparse Matrix of class "dgCMatrix"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    [[ suppressing 18 column names ‘t7’, ‘t3’, ‘t5’ ... ]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t7    2.404172 2.283026 2.283026 2.283026 2.283026 2.162691 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t3    2.283026 2.404172 2.340322 2.340322 2.340322 2.162691 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t5    2.283026 2.340322 2.404172 2.397673 2.353949 2.162691 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t1    2.283026 2.340322 2.397673 2.404172 2.353949 2.162691 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t6    2.283026 2.340322 2.353949 2.353949 2.404172 2.162691 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t10   2.162691 2.162691 2.162691 2.162691 2.162691 2.404172 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t4    .        .        .        .        .        .        2.404172 2.335447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t8    .        .        .        .        .        .        2.335447 2.404172</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t2    .        .        .        .        .        .        2.241585 2.241585</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t9    .        .        .        .        .        .        2.192722 2.192722</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node2 2.162691 2.162691 2.162691 2.162691 2.162691 2.162691 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node3 .        .        .        .        .        .        2.192722 2.192722</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node4 .        .        .        .        .        .        2.241585 2.241585</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node5 2.283026 2.283026 2.283026 2.283026 2.283026 2.162691 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node6 .        .        .        .        .        .        2.335447 2.335447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node7 2.283026 2.340322 2.340322 2.340322 2.340322 2.162691 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node8 2.283026 2.340322 2.353949 2.353949 2.353949 2.162691 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node9 2.283026 2.340322 2.397673 2.397673 2.353949 2.162691 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t7    .        .        2.162691 .        .        2.283026 .        2.283026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t3    .        .        2.162691 .        .        2.283026 .        2.340322</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t5    .        .        2.162691 .        .        2.283026 .        2.340322</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t1    .        .        2.162691 .        .        2.283026 .        2.340322</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t6    .        .        2.162691 .        .        2.283026 .        2.340322</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t10   .        .        2.162691 .        .        2.162691 .        2.162691</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t4    2.241585 2.192722 .        2.192722 2.241585 .        2.335447 .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t8    2.241585 2.192722 .        2.192722 2.241585 .        2.335447 .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t2    2.404172 2.192722 .        2.192722 2.241585 .        2.241585 .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t9    2.192722 2.404172 .        2.192722 2.192722 .        2.192722 .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node2 .        .        2.162691 .        .        2.162691 .        2.162691</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node3 2.192722 2.192722 .        2.192722 2.192722 .        2.192722 .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node4 2.241585 2.192722 .        2.192722 2.241585 .        2.241585 .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node5 .        .        2.162691 .        .        2.283026 .        2.283026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node6 2.241585 2.192722 .        2.192722 2.241585 .        2.335447 .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node7 .        .        2.162691 .        .        2.283026 .        2.340322</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node8 .        .        2.162691 .        .        2.283026 .        2.340322</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node9 .        .        2.162691 .        .        2.283026 .        2.340322</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t7    2.283026 2.283026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t3    2.340322 2.340322</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t5    2.353949 2.397673</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t1    2.353949 2.397673</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t6    2.353949 2.353949</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t10   2.162691 2.162691</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t4    .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t8    .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t2    .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t9    .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node2 2.162691 2.162691</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node3 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node4 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node5 2.283026 2.283026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node6 .        .       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node7 2.340322 2.340322</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node8 2.353949 2.353949</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Node9 2.353949 2.397673</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    [[ suppressing 18 column names ‘t6’, ‘t2’, ‘t4’ ... ]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t6    2.304726 2.264460 2.043202 1.806916 .         .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t2    2.264460 2.304726 2.043202 1.806916 .         .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t4    2.043202 2.043202 2.304726 1.806916 .         .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t10   1.806916 1.806916 1.806916 2.304726 .         .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t8    .        .        .        .        2.3047259 1.5591918 0.5791807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t5    .        .        .        .        1.5591918 2.3047259 0.5791807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t3    .        .        .        .        0.5791807 0.5791807 2.3047259</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t1    .        .        .        .        0.5791807 0.5791807 2.2758339</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t7    .        .        .        .        0.5791807 0.5791807 2.2550617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t9    .        .        .        .        0.5791807 0.5791807 2.2550617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node2 .        .        .        .        0.5791807 0.5791807 0.5791807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node3 .        .        .        .        1.5591918 1.5591918 0.5791807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node4 1.806916 1.806916 1.806916 1.806916 .         .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node5 2.043202 2.043202 2.043202 1.806916 .         .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node6 .        .        .        .        0.5791807 0.5791807 2.2550617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node7 2.264460 2.264460 2.043202 1.806916 .         .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node8 .        .        .        .        0.5791807 0.5791807 2.2758339</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node9 .        .        .        .        0.5791807 0.5791807 2.2550617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t6    .         .         .         .         .         1.806916 2.043202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t2    .         .         .         .         .         1.806916 2.043202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t4    .         .         .         .         .         1.806916 2.043202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t10   .         .         .         .         .         1.806916 1.806916</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t8    0.5791807 0.5791807 0.5791807 0.5791807 1.5591918 .        .       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t5    0.5791807 0.5791807 0.5791807 0.5791807 1.5591918 .        .       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t3    2.2758339 2.2550617 2.2550617 0.5791807 0.5791807 .        .       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t1    2.3047259 2.2550617 2.2550617 0.5791807 0.5791807 .        .       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t7    2.2550617 2.3047259 2.2917351 0.5791807 0.5791807 .        .       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t9    2.2550617 2.2917351 2.3047259 0.5791807 0.5791807 .        .       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node2 0.5791807 0.5791807 0.5791807 0.5791807 0.5791807 .        .       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node3 0.5791807 0.5791807 0.5791807 0.5791807 1.5591918 .        .       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node4 .         .         .         .         .         1.806916 1.806916</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node5 .         .         .         .         .         1.806916 2.043202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node6 2.2550617 2.2550617 2.2550617 0.5791807 0.5791807 .        .       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node7 .         .         .         .         .         1.806916 2.043202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node8 2.2758339 2.2550617 2.2550617 0.5791807 0.5791807 .        .       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node9 2.2550617 2.2917351 2.2917351 0.5791807 0.5791807 .        .       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t6    .         2.264460 .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t2    .         2.264460 .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t4    .         2.043202 .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t10   .         1.806916 .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t8    0.5791807 .        0.5791807 0.5791807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t5    0.5791807 .        0.5791807 0.5791807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t3    2.2550617 .        2.2758339 2.2550617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t1    2.2550617 .        2.2758339 2.2550617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t7    2.2550617 .        2.2550617 2.2917351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> t9    2.2550617 .        2.2550617 2.2917351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node2 0.5791807 .        0.5791807 0.5791807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node3 0.5791807 .        0.5791807 0.5791807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node4 .         1.806916 .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node5 .         2.043202 .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node6 2.2550617 .        2.2550617 2.2550617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node7 .         2.264460 .         .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node8 2.2550617 .        2.2758339 2.2550617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Node9 2.2550617 .        2.2550617 2.2917351</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
