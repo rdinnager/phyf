@@ -1189,4 +1189,13 @@ pf_is_tips <- function(x, ...) {
   field(x, "is_tip")
   
 }
+
+drop_zero_edges <- function(x, ...) {
+  m <- pf_as_sparse(x)
+  internal <- attr(x, "internal")
+  zero_br <- Matrix::colSums(m) != 0
+  m <- m[ , zero_br]
+  pf_as_pfc(m, internal = internal[zero_br],
+            is_tip = field(x, "is_tip"))
+}
   

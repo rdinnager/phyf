@@ -17,7 +17,7 @@ ggplot2::autoplot
 #' @examples
 #' autoplot(pf(rpfc(100)) %>% dplyr::mutate(trait = rnorm(dplyr::n())), trait,
 #' layout = "rectangular")
-autoplot.pf <- function(object, columns = dplyr::everything(), layout = "circular",
+autoplot.pf <- function(object, columns = NULL, layout = "circular",
                         suppress_tiplabels = FALSE, ...) {
   
   sel <- dplyr::select(object, {{ columns }})
@@ -25,13 +25,33 @@ autoplot.pf <- function(object, columns = dplyr::everything(), layout = "circula
   ob <- phyf::pf_phyloflow(object)
   tree <- phyf::pf_as_phylo(ob)
   
+  if(length(sel) == 0) {
+    p1 <- ggtree::ggtree(tree) 
+    if(length(tree_df$label[tree_df$isTip]) < 200 && !suppress_tiplabels) {
+      p1 <- p1 + + ggtree::geom_tiplab()
+    }
+    return(p1)
+  }
+  
   tree_df <- ggtree::fortify(tree)
   
-  if(ncol(sel) == 1 && (nrow(tree_df) == length(ob) + 1 || nrow(tree_df) == length(ob))) {
-    tree_df <- tree_df %>%
+  tree_df <- tree_df %>%
       dplyr::left_join(sel %>%
                          dplyr::mutate(label = phyf::pf_labels(ob)),
                        by = "label")
+  
+  if(ncol(sel) == 1 && (nrow(tree_df) == length(ob) + 1 || nrow(tree_df) == length(ob))) {
+    
+    if(all(is.na(unlist(sel)[!pf_is_tips(ob)]))) {
+      p1 <- ggtree::ggtree(tree_df, layout = layout, ladderize = FALSE, size = 2.2) + 
+        ggtree::geom_tippoint(colour = "black",
+                              size = 2.8) +
+        ggtree::geom_tippoint(ggplot2::aes(color = {{ columns }}),
+                              size = 2) +
+        ggplot2::scale_color_viridis_c() +
+        ggplot2::theme(legend.position = c(.05, .85))
+      return(p1)
+    }
     
     p1 <- ggtree::ggtree(tree_df, layout = layout, ladderize = FALSE, size = 2.2) + 
       ggtree::geom_tree(ggplot2::aes(color = {{ columns }}), continuous = 'colour', size = 1.4) +  
@@ -63,7 +83,7 @@ autoplot.pf <- function(object, columns = dplyr::everything(), layout = "circula
 #'
 #' @return A `phytools::contMap()` object.
 #' @export 
-plot.pf <- function(x, columns = dplyr::everything(), 
+plot.pf <- function(x, columns = NULL, 
                         layout = "fan", ...) {
   
   object <- x
@@ -72,6 +92,15 @@ plot.pf <- function(x, columns = dplyr::everything(),
   
   ob <- phyf::pf_phyloflow(object)
   tree <- phyf::pf_as_phylo(ob)
+  
+  if(length(sel) == 0) {
+    if(length(tree$tip.label) > 200) {
+      p1 <- plot(tree, show.tip.label = FALSE, ...)
+    } else {
+      p1 <- plot(tree, ...)
+    }
+    return(invisible(p1))
+  }
   
   total_nodes <- tree$Nnode + length(tree$tip.label)
   
@@ -111,7 +140,6 @@ plot.pf <- function(x, columns = dplyr::everything(),
     
   }
   
-  p1
   
 }
 

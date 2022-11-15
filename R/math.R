@@ -528,3 +528,19 @@ vec_math_sparse <- function(fn, x) {
   math_fn <- getExportedValue("base", fn)
   math_fn(x)
 }
+
+#' Calculate phylogenetic variance covariance matrix from `pfc`
+#'
+#' @param x A `pfc` object
+#' @param ... Other arguments for future extensions.
+#'
+#' @return A `sparseMatrix`
+#' @export
+#'
+#' @examples
+#' pf_vcv(rpfc(10))
+pf_vcv <- function(x, ...) {
+  m <- pf_as_sparse(sqrt(x))
+  covar <- m %*% Matrix::t(m)
+  covar
+}

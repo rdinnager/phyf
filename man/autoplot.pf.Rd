@@ -6,7 +6,7 @@
 \usage{
 \method{autoplot}{pf}(
   object,
-  columns = dplyr::everything(),
+  columns = NULL,
   layout = "circular",
   suppress_tiplabels = FALSE,
   ...
