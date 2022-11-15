@@ -10,10 +10,10 @@
     <loc>https://rdinnager.github.io/phyf/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://rdinnager.github.io/phyf/articles/getting_started.html</loc>
+    <loc>https://rdinnager.github.io/phyf/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://rdinnager.github.io/phyf/articles/index.html</loc>
+    <loc>https://rdinnager.github.io/phyf/articles/phyf.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/articles/phyf_arith.html</loc>
@@ -71,6 +71,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_edge_names.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_filter_with_mrca.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_flow_cumsum.html</loc>
@@ -134,6 +137,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_tips.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_vcv.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_zeros.html</loc>

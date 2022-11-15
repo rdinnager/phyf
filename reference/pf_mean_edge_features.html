@@ -18,13 +18,15 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/phyf.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/getting_started.html">Getting Started with {phyf}</a>
     <a class="dropdown-item" href="../articles/phyf_arith.html">Tree Arithmetic with Phylogenetic Flows</a>
   </div>
 </li>
@@ -69,71 +71,71 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">pf_mean_edge_features</span><span class="op">(</span><span class="fu"><a href="rpfc.html">rpfc</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            1            2            3            4            5            6 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.278689e+00 2.746765e+00 4.668925e-01 1.240151e-01 2.864161e-03 2.791535e-01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5.6109206524 6.7435255871 0.1311119634 0.3218439061 0.0018216782 0.0018216782 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            7            8            9           10           11           12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8.539790e-02 8.118748e-02 3.346883e-02 6.601436e-03 2.993769e-02 5.830637e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.1621299330 0.1677876596 0.0247659613 0.0247659613 0.0304236880 0.0301806732 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           13           14           15           16           17           18 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.310725e-02 5.848170e-04 2.352224e-02 2.352224e-02 9.998004e-04 9.998004e-04 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0002430148 0.0002430148 1.4399912894 0.8560541613 0.1163284511 0.3901495314 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           19           20           21           22           23           24 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3.070296e-03 3.070296e-03 7.621642e-03 3.232871e-02 2.252205e-02 1.826513e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.1914587848 0.0921298257 0.0278595726 0.0195050845 0.0008671260 0.0269596033 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           25           26           27           28           29           30 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6.441941e-03 6.441941e-03 2.185017e-03 2.185017e-03 2.258517e-01 2.828483e-01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0665168291 0.0404128611 0.0080452616 0.0086294756 0.0169486905 0.0224299762 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           31           32           33           34           35           36 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9.106868e-03 1.085117e-01 2.655883e-03 2.655883e-03 1.020607e-01 6.662351e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0054812857 0.0054812857 0.0021837940 0.0042832149 0.0187309753 0.0187309753 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           37           38           39           40           41           42 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3.257032e-02 3.040506e-02 1.953000e-03 5.032142e-03 3.079143e-03 3.079143e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0179164505 0.0088625556 0.0119678406 0.0119678406 0.0029139458 0.0029139458 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           43           44           45           46           47           48 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.866876e-03 2.866876e-03 6.011125e-02 4.749371e-02 6.526122e-02 3.252458e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0049554838 0.0049554838 0.0357634076 0.0112241258 0.0494879138 0.0674349534 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           49           50           51           52           53           54 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4.886452e-02 8.814591e-02 1.818368e-02 2.450716e-02 1.477424e-02 1.477424e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0189057110 0.0094714464 0.0094342646 0.0048268618 0.0046074028 0.0018390404 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           55           56           57           58           59           60 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.329545e-02 2.109771e-02 7.802260e-03 7.802260e-03 4.652674e-02 2.622971e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0016812045 0.0027683624 0.0010871578 0.0010871578 0.0368527506 0.0368527506 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           61           62           63           64           65           66 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.207027e-02 1.962627e-02 9.553292e-03 9.553292e-03 3.809636e-03 7.109286e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0461155655 0.0170827207 0.0447186619 0.0447186619 0.0156858170 0.0156858170 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           67           68           69           70           71           72 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.414108e-03 3.299650e-03 1.885543e-03 1.885543e-03 1.854639e-03 8.882523e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0900774281 0.0717058491 0.0016608215 0.0183715790 0.0014150325 0.0164026951 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           73           74           75           76           77           78 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6.885353e-03 7.027884e-03 1.425313e-04 1.425313e-04 1.080530e-01 1.037656e-01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0003080623 0.0003080623 0.0152957250 0.0152957250 0.0186080416 0.0186080416 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           79           80           81           82           83           84 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4.287373e-03 4.287373e-03 3.355008e-02 2.290835e-02 1.548328e-02 3.068898e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.4838879067 0.2242956777 0.1387703078 0.0015082742 0.0755453060 0.1336999156 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           85           86           87           88           89           90 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4.053535e-04 4.053535e-04 1.561105e-02 1.561105e-02 2.045261e-02 1.531770e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0699202164 0.0902953643 0.0063895093 0.0194317252 0.0146569496 0.0146569496 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           91           92           93           94           95           96 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5.134914e-03 5.134914e-03 1.757686e+00 1.260375e+00 2.175450e-02 2.877244e-01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0276991655 0.0276991655 0.0103342701 0.0544638227 0.0273932376 0.0276222786 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           97           98           99          100          101          102 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.073175e-01 3.830073e-01 3.300568e-02 5.786428e-02 2.485859e-02 1.193105e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0165072740 0.0011448373 0.0153624367 0.0153624367 0.0104111465 0.0167363150 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          103          104          105          106          107          108 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.292755e-02 1.292755e-02 7.750215e-02 2.136347e-01 1.991943e-02 1.991943e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0038404767 0.0063251686 0.0024846919 0.0024846919 0.1825386488 0.0237520785 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          109          110          111          112          113          114 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.282381e-01 1.879476e-02 7.731090e-02 1.372572e-01 5.433791e-03 5.994629e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.1026127489 0.0419508938 0.1168356765 0.1137506242 0.0030850523 0.0030850523 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          115          116          117          118          119          120 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.660231e-02 5.451249e-02 3.791018e-02 3.321448e-02 4.695700e-03 4.695700e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0181882546 0.0194625565 0.0083956519 0.0200692798 0.0166419851 0.0036783428 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          121          122          123          124          125          126 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3.038429e-03 2.781381e-02 2.477538e-02 8.208957e-03 1.656642e-02 5.899297e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0082350542 0.0008641553 0.0120994870 0.0120994870 0.0047285882 0.0017826567 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          127          128          129          130          131          132 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.066712e-02 1.066712e-02 7.068414e-01 5.060697e-01 7.650622e-02 1.508671e-01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0029459314 0.0003962900 0.0025496414 0.0025496414 0.0283156130 0.0283156130 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          133          134          135          136          137          138 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4.140989e-02 4.576828e-02 4.136357e-03 4.136357e-03 5.068821e-03 8.494749e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0350225693 0.0167556775 0.0212298893 0.0212298893 0.0029629976 0.0029629976 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          139          140          141          142          143          144 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3.425927e-03 3.425927e-03 4.871549e-02 1.023958e-01 6.643193e-03 2.186968e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0386224450 0.0771186396 0.0085673440 0.0102170336 0.0262204195 0.0235533577 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          145          146          147          148          149          150 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.522648e-02 5.374218e-03 9.852265e-03 9.852265e-03 6.408920e-02 3.751761e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0099328903 0.0059749457 0.0004114551 0.0024209424 0.0015370022 0.0015370022 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          151          152          153          154          155          156 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.899890e-02 3.803242e-02 9.033523e-03 5.052237e-03 3.423036e-03 3.981286e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0035464895 0.0035464895 0.0001647510 0.0044954222 0.0027704063 0.0027704063 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          157          158          159          160          161          162 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5.582507e-04 4.971555e-05 5.085351e-04 9.647775e-05 4.120574e-04 4.120574e-04 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0071010775 0.0052669485 0.0013753887 0.0018341290 0.0004587403 0.0004587403 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          163          164          165          166          167          168 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.146083e-02 2.435776e-03 9.025056e-03 9.025056e-03 1.466698e-01 1.796444e-01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0017365255 0.0351359376 0.0333994121 0.0002541508 0.0073843527 0.0331452613 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          169          170          171          172          173          174 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6.879788e-03 1.509560e-02 3.654518e-02 3.654518e-02 4.476098e-02 1.973184e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0191177447 0.0257609087 0.0066431640 0.0066431640 0.0021111841 0.0821994762 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          175          176          177          178          179          180 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4.278780e-02 4.278780e-02 4.940473e-02 7.613782e-02 8.477544e-03 8.477544e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0090782765 0.0545092499 0.0080868282 0.0159951179 0.0095839243 0.0025128761 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          181          182          183          184          185          186 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.266056e-02 6.089168e-03 4.376201e-03 6.775218e-03 1.337520e-02 2.234625e-02 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0070710481 0.0070710481 0.0130376848 0.0166144062 0.0008778078 0.0008778078 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          187          188          189          190          191          192 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7.223614e-03 6.100520e-03 2.870528e-03 2.870528e-03 1.747434e-03 1.747434e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0044545292 0.0044545292 0.0710100156 0.0229701489 0.0480398668 0.0260491818 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          193          194          195          196          197          198 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.474527e-02 2.474527e-02 1.255008e-02 2.651898e-03 9.898185e-03 9.898185e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0216046449 0.0219906850 0.0003860401 0.0003860401 0.0162792297 0.0162792297 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

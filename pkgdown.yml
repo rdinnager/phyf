@@ -2,9 +2,9 @@ pandoc: 2.19.2
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
-  getting_started: getting_started.html
+  phyf: phyf.html
   phyf_arith: phyf_arith.html
-last_built: 2022-11-12T04:46Z
+last_built: 2022-11-15T19:22Z
 urls:
   reference: https://rdinnager.github.io/phyf/reference
   article: https://rdinnager.github.io/phyf/articles
