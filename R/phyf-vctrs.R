@@ -1198,4 +1198,13 @@ drop_zero_edges <- function(x, ...) {
   pf_as_pfc(m, internal = internal[zero_br],
             is_tip = field(x, "is_tip"))
 }
+
+drop_root_edges <- function(x, ...) {
+  mrca <- pf_mrca(x)
+  m <- pf_as_sparse(x)
+  internal <- attr(x, "internal")
+  m <- m[ , -1:-mrca]
+  pf_as_pfc(m, internal = internal[-1:-mrca],
+            is_tip = field(x, "is_tip"))
+}
   

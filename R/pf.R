@@ -21,12 +21,14 @@
 #' @examples
 #' avonet %>% 
 #'     pf_filter_with_mrca(label %in% c("Platalea_minor", "Pelecanus_occidentalis"))
-pf_filter_with_mrca <- function(x, descendents, drop_null_edges = TRUE, ...) {
+pf_filter_with_mrca <- function(x, descendents, drop_null_edges = TRUE, 
+                                drop_root_edges = TRUE, ...) {
   UseMethod("pf_filter_with_mrca")
 }
 
 #' @export
-pf_filter_with_mrca.pf <- function(x, descendents, drop_null_edges = TRUE, ...) {
+pf_filter_with_mrca.pf <- function(x, descendents, drop_null_edges = TRUE,
+                                   drop_root_edges = TRUE, ...) {
   pf_col <- attr(x, "pf_column")[1]
   desc <- rlang::eval_tidy(rlang::enquo(descendents), x)
   if(pf_is_pfc(desc)) {
@@ -45,15 +47,23 @@ pf_filter_with_mrca.pf <- function(x, descendents, drop_null_edges = TRUE, ...) 
     res[[pf_col]] <- drop_zero_edges(res[[pf_col]])  
   }
   
+  if(drop_root_edges) {
+    res[[pf_col]] <- drop_root_edges(res[[pf_col]])
+  }
+  
   return(res)
 
 }
 
 #' @export
-pf_filter_with_mrca.pfc <- function(x, descendents, drop_null_edges = TRUE, ...) {
+pf_filter_with_mrca.pfc <- function(x, descendents, drop_null_edges = TRUE,
+                                    drop_root_edges = TRUE, ...) {
   res <- x[pf_is_desc(x, pf_mrca(x[descendents]))]
   if(drop_null_edges) {
     res <- drop_zero_edges(res)  
+  }
+  if(drop_root_edges) {
+    res <- drop_root_edges(res)
   }
   res
 }
