@@ -4,7 +4,13 @@
 \alias{pf_filter_with_mrca}
 \title{Filter descendents of a MRCA}
 \usage{
-pf_filter_with_mrca(x, descendents, drop_null_edges = TRUE, ...)
+pf_filter_with_mrca(
+  x,
+  descendents,
+  drop_null_edges = TRUE,
+  drop_root_edges = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A \code{pf} or \code{pfc} object}
