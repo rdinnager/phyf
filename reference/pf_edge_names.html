@@ -19,24 +19,12 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item">
-  <a class="nav-link" href="../articles/phyf.html">Get started</a>
-</li>
-<li class="active nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
-<li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/phyf_arith.html">Tree Arithmetic with Phylogenetic Flows</a>
-  </div>
+  <a class="external-link nav-link" href="https://rdinnager.github.io/pulling_threads/" aria-label="Blog">Blog</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://rdinnager.github.io/pulling_threads/" aria-label="Blog">Blog</a>
-</li>
-      </ul></div>
+      <ul class="navbar-nav"></ul></div>
 
     
   </div>
@@ -73,31 +61,31 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">pf_edge_names</span><span class="op">(</span><span class="fu"><a href="rpfc.html">rpfc</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "Node2"  "Node8"  "Node51" "Node10" "Node29" "Node14" "Node35" "Node17"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [9] "Node20" "Node43" "Node86" "Node61" "Node87" "Node96" "t16"    "t79"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [17] "t70"    "t99"    "Node95" "t6"     "t92"    "t56"    "Node60" "Node22"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [25] "Node24" "Node38" "t80"    "Node66" "t52"    "Node67" "Node89" "t12"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [33] "t53"    "t100"   "Node32" "Node97" "t28"    "t9"     "Node59" "t63"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [41] "Node72" "Node85" "t54"    "t76"    "Node93" "t41"    "t57"    "t3"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [49] "t82"    "t29"    "t11"    "Node44" "t44"    "Node45" "Node64" "Node63"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [57] "t43"    "t47"    "Node69" "Node82" "t5"     "t42"    "t90"    "t85"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [65] "Node36" "t77"    "t51"    "Node42" "Node65" "Node46" "t61"    "Node53"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [73] "t65"    "Node78" "t71"    "Node81" "t15"    "t84"    "t46"    "t49"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [81] "t26"    "Node90" "t74"    "t94"    "Node6"  "Node3"  "Node5"  "Node4" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [89] "Node9"  "Node13" "Node19" "Node25" "Node41" "Node26" "Node33" "Node28"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [97] "t24"    "Node50" "Node57" "t62"    "Node79" "t60"    "Node91" "t98"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [105] "t8"     "t32"    "t69"    "t89"    "t95"    "t67"    "t14"    "Node23"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [113] "t10"    "t91"    "Node11" "Node37" "t4"     "t73"    "Node70" "Node16"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [121] "Node49" "t88"    "Node52" "Node56" "t20"    "t13"    "Node75" "t25"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [129] "t21"    "t68"    "Node94" "t93"    "t86"    "t2"     "Node7"  "Node12"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] "Node30" "Node15" "Node34" "t37"    "Node68" "t45"    "t17"    "Node77"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [145] "Node92" "t19"    "t96"    "t1"     "Node74" "t35"    "t7"     "Node99"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [153] "t33"    "t78"    "Node21" "Node18" "t66"    "t40"    "Node27" "Node73"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [161] "Node84" "Node83" "t55"    "t81"    "t36"    "t72"    "Node47" "t31"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [169] "Node80" "t87"    "t75"    "Node98" "t48"    "t22"    "Node31" "t64"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [177] "Node54" "Node39" "Node55" "Node40" "Node48" "Node76" "t59"    "t97"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [185] "Node71" "t58"    "t83"    "t34"    "Node58" "t23"    "t39"    "t18"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [193] "Node88" "Node62" "t50"    "t30"    "t27"    "t38"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "Node2"  "Node4"  "Node5"  "Node40" "Node63" "t74"    "t50"    "Node69"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [9] "t100"   "Node83" "t51"    "t95"    "Node7"  "Node6"  "Node8"  "Node36"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [17] "Node64" "t22"    "Node65" "t46"    "t88"    "t68"    "Node9"  "t19"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [25] "Node13" "Node10" "Node55" "t12"    "t10"    "Node57" "t39"    "Node91"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [33] "t62"    "t52"    "t4"     "t1"     "Node71" "Node18" "Node26" "Node21"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [41] "Node98" "Node28" "t77"    "t84"    "t23"    "t17"    "Node43" "Node29"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [49] "t70"    "Node32" "Node33" "Node38" "Node48" "Node77" "t53"    "Node94"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [57] "t16"    "t85"    "t82"    "t71"    "t34"    "Node34" "Node54" "t5"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [65] "Node56" "Node75" "t3"     "t9"     "Node70" "t90"    "Node80" "t15"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [73] "t21"    "t2"     "Node53" "Node49" "Node85" "t14"    "t91"    "Node96"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [81] "t32"    "t65"    "t27"    "t67"    "Node78" "t38"    "t48"    "Node97"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [89] "Node99" "t13"    "t28"    "t54"    "Node3"  "Node50" "Node60" "t97"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [97] "t49"    "t92"    "Node12" "Node11" "t42"    "Node14" "Node23" "Node45"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [105] "Node47" "Node46" "t98"    "t61"    "Node51" "Node66" "Node72" "t93"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [113] "Node74" "Node76" "Node79" "t40"    "t73"    "t96"    "t79"    "t66"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [121] "t76"    "Node73" "Node88" "t80"    "t57"    "t78"    "Node24" "t72"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [129] "Node59" "t30"    "Node68" "t99"    "t58"    "t60"    "Node25" "Node15"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [137] "Node16" "Node17" "Node20" "Node19" "Node41" "t87"    "t41"    "t24"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [145] "Node58" "Node31" "Node87" "Node81" "t94"    "Node92" "t69"    "t81"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [153] "Node89" "t75"    "t33"    "t83"    "t45"    "t7"     "Node30" "Node22"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [161] "Node39" "Node27" "Node37" "Node95" "t18"    "t55"    "t29"    "t6"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [169] "t36"    "t44"    "Node42" "t20"    "Node86" "Node93" "t89"    "t56"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [177] "t31"    "t64"    "Node35" "t37"    "Node61" "Node44" "Node52" "t43"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [185] "t25"    "Node62" "t59"    "t35"    "Node84" "Node67" "t26"    "Node82"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [193] "t11"    "t47"    "Node90" "t63"    "t86"    "t8"    </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
