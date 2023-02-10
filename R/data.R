@@ -1,6 +1,6 @@
 #' AVONET Bird Trait Data with Phylogeny
 #'
-#' The AVONET Bird Trait Database joined to a `pf` object (for `{phyf}`)
+#' The AVONET Bird Trait Database joined to a `pf` object (for `{phyf}`).
 #'
 #' @format ## `avonet`
 #' A 'pf' data frame (subclasses `tibble`) with 13,338 rows and 38 columns:
@@ -11,8 +11,11 @@
 #'   \item{Total.individuals}{Number of individuals used to measure the data}
 #'   \item{Beak.Length_Culmen:Species.Status}{Various traits of the bird species, see Source section to get more detailed information}
 #' }
+#' The tree was from Jetz et al. (2012). I used the same tree as used in Maliet and Morlon (2021).
 #' @source <https://figshare.com/articles/dataset/AVONET_morphological_ecological_and_geographical_data_for_all_birds_Tobias_et_al_2021_Ecology_Letters_/16586228>
-#' @references Tobias JA, Sheard C, Pigot AL, Devenish AJ, Yang J, Sayol F, Neate-Clegg MH, Alioravainen N, Weeks TL, Barber RA, Walkden PA. AVONET: morphological, ecological and geographical data for all birds. Ecology Letters. 2022 Mar 1;25(3):581-97.
+#' @references Tobias JA, Sheard C, Pigot AL, Devenish AJ, Yang J, Sayol F, Neate-Clegg MH, Alioravainen N, Weeks TL, Barber RA, Walkden PA. AVONET: morphological, ecological and geographical data for all birds. Ecology Letters. 2022 Mar 1;25(3):581-97. \cr
+#' Maliet, O., & Morlon, H. (2021). Fast and accurate estimation of species-specific diversification rates using data augmentation. Systematic biology. \cr
+#' Jetz, W., Thomas, G.H., Joy, J.B., Hartmann, K., & Mooers, A.O. (2012). The global diversity of birds in space and time. Nature, 491, 444-448. \cr
 "avonet"
 
 #' Vertebrate Base Metabolic Rates with Phylogeny

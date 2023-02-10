@@ -18,7 +18,9 @@ ggplot2::autoplot
 #' autoplot(pf(rpfc(100)) %>% dplyr::mutate(trait = rnorm(dplyr::n())), trait,
 #' layout = "rectangular")
 autoplot.pf <- function(object, columns = NULL, layout = "circular",
-                        suppress_tiplabels = FALSE, ...) {
+                        suppress_tiplabels = FALSE,
+                        edge_traits = FALSE,
+                        continuous = "colour", ...) {
   
   sel <- dplyr::select(object, {{ columns }})
   
@@ -43,7 +45,8 @@ autoplot.pf <- function(object, columns = NULL, layout = "circular",
   if(ncol(sel) == 1 && (nrow(tree_df) == length(ob) + 1 || nrow(tree_df) == length(ob))) {
     
     if(all(is.na(unlist(sel)[!pf_is_tips(ob)]))) {
-      p1 <- ggtree::ggtree(tree_df, layout = layout, ladderize = FALSE, size = 2.2) + 
+      p1 <- ggtree::ggtree(tree_df, layout = layout, ladderize = FALSE, size = 2.2,
+                           ...) + 
         ggtree::geom_tippoint(colour = "black",
                               size = 2.8) +
         ggtree::geom_tippoint(ggplot2::aes(color = {{ columns }}),
@@ -53,8 +56,13 @@ autoplot.pf <- function(object, columns = NULL, layout = "circular",
       return(p1)
     }
     
+    if(edge_traits) {
+      continuous <- "none"
+    }
+    
     p1 <- ggtree::ggtree(tree_df, layout = layout, ladderize = FALSE, size = 2.2) + 
-      ggtree::geom_tree(ggplot2::aes(color = {{ columns }}), continuous = 'colour', size = 1.4) +  
+      ggtree::geom_tree(ggplot2::aes(color = {{ columns }}), 
+                        continuous = continuous, size = 1.4, ...) +  
       ggplot2::scale_color_viridis_c() +
       ggplot2::theme(legend.position = c(.05, .85)) 
     

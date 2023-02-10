@@ -10,6 +10,7 @@ library(exactextractr)
 library(tidyr)
 
 avonet_tree <- ape::read.nexus("extdata/HackettStage1_0001_1000_MCCTreeTargetHeights.nex")
+avonet_tree <- ape::read.tree("extdata/bird_CLADS.tre")
 avonet_dat <- readr::read_csv("extdata/AVONET3_BirdTree.csv")
 
 avonet <- pf_as_pf(avonet_tree)
