@@ -9,6 +9,8 @@
   columns = NULL,
   layout = "circular",
   suppress_tiplabels = FALSE,
+  edge_traits = FALSE,
+  continuous = "colour",
   ...
 )
 }
@@ -21,6 +23,14 @@ Can use bare column names or any other \code{tidyselect} syntax}
 \item{layout}{\code{ggtree::ggtree()} layout to use.}
 
 \item{suppress_tiplabels}{If \code{TRUE}, don't draw tip labels.}
+
+\item{edge_traits}{A logical indicating whether the continuous avriable
+refers to edge traits, where the edge is determines by the terminal node.
+(default is FALSE, which means the variable refers to a node trait).}
+
+\item{continuous}{continuous transition for selected aesthethic
+('size' or 'color'('colour')). It should be one of 'color' (or 'colour'),
+'size', 'all' and 'none', default is 'colour'.}
 
 \item{...}{Other arguments passed to or from other methods.}
 }

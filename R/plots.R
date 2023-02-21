@@ -9,6 +9,12 @@ ggplot2::autoplot
 #' Can use bare column names or any other `tidyselect` syntax 
 #' @param layout `ggtree::ggtree()` layout to use.
 #' @param suppress_tiplabels If `TRUE`, don't draw tip labels.
+#' @param edge_traits A logical indicating whether the continuous avriable
+#' refers to edge traits, where the edge is determines by the terminal node.
+#' (default is FALSE, which means the variable refers to a node trait).
+#' @param continuous continuous transition for selected aesthethic 
+#' ('size' or 'color'('colour')). It should be one of 'color' (or 'colour'), 
+#' 'size', 'all' and 'none', default is 'colour'.
 #' @param ... Other arguments passed to or from other methods.
 #'
 #' @return A `ggplot` object.

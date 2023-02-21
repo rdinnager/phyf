@@ -24,8 +24,11 @@ or \code{pfc} with all descendents of the mrca.}
 \item{drop_null_edges}{If \code{TRUE} (the default), drop edges with
 no descendants after the filtering.}
 
-\item{...}{Other arguments for future
-extensions.}
+\item{drop_root_edges}{If \code{TRUE} (the default), drop all edges
+leading up to the mrca (e.g. when combined together these would make
+a root edge leading to the desired clade)}
+
+\item{...}{Other arguments for future extensions.}
 }
 \value{
 A \code{pf} or \code{pfc} object

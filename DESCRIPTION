@@ -11,7 +11,7 @@ Description: The {phyf} package implements a tibble and vctrs based object for
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Imports: 
     ape,
     assertthat,
@@ -32,7 +32,7 @@ Imports:
     viridis,
     ggplot2,
     utils,
-    ggtree (>= 3.4.2)
+    ggtree (>= 3.6.1)
 Suggests: 
     cli,
     knitr,
@@ -44,5 +44,3 @@ Depends:
     R (>= 2.10)
 LazyData: true
 LazyDataCompression: bzip2
-Remotes:  
-    YuLab-SMU/ggtree
