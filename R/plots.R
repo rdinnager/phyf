@@ -141,12 +141,14 @@ plot.pf <- function(x, columns = NULL,
       ancs <- ancs[!is.na(ancs)]
     }
     
+    pal <- scales::viridis_pal()
+    
     p1 <- phytools::contMap(tree, tips, 
                             anc.states = ancs,
                             method = method,
                             plot = FALSE,
                             ...)
-    p1 <- phytools::setMap(p1, colors = viridis::viridis(50))
+    p1 <- phytools::setMap(p1, colors = pal(50))
     plot(p1, ftype = ftype, fsize = 1.2,
          type = layout,
          sig = 1,

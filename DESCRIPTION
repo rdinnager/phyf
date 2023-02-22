@@ -29,7 +29,6 @@ Imports:
     methods,
     inlabru,
     scales,
-    viridis,
     ggplot2,
     utils,
     ggtree (>= 3.6.1)
