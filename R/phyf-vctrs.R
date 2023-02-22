@@ -35,8 +35,10 @@ pf_as_pfc.phylo <- function(x, ...) {
   lens <- x2$edge.length[edge_ord]
   
   rtp <- Matrix::t(rtp)[ , -1] 
-  #cnames <- colnames(rtp)
-  rtp <- rtp %*% Matrix::Diagonal(length(lens), lens, names = colnames(rtp))
+  d <- Matrix::Diagonal(length(lens), lens)
+  colnames(d) <- colnames(rtp)
+  
+  rtp <- rtp %*% d
   rtp <- Matrix::drop0(rtp)
   
   zero_br <- Matrix::colSums(rtp) != 0
