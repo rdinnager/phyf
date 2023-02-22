@@ -255,7 +255,7 @@ pf_row_kron.pfc.pfc <- function(x, y, ...) {
   m1 <- pf_as_sparse(x)
   m2 <- pf_as_sparse(y)
 
-  new_is_tip <- field(x, "is_tip") | field(y, "is_tip")
+  new_is_tip <- field(x, "is_tip") & field(y, "is_tip")
   new_internal <- attr(x, "internal") | attr(y, "internal")
   
   m <- force_dgCMatrix(inlabru::row_kron(m1, m2, ...))

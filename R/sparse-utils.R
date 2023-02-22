@@ -20,13 +20,35 @@ added_rows <- function(v) {
   v + 0:(length(v)-1)
 }
 
-split_indexes <- function(x) {
+split_indexes <- function(x, empty = NULL) {
+  
+  if(!is.null(empty)) {
+    empty2 <- Matrix::colSums(x) == 0
+    if(any(empty2)) {
+      x[1, empty2] <- 1e-20
+    }
+  }
   res <- split(x@i + 1, findInterval(seq_len(Matrix::nnzero(x)), x@p, left.open = TRUE))
+  
+  if(!is.null(empty) && any(empty2)) {
+    res[empty2] <- list(empty)
+  }
   res
 }
 
-split_xs <- function(x) {
+split_xs <- function(x, empty = NULL) {
+  ## deal with empty columns
+  if(!is.null(empty)) {
+    empty2 <- Matrix::colSums(x) == 0
+    if(any(empty2)) {
+      x[1, empty2] <- 1e-20
+    }
+  }
   res <- split(x@x, findInterval(seq_len(Matrix::nnzero(x)), x@p, left.open = TRUE))
+  
+  if(!is.null(empty) && any(empty2)) {
+    res[empty2] <- list(empty)
+  }
   res
 }
 

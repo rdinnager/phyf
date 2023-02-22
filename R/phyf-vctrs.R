@@ -34,7 +34,9 @@ pf_as_pfc.phylo <- function(x, ...) {
   
   lens <- x2$edge.length[edge_ord]
   
-  rtp <- Matrix::t(rtp)[ , -1] %*% Matrix::Diagonal(length(lens), lens)
+  rtp <- Matrix::t(rtp)[ , -1] 
+  #cnames <- colnames(rtp)
+  rtp <- rtp %*% Matrix::Diagonal(length(lens), lens, names = colnames(rtp))
   rtp <- Matrix::drop0(rtp)
   
   zero_br <- Matrix::colSums(rtp) != 0
@@ -418,8 +420,8 @@ edge_names <- function(x) {
   attr(x, "edge_names")  
 }
 
-edge_lengths <- function(x, fun) {
-  purrr::map_dbl(split_xs(pf_as_sparse(x)), fun)
+edge_lengths <- function(x, fun, empty = NULL) {
+  purrr::map_dbl(split_xs(pf_as_sparse(x), empty = empty), fun)
 }
 
 tip_names <- function(x) {
@@ -1147,7 +1149,7 @@ pf_edge_names <- function(x) {
 #' @examples
 #' pf_mean_edge_features(rpfc(100))
 pf_mean_edge_features <- function(x) {
-  edge_lengths(x, mean)
+  edge_lengths(x, mean, empty = 0)
 }
 
 #' @export
