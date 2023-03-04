@@ -72,9 +72,18 @@ pf_as_pfc.phylo <- function(x, ...) {
 }
 
 #' @export
-pf_as_pfc.dgCMatrix <- function(x, is_tip = NULL, internal = NULL, ...) {
+pf_as_pfc.Matrix <- function(x, is_tip = NULL, internal = NULL, ...) {
   
   x <- force_dgCMatrix(x)
+  
+  ## deal with possible blank dimnames
+  if(is.null(colnames(x))) {
+    colnames(x) <- paste0("Node", seq_len(ncol(x)))
+  }
+  
+  if(is.null(rownames(x))) {
+    rownames(x) <- paste0("t", seq_len(nrow(x)))
+  }
   
   ## deal with possible empty cols
   empty <- Matrix::rowSums(x) == 0
@@ -97,15 +106,6 @@ pf_as_pfc.dgCMatrix <- function(x, is_tip = NULL, internal = NULL, ...) {
           edge_names,
           internal,
           Matrix::drop0(x, 1e-10))
-  
-}
-
-#' @export
-pf_as_pfc.Matrix <- function(x, is_tip = NULL, internal = NULL, ...) {
-  
-  x <- force_dgCMatrix(x)
-  
-  pf_as_pfc(x, is_tip = is_tip, internal = internal, ...)
   
 }
 

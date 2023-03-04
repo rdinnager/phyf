@@ -17,9 +17,11 @@ pf_filter_with_mrca(
 
 \item{descendents}{An index into a \code{pfc}, using any way
 that you can index a \code{pfc}. \code{filter_with_mrca} will find
-the most recent common ancestor of everyhting in
+the most recent common ancestor of everything in
 \code{descendents} and then it will return a filtered \code{pf}
-or \code{pfc} with all descendents of the mrca.}
+or \code{pfc} with all descendents of the mrca. If of length one,
+it will instead be assumed to be the node name or number representing
+the mrca itself.}
 
 \item{drop_null_edges}{If \code{TRUE} (the default), drop edges with
 no descendants after the filtering.}
