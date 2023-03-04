@@ -78,9 +78,11 @@ of <code>descendents</code></p>
 <dt>descendents</dt>
 <dd><p>An index into a <code>pfc</code>, using any way
 that you can index a <code>pfc</code>. <code>filter_with_mrca</code> will find
-the most recent common ancestor of everyhting in
+the most recent common ancestor of everything in
 <code>descendents</code> and then it will return a filtered <code>pf</code>
-or <code>pfc</code> with all descendents of the mrca.</p></dd>
+or <code>pfc</code> with all descendents of the mrca. If of length one,
+it will instead be assumed to be the node name or number representing
+the mrca itself.</p></dd>
 
 
 <dt>drop_null_edges</dt>
