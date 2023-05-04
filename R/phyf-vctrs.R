@@ -1194,6 +1194,39 @@ pf_is_tips <- function(x, ...) {
   
 }
 
+#' Returns the end edge of each phylogenetic flow as a two-column tibble
+#' with start and end columns
+#'
+#' @param x A pfc object
+#' @param return_names If TRUE, return the start and end node names. If FALSE,
+#' return their indexes.
+#'
+#' @return A `tibble` with start and end nodes
+#' @export
+#'
+#' @examples
+#' pf_ends(rpfc(100))
+pf_ends <- function(x, return_names = TRUE) {
+  
+  inds <- purrr::map(pf_path(x),
+                     ~ c(start = .x[length(.x) - 1],
+                         end = .x[length(.x)]))
+  
+  if(return_names) {
+    edge_nams <- edge_names(x)
+    res <- purrr::map_dfr(inds,
+                          ~ dplyr::tibble(start = edge_nams[.x[1]],
+                                          end = edge_nams[.x[2]]))
+  } else {
+    res <- purrr::map_dfr(inds,
+                          ~ dplyr::tibble(start = .x[1],
+                                          end = .x[2]))
+  }
+  
+  res
+  
+}
+
 drop_zero_edges <- function(x, ...) {
   m <- pf_as_sparse(x)
   internal <- attr(x, "internal")

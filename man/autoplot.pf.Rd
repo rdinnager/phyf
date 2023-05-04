@@ -9,8 +9,11 @@
   columns = NULL,
   layout = "circular",
   suppress_tiplabels = FALSE,
+  suppress_tippoints = FALSE,
   edge_traits = FALSE,
   continuous = "colour",
+  size = 1.4,
+  outline_size = 1.4 * size,
   ...
 )
 }
