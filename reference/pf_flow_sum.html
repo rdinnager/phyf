@@ -81,56 +81,56 @@ sum of each flow's features</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">pf_flow_sum</span><span class="op">(</span><span class="fu"><a href="rpfc.html">rpfc</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      t66      t30      t78      t36       t3      t14      t96      t92 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       t5      t20      t67      t48      t89      t19      t72      t47 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      t83      t33      t82      t54      t57      t84      t25      t81 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       t9      t21      t34      t51      t17      t91      t69      t27 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      t86      t70      t77      t95      t73      t63      t37      t94 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      t26      t23       t7      t68      t32      t56      t11      t41 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      t50      t42      t18      t80       t8      t59      t35      t65 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      t31      t29      t85      t46      t22      t40      t99      t53 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      t15      t55      t45      t76      t74      t90      t58      t93 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      t87       t1       t6      t75      t43      t13      t97      t64 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     t100      t16      t71      t52      t62      t49      t79      t24 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       t4      t98      t28       t2      t39      t61      t88      t60 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 2.434453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      t10      t12      t44      t38    Node2    Node3    Node4    Node5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.434453 2.434453 2.434453 2.434453 1.941345 2.026984 2.030868 2.035258 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Node6    Node7    Node8    Node9   Node10   Node11   Node12   Node13 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.089114 2.136110 2.151827 2.176869 2.181049 2.206921 2.235455 2.260414 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Node14   Node15   Node16   Node17   Node18   Node19   Node20   Node21 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.287451 2.305563 2.314259 2.315909 2.317981 2.323766 2.331340 2.359780 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Node22   Node23   Node24   Node25   Node26   Node27   Node28   Node29 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.365992 2.366324 2.375105 2.377360 2.377699 2.378494 2.385006 2.391002 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Node30   Node31   Node32   Node33   Node34   Node35   Node36   Node37 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.391280 2.391385 2.396131 2.398657 2.398662 2.400894 2.400965 2.401003 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Node38   Node39   Node40   Node41   Node42   Node43   Node44   Node45 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.401573 2.401909 2.401946 2.402180 2.405897 2.406251 2.406449 2.407442 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Node46   Node47   Node48   Node49   Node50   Node51   Node52   Node53 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.408185 2.408198 2.410919 2.411102 2.411368 2.412631 2.415377 2.416347 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Node54   Node55   Node56   Node57   Node58   Node59   Node60   Node61 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.416458 2.416887 2.417398 2.417940 2.418957 2.419249 2.419511 2.420673 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Node62   Node63   Node64   Node65   Node66   Node67   Node68   Node69 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.421544 2.421672 2.422707 2.423069 2.423212 2.423359 2.423413 2.423797 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Node70   Node71   Node72   Node73   Node74   Node75   Node76   Node77 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.424304 2.426318 2.426415 2.426561 2.427060 2.427994 2.428168 2.428416 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Node78   Node79   Node80   Node81   Node82   Node83   Node84   Node85 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.429546 2.429702 2.430370 2.430582 2.431060 2.431249 2.431579 2.431592 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Node86   Node87   Node88   Node89   Node90   Node91   Node92   Node93 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.431753 2.431813 2.432218 2.432305 2.432479 2.432641 2.433356 2.433494 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Node94   Node95   Node96   Node97   Node98   Node99 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2.433642 2.433645 2.433766 2.433976 2.434051 2.434348 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t32       t57       t90       t91       t88       t68       t63        t5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t21       t69       t20       t60       t26        t3       t50       t76 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t66       t23       t45       t83       t72       t33       t74       t31 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        t7       t51        t1       t98       t48       t92       t14       t89 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t40       t86       t17       t16       t58       t79       t11       t18 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t39       t52       t96       t70       t67       t46       t94       t87 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t77       t53       t27       t54       t19        t4       t55       t99 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t97       t84       t75        t2       t24       t37       t41       t62 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t42       t49       t59       t47       t95       t65       t15       t80 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t61        t8       t56       t73       t35       t28       t85        t9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t44       t43       t78       t71       t34       t12      t100       t10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t82        t6       t64       t22       t13       t30       t25       t93 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 0.8988556 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       t81       t38       t36       t29     Node2     Node3     Node4     Node5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8988556 0.8988556 0.8988556 0.8988556 0.5363140 0.5895693 0.6420756 0.7294814 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Node6     Node7     Node8     Node9    Node10    Node11    Node12    Node13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.7362627 0.7367440 0.7533085 0.7608951 0.7739242 0.7920646 0.7962307 0.7964372 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Node14    Node15    Node16    Node17    Node18    Node19    Node20    Node21 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.7993200 0.8050122 0.8057266 0.8093857 0.8163887 0.8232687 0.8247618 0.8250937 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Node22    Node23    Node24    Node25    Node26    Node27    Node28    Node29 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8281490 0.8304630 0.8402150 0.8403820 0.8406586 0.8412735 0.8510377 0.8536674 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Node30    Node31    Node32    Node33    Node34    Node35    Node36    Node37 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8549197 0.8557965 0.8572689 0.8591252 0.8660228 0.8673786 0.8684966 0.8712242 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Node38    Node39    Node40    Node41    Node42    Node43    Node44    Node45 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8723587 0.8729496 0.8735621 0.8737798 0.8738835 0.8739783 0.8751780 0.8759271 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Node46    Node47    Node48    Node49    Node50    Node51    Node52    Node53 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8766448 0.8779169 0.8788896 0.8798288 0.8800202 0.8814499 0.8825869 0.8828088 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Node54    Node55    Node56    Node57    Node58    Node59    Node60    Node61 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8830073 0.8832007 0.8834277 0.8835343 0.8839911 0.8843593 0.8843974 0.8858905 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Node62    Node63    Node64    Node65    Node66    Node67    Node68    Node69 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8860616 0.8865211 0.8867125 0.8874563 0.8882127 0.8883610 0.8883749 0.8887885 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Node70    Node71    Node72    Node73    Node74    Node75    Node76    Node77 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8897670 0.8898109 0.8900546 0.8902539 0.8911100 0.8911308 0.8912433 0.8915836 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Node78    Node79    Node80    Node81    Node82    Node83    Node84    Node85 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8920364 0.8922657 0.8925313 0.8929353 0.8931882 0.8940549 0.8942714 0.8953267 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Node86    Node87    Node88    Node89    Node90    Node91    Node92    Node93 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8953678 0.8954902 0.8956939 0.8957832 0.8962827 0.8966739 0.8974274 0.8975003 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Node94    Node95    Node96    Node97    Node98    Node99 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.8976426 0.8977597 0.8979761 0.8979990 0.8980614 0.8981046 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
