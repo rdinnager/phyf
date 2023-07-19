@@ -4,7 +4,7 @@
 \alias{plot.pf}
 \title{Make a plot for a \code{pf} object}
 \usage{
-\method{plot}{pf}(x, columns = NULL, layout = "fan", ...)
+\method{plot}{pf}(x, columns = NULL, layout = "fan", suppress_tiplabels = FALSE, ...)
 }
 \arguments{
 \item{x}{A \code{pf} obect to plot}
