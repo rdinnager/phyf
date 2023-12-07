@@ -61,6 +61,8 @@
 <span>  is_tip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  edge_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  internal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  node_ord <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  edge_ord <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sparse_mat <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -94,6 +96,18 @@ edges</p></dd>
 <dt>internal</dt>
 <dd><p>A logical vector specifying whether each edge
 is internal (not leading to a tip)</p></dd>
+
+
+<dt>node_ord</dt>
+<dd><p>An optional integer vector specifying an order for the
+nodes. Usually used to store ordering information from another tree
+format such as <code>phylo</code> so it is easier to match data up later.</p></dd>
+
+
+<dt>edge_ord</dt>
+<dd><p>An optional integer vector specifying an order for the
+edges. Usually used to store ordering information from another tree
+format such as <code>phylo</code> so it is easier to match data up later.</p></dd>
 
 
 <dt>sparse_mat</dt>
