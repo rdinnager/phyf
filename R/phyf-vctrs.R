@@ -20,7 +20,16 @@ pf_as_pfc.phylo <- function(x, ...) {
   assertthat::assert_that(inherits(x, "phylo"))
 
   n_nodes <- ape::Ntip(x) + ape::Nnode(x)
-  x <- ape::makeNodeLabel(x)
+  
+  if(is.null(x$node.label)) {
+    x <- ape::makeNodeLabel(x)
+  } else {
+    nn <- ape::makeNodeLabel(x)
+    if(any(is.na(x$node.label))) {
+      x$node.label <- ifelse(is.na(x$node.label, nn$node.label, x$node.label))
+    }
+    x$node.label[nn$node.label == "Node1"] <- "Node1"
+  }
   x2 <- add_internal_tips(x)
   
   edge_ord <- rev(ape::postorder(x2))
@@ -640,7 +649,7 @@ pf_as_phylo <- function(x, ...) {
 }
 
 #' @export
-pf_as_phylo.pfc <- function(x, ...) {
+pf_as_phylo.pfc <- function(x, collapse_singletons = TRUE, ...) {
   
   tips <- x[field(x, "is_tip")]
   nodes <- field(tips, "pfp")
@@ -675,7 +684,9 @@ pf_as_phylo.pfc <- function(x, ...) {
   
   class(new_phylo) <- "phylo"
   
-  new_phylo <- ape::collapse.singles(new_phylo, root.edge = TRUE)
+  if(collapse_singletons) {
+    new_phylo <- ape::collapse.singles(new_phylo, root.edge = TRUE)
+  }
   
   # ape::checkValidPhylo(new_phylo)
   # plot(new_phylo)
@@ -1259,5 +1270,20 @@ drop_root_edges <- function(x, ...) {
 pf_is_empty <- function(x, ...) {
   purrr::map_lgl(pf_path(x),
                  purrr::is_empty)
-} 
+}
+
+pf_as_pftibble <- function(x) {
+  paths <- vctrs::field(x, "pfp")
+  res <- dplyr::tibble(path = rep(vctrs::field(x, "pfn"), times = purrr::map_int(paths, length)),
+                       edge = unlist(paths),
+                       val = unlist(vctrs::field(x, "pfl")))
+  
+}
+
+pfc_from_pftibble <- function(pft) {
+  ob <- pft %>%
+    dplyr::group_by(path) %>%
+    dplyr::group_nest()
+  ob2 <- purrr::list_transpose(ob$data)
+}
   

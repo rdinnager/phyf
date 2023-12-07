@@ -31,7 +31,8 @@ Imports:
     scales,
     ggplot2,
     utils,
-    ggtree (>= 3.6.1)
+    ggtree (>= 3.6.1),
+    ivs
 Suggests: 
     cli,
     knitr,
