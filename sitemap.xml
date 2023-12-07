@@ -73,7 +73,13 @@
     <loc>https://rdinnager.github.io/phyf/reference/pf_edge_names.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_edge_segmentize.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_ends.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_epoch_info.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_filter_with_mrca.html</loc>
@@ -92,6 +98,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_is_desc.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/phyf/reference/pf_is_empty.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/phyf/reference/pf_is_tips.html</loc>
