@@ -20,7 +20,14 @@ pf_as_pfc.phylo <- function(x, ...) {
   assertthat::assert_that(inherits(x, "phylo"))
 
   n_nodes <- ape::Ntip(x) + ape::Nnode(x)
-  x <- ape::makeNodeLabel(x)
+  if(is.null(x$node.label)) {
+    x <- ape::makeNodeLabel(x)
+  } else {
+    temp <- ape::makeNodeLabel(x)$node.label
+    x$node.label <- ifelse(is.na(x$node.label), temp, x$node.label)
+    x$node.label <- make.unique(x$node.label)
+  }
+  
   x2 <- add_internal_tips(x)
   
   edge_ord <- rev(ape::postorder(x2))
@@ -61,18 +68,23 @@ pf_as_pfc.phylo <- function(x, ...) {
   
   internal <- edge_names %in% x$node.label
   
+  node_ord <- match(tip_names, c(x$tip.label, x$node.label))
+  edge_ord <- match(edge_names, c(x$tip.label, x$node.label)[x$edge[ , 2]])
+  
   new_pfc(tip_names,
           np,
           el,
           is_tip,
           edge_names,
           internal,
+          node_ord,
+          edge_ord,
           rtp)
   
 }
 
 #' @export
-pf_as_pfc.Matrix <- function(x, is_tip = NULL, internal = NULL, ...) {
+pf_as_pfc.Matrix <- function(x, is_tip = NULL, internal = NULL, node_ord = NULL, edge_ord = NULL, ...) {
   
   x <- force_dgCMatrix(x)
   
@@ -105,6 +117,8 @@ pf_as_pfc.Matrix <- function(x, is_tip = NULL, internal = NULL, ...) {
           is_tip,
           edge_names,
           internal,
+          node_ord,
+          edge_ord,
           Matrix::drop0(x, 1e-10))
   
 }
@@ -125,6 +139,8 @@ new_pfc <- function(pfn = character(),
                     is_tip = logical(),
                     edge_names = character(),
                     internal = logical(),
+                    node_ord,
+                    edge_ord,
                     sparse_mat = NULL) {
   
   if(is.null(sparse_mat)) {
@@ -140,6 +156,8 @@ new_pfc <- function(pfn = character(),
                 is_tip = unname(is_tip)),
            edge_names = edge_names,
            internal = internal,
+           node_ord = node_ord,
+           edge_ord = edge_ord,
            sparse_rep = sparse_mat,
            class = "pfc")
 }
@@ -202,6 +220,12 @@ format.pfp <- function(x, ...) {
 #' @param sparse_mat A sparse matrix representation of the phylogenetic
 #' flow collection. Can be left `NULL`, in which case it is constructed
 #' from the other arguments.
+#' @param node_ord An optional integer vector specifying an order for the
+#' nodes. Usually used to store ordering information from another tree
+#' format such as `phylo` so it is easier to match data up later.
+#' @param edge_ord An optional integer vector specifying an order for the
+#' edges. Usually used to store ordering information from another tree
+#' format such as `phylo` so it is easier to match data up later.
 #'
 #' @return A `pfc` object
 #' @export
@@ -211,6 +235,8 @@ pfc <- function(pfn = character(),
                 is_tip = logical(),
                 edge_names = character(),
                 internal = logical(),
+                node_ord = NULL,
+                edge_ord = NULL,
                 sparse_mat = NULL) {
   
   vec_assert(pfn, character())
@@ -224,8 +250,17 @@ pfc <- function(pfn = character(),
     if(length(pfn) > 0) {
       assertthat::assert_that(inherits(sparse_mat,
                                      "CsparseMatrix"))
+      assertthat::assert_that(nrow(sparse_mat) == length(pfn),
+                              ncol(sparse_mat) == length(edge_names))
     } 
   } 
+  
+  if(!is.null(node_ord)) {
+    vec_assert(node_ord, integer(), length(pfn))
+  }
+  if(!is.null(edge_ord)) {
+    vec_assert(edge_ord, integer(), length(edge_names))
+  }
   
   new_pfc(pfn,
           pfpp,
@@ -233,6 +268,8 @@ pfc <- function(pfn = character(),
           is_tip,
           edge_names,
           internal,
+          node_ord,
+          edge_ord,
           sparse_mat)
 }
 
@@ -359,6 +396,8 @@ vec_restore.pfc <- function(x, to, ..., i = NULL) {
           field(x, "is_tip"),
           edge_names(to),
           internal_edges(to),
+          node_ord(to),
+          edge_ord(to),
           new_sm)
 
 }
@@ -393,6 +432,8 @@ vec_ptype2.pfc.pfc <- function(x, y, ...) {
           field(x, "pfl"), field(x, "is_tip"),
           edge_names(x),
           internal_edges(x),
+          node_ord(x),
+          edge_ord(x),
           pf_as_sparse(x))
 }
 
@@ -420,6 +461,14 @@ vec_ptype_full.pfc <- function(x, ...) {
 
 edge_names <- function(x) {
   attr(x, "edge_names")  
+}
+
+node_ord <- function(x) {
+  attr(x, "node_ord")
+}
+
+edge_ord <- function(x) {
+  attr(x, "edge_ord")
 }
 
 edge_lengths <- function(x, fun, empty = NULL) {
@@ -970,7 +1019,9 @@ refresh_features <- function(x) {
                field(x, "pfl"),
                field(x, "is_tip"),
                edge_names(x),
-               internal_edges(x))
+               internal_edges(x),
+               node_ord(x),
+               edge_ord(x))
 
   p
 }
