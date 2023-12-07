@@ -10,7 +10,7 @@ library(exactextractr)
 library(tidyr)
 
 avonet_tree <- ape::read.nexus("extdata/HackettStage1_0001_1000_MCCTreeTargetHeights.nex")
-avonet_tree <- ape::read.tree("extdata/bird_CLADS.tre")
+#avonet_tree <- ape::read.tree("extdata/bird_CLADS.tre")
 avonet_dat <- readr::read_csv("extdata/AVONET3_BirdTree.csv")
 
 avonet <- pf_as_pf(avonet_tree)
@@ -25,6 +25,7 @@ usethis::use_data(avonet, overwrite = TRUE)
 codes <- readr::read_rds("extdata/latent_code_reconstructions.rds")
 bird_tree <- ape::read.tree("extdata/Stage2_MayrParSho_Ericson_set1_decisive.tre")
 bird_tree <- bird_tree[[1]]
+#bird_tree <- ape::read.tree("extdata/bird_CLADS.tre")
 
 tree_beaks <- ape::drop.tip(bird_tree, which(!bird_tree$tip.label %in% codes$Binomal_Jetz))
 

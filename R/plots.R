@@ -25,40 +25,49 @@ ggplot2::autoplot
 #' layout = "rectangular")
 autoplot.pf <- function(object, columns = NULL, layout = "circular",
                         suppress_tiplabels = FALSE,
+                        suppress_tippoints = FALSE,
                         edge_traits = FALSE,
-                        continuous = "colour", ...) {
+                        continuous = "colour",
+                        size = 1.4,
+                        outline_size = 1.4 * size,
+                        ...) {
   
   sel <- dplyr::select(object, {{ columns }})
   
   ob <- phyf::pf_phyloflow(object)
   tree <- phyf::pf_as_phylo(ob)
   
+  tree_df <- ggtree::fortify(tree)
+  
   if(length(sel) == 0) {
     p1 <- ggtree::ggtree(tree) 
     if(length(tree_df$label[tree_df$isTip]) < 200 && !suppress_tiplabels) {
-      p1 <- p1 + + ggtree::geom_tiplab()
+      p1 <- p1 + ggtree::geom_tiplab()
     }
     return(p1)
   }
-  
-  tree_df <- ggtree::fortify(tree)
   
   tree_df <- tree_df %>%
       dplyr::left_join(sel %>%
                          dplyr::mutate(label = phyf::pf_labels(ob)),
                        by = "label")
   
-  if(ncol(sel) == 1 && (nrow(tree_df) == length(ob) + 1 || nrow(tree_df) == length(ob))) {
+  if(ncol(sel) == 1) {
+    
+    # && (nrow(tree_df) == length(ob) + 1 || nrow(tree_df) == length(ob))
     
     if(all(is.na(unlist(sel)[!pf_is_tips(ob)]))) {
-      p1 <- ggtree::ggtree(tree_df, layout = layout, ladderize = FALSE, size = 2.2,
+      p1 <- ggtree::ggtree(tree_df, layout = layout, ladderize = FALSE, size = size,
                            ...) + 
-        ggtree::geom_tippoint(colour = "black",
-                              size = 2.8) +
-        ggtree::geom_tippoint(ggplot2::aes(color = {{ columns }}),
-                              size = 2) +
         ggplot2::scale_color_viridis_c() +
         ggplot2::theme(legend.position = c(.05, .85))
+      if(!suppress_tippoints) {
+        p1 <- p1 +
+          ggtree::geom_tippoint(colour = "black",
+                                size = 1.4 * outline_size) +
+          ggtree::geom_tippoint(ggplot2::aes(color = {{ columns }}),
+                                size = 1.4 * size)
+      }
       return(p1)
     }
     
@@ -66,17 +75,19 @@ autoplot.pf <- function(object, columns = NULL, layout = "circular",
       continuous <- "none"
     }
     
-    p1 <- ggtree::ggtree(tree_df, layout = layout, ladderize = FALSE, size = 2.2) + 
+    p1 <- ggtree::ggtree(tree_df, layout = layout, ladderize = FALSE, size = outline_size) + 
       ggtree::geom_tree(ggplot2::aes(color = {{ columns }}), 
-                        continuous = continuous, size = 1.4, ...) +  
+                        continuous = continuous, size = size, ...) +  
       ggplot2::scale_color_viridis_c() +
       ggplot2::theme(legend.position = c(.05, .85)) 
     
-    if(length(tree_df$label[tree_df$isTip]) > 200 || suppress_tiplabels) {
-      p1 <- p1 + ggtree::geom_tippoint(colour = "black",
-                                       size = 2.8) +
-        ggtree::geom_tippoint(ggplot2::aes(color = {{ columns }}),
-                              size = 2)
+    if((length(tree_df$label[tree_df$isTip]) > 200 || suppress_tiplabels)) {
+      if(!suppress_tippoints) {
+        p1 <- p1 + ggtree::geom_tippoint(colour = "black",
+                                         size = 1.4 * outline_size) +
+          ggtree::geom_tippoint(ggplot2::aes(color = {{ columns }}),
+                                size = 1.4 * size)
+      }
     } else {
       p1 <- p1 + ggtree::geom_tiplab(ggplot2::aes(color = {{ columns }}), hjust = -.1)
     }
@@ -98,7 +109,9 @@ autoplot.pf <- function(object, columns = NULL, layout = "circular",
 #' @return A `phytools::contMap()` object.
 #' @export 
 plot.pf <- function(x, columns = NULL, 
-                        layout = "fan", ...) {
+                    layout = "fan", 
+                    suppress_tiplabels = FALSE,
+                    ...) {
   
   object <- x
   
@@ -118,9 +131,11 @@ plot.pf <- function(x, columns = NULL,
   
   total_nodes <- tree$Nnode + length(tree$tip.label)
   
-  if(ncol(sel) == 1 && total_nodes == length(ob) + 1) {
+  if(ncol(sel) == 1) {
     
-    if(length(tree$tip.label) > 200){
+    # && total_nodes == length(ob) + 1
+    
+    if(length(tree$tip.label) > 200 || suppress_tiplabels){
       ftype <- c("off", "reg")  
     } else {
       ftype <- NULL

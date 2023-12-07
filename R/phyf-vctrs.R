@@ -1245,6 +1245,39 @@ pf_is_tips <- function(x, ...) {
   
 }
 
+#' Returns the end edge of each phylogenetic flow as a two-column tibble
+#' with start and end columns
+#'
+#' @param x A pfc object
+#' @param return_names If TRUE, return the start and end node names. If FALSE,
+#' return their indexes.
+#'
+#' @return A `tibble` with start and end nodes
+#' @export
+#'
+#' @examples
+#' pf_ends(rpfc(100))
+pf_ends <- function(x, return_names = TRUE) {
+  
+  inds <- purrr::map(pf_path(x),
+                     ~ c(start = .x[length(.x) - 1],
+                         end = .x[length(.x)]))
+  
+  if(return_names) {
+    edge_nams <- edge_names(x)
+    res <- purrr::map_dfr(inds,
+                          ~ dplyr::tibble(start = edge_nams[.x[1]],
+                                          end = edge_nams[.x[2]]))
+  } else {
+    res <- purrr::map_dfr(inds,
+                          ~ dplyr::tibble(start = .x[1],
+                                          end = .x[2]))
+  }
+  
+  res
+  
+}
+
 drop_zero_edges <- function(x, ...) {
   m <- pf_as_sparse(x)
   internal <- attr(x, "internal")
@@ -1262,4 +1295,20 @@ drop_root_edges <- function(x, ...) {
   pf_as_pfc(m, internal = internal[-1:-mrca],
             is_tip = field(x, "is_tip"))
 }
+
+#' Test which elements of a pfc are empty
+#'
+#' @param x A `pfc` object
+#' @param ... Further arguments for future extensions. Currently not used.
+#'
+#' @return A logical vector of the same length as `x` with `TRUE` where 
+#' there are empty flows in `x`, `FALSE` otherwise
+#' @export
+#'
+#' @examples
+#' pf_is_empty(rpfc(100))
+pf_is_empty <- function(x, ...) {
+  purrr::map_lgl(pf_path(x),
+                 purrr::is_empty)
+} 
   
