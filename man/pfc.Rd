@@ -12,6 +12,8 @@ pfc(
   is_tip = logical(),
   edge_names = character(),
   internal = logical(),
+  node_ord = NULL,
+  edge_ord = NULL,
   sparse_mat = NULL
 )
 
@@ -32,6 +34,14 @@ edges}
 
 \item{internal}{A logical vector specifying whether each edge
 is internal (not leading to a tip)}
+
+\item{node_ord}{An optional integer vector specifying an order for the
+nodes. Usually used to store ordering information from another tree
+format such as \code{phylo} so it is easier to match data up later.}
+
+\item{edge_ord}{An optional integer vector specifying an order for the
+edges. Usually used to store ordering information from another tree
+format such as \code{phylo} so it is easier to match data up later.}
 
 \item{sparse_mat}{A sparse matrix representation of the phylogenetic
 flow collection. Can be left \code{NULL}, in which case it is constructed

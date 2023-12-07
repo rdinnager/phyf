@@ -1331,4 +1331,19 @@ pfc_from_pftibble <- function(pft) {
     dplyr::group_nest()
   ob2 <- purrr::list_transpose(ob$data)
 }
+
+#' Extract the features of the end edge of each phylogenetic flow
+#'
+#' @param x A `pfc` object
+#'
+#' @return A numeric vector of the features of the end edge of each phylogenetic flow
+#' @export
+#'
+#' @examples
+#' pf_end_features(rpfc(100))
+pf_end_features <- function(x) {
+  purrr::map(vctrs::field(x, "pfl"),
+             ~ .x[length(.x)]) %>%
+    purrr::list_c()
+}
   
