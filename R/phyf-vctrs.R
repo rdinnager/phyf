@@ -1317,6 +1317,15 @@ pf_is_empty <- function(x, ...) {
                  purrr::is_empty)
 }
 
+#' Convert pfc into a pftibble
+#'
+#' @param x  a `pfc` object
+#'
+#' @return A `tibble`
+#' @export
+#'
+#' @examples
+#' pf_as_pftibble(rpfc(100))
 pf_as_pftibble <- function(x) {
   paths <- vctrs::field(x, "pfp")
   res <- dplyr::tibble(path = rep(vctrs::field(x, "pfn"), times = purrr::map_int(paths, length)),
@@ -1325,6 +1334,15 @@ pf_as_pftibble <- function(x) {
   
 }
 
+#' Convert pftibble into a pfc
+#'
+#' @param x  a pftibble `tibble`
+#'
+#' @return A `pfc`
+#' @export
+#'
+#' @examples
+#' pfc_from_pftibble(pf_as_pftibble(rpfc(100)))
 pfc_from_pftibble <- function(pft) {
   ob <- pft %>%
     dplyr::group_by(path) %>%
