@@ -1,201 +1,71 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://rdinnager.github.io/phyf/404.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/articles/phyf.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/articles/phyf_arith.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/autoplot.pf.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/avonet.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/bird_beak_codes.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/ecoregion_ids.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/make_interp.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/mammal_biogeo.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_anc.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_as_pf.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_as_pfc.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_as_phylo.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_as_sparse.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_desc.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_edge_apply.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_edge_names.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_edge_segmentize.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_end_features.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_ends.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_epoch_info.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_filter_with_mrca.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_flow_cumsum.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_flow_sum.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_indexes.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_internal.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_is_desc.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_is_empty.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_is_tips.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_kronecker.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_labels.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_mean_edge_features.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_mrca.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_nedges.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_nodes.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_ones.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_path.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_phyloflow.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_position.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_row_kron.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_scale_flow_sum.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_second_order.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_standardise.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_tips.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_vcv.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pf_zeros.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pfc.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pfp.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/phyf-package.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/phyf-vctrs.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/plant_fungus.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/plot.pf.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/primate_diet.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/primate_diet_hierarchy.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/primate_diet_refs.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/rpfc.html</loc>
-  </url>
-  <url>
-    <loc>https://rdinnager.github.io/phyf/reference/vert_bmr.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://rdinnager.github.io/phyf/404.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/LICENSE-text.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/LICENSE.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/articles/index.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/articles/phyf.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/articles/phyf_arith.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/authors.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/index.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/autoplot.pf.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/avonet.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/bird_beak_codes.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/ecoregion_ids.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/index.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/make_interp.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/mammal_biogeo.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_anc.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_as_pf.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_as_pfc.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_as_pftibble.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_as_phylo.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_as_sparse.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_desc.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_edge_apply.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_edge_names.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_edge_segmentize.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_end_features.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_ends.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_epoch_info.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_filter_with_mrca.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_flow_cumsum.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_flow_sum.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_indexes.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_internal.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_is_desc.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_is_empty.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_is_tips.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_kronecker.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_labels.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_mean_edge_features.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_mrca.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_nedges.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_nodes.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_ones.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_path.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_phyloflow.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_position.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_row_kron.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_scale_flow_sum.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_second_order.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_standardise.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_tips.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_vcv.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pf_zeros.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pfc.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pfc_from_pftibble.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pfp.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/phyf-package.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/phyf-vctrs.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/pipe.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/plant_fungus.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/plot.pf.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/primate_diet.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/primate_diet_hierarchy.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/primate_diet_refs.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/reexports.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/rpfc.html</loc></url>
+<url><loc>https://rdinnager.github.io/phyf/reference/vert_bmr.html</loc></url>
 </urlset>
+
